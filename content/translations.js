@@ -216,6 +216,7 @@ var I18N = {
     "demo.badge": "Version démo",
     "demo.notice": "Version de démonstration : les coordonnées sont fictives et aucune demande n'est envoyée.",
     "nav.home": "Page introuvable · Retour à l'accueil",
+    "theme.dark": "Mode sombre",
     "footer.privacy": "Nous ne collectons que les informations nécessaires pour répondre à votre demande."
   },
 
@@ -424,6 +425,7 @@ var I18N = {
     "demo.badge": "نسخة تجريبية",
     "demo.notice": "نسخة تجريبية: بيانات الاتصال غير حقيقية ولا يتم إرسال أي طلب.",
     "nav.home": "الصفحة غير موجودة · العودة إلى الرئيسية",
+    "theme.dark": "الوضع الداكن",
     "footer.privacy": "لا نجمع إلا المعلومات اللازمة للرد على طلبك."
   },
 
@@ -632,6 +634,7 @@ var I18N = {
     "demo.badge": "Demo version",
     "demo.notice": "Demo version: the contact details are placeholders and no request is sent.",
     "nav.home": "Page not found · Back to home",
+    "theme.dark": "Dark mode",
     "footer.privacy": "We only collect the information needed to answer your request."
   },
 
@@ -840,6 +843,7 @@ var I18N = {
     "demo.badge": "Versión demo",
     "demo.notice": "Versión de demostración: los datos de contacto son ficticios y no se envía ninguna solicitud.",
     "nav.home": "Página no encontrada · Volver al inicio",
+    "theme.dark": "Modo oscuro",
     "footer.privacy": "Solo recogemos la información necesaria para responder a su solicitud."
   }
 };

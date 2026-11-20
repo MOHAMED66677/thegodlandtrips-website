@@ -105,13 +105,22 @@
       '<li><a href="#contact">' + e(lang, "nav.contact") + "</a></li>";
   }
 
+  // Light/dark switch: a pressed button = dark mode on
+  function themeToggle(lang, withLabel) {
+    return '<button type="button" class="theme-toggle" aria-pressed="false"' + (withLabel ? "" : ' aria-label="' + e(lang, "theme.dark") + '"') + ">" +
+      '<svg class="i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true"><use href="#i-sun"/></svg>' +
+      (withLabel ? "<span>" + e(lang, "theme.dark") + "</span>" : "") + "</button>";
+  }
+
   function header(lang) {
     return '<a class="skip-link" href="#main">' + e(lang, "skip") + "</a>" +
       '<header class="site-header is-top"><div class="container header-inner">' +
         '<a class="brand" href="#top">' + brandInner() + "</a>" +
-        '<nav class="main-nav" id="main-nav" aria-label="' + e(lang, "nav.label") + '"><ul>' + navLinks(lang) + "</ul></nav>" +
+        '<nav class="main-nav" id="main-nav" aria-label="' + e(lang, "nav.label") + '"><ul>' + navLinks(lang) +
+          '<li class="theme-row">' + themeToggle(lang, true) + "</li></ul></nav>" +
         langSwitch(lang) +
         '<a class="btn btn-action btn-sm header-cta" href="#quote" data-quote="transfer">' + e(lang, "hero.ctaQuote") + "</a>" +
+        themeToggle(lang) +
         '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="' + e(lang, "nav.menu") + '">' + icon("menu") + "</button>" +
       "</div></header>";
   }

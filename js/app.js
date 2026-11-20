@@ -57,6 +57,25 @@
     demoTimer = setTimeout(function () { n.classList.remove("is-visible"); }, 4000);
   }
 
+  /* ---------- light / dark theme ---------- */
+  var THEME_COLORS = { light: "#A13A26", dark: "#15100E" };
+  function savedTheme() { try { var v = localStorage.getItem("theme"); return v === "dark" || v === "light" ? v : null; } catch (e) { return null; } }
+  function systemTheme() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+  function currentTheme() { return html.getAttribute("data-theme") === "dark" ? "dark" : "light"; }
+  function applyTheme(theme, save) {
+    html.setAttribute("data-theme", theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", THEME_COLORS[theme]);
+    app.querySelectorAll(".theme-toggle").forEach(function (b) { b.setAttribute("aria-pressed", String(theme === "dark")); });
+    if (save) { try { localStorage.setItem("theme", theme); } catch (e) {} }
+  }
+  // follow the device setting until the visitor makes a choice
+  if (window.matchMedia) {
+    var mq = matchMedia("(prefers-color-scheme: dark)");
+    var onSys = function () { if (!savedTheme()) applyTheme(systemTheme(), false); };
+    if (mq.addEventListener) mq.addEventListener("change", onSys); else if (mq.addListener) mq.addListener(onSys);
+  }
+
   function valid(l) { return LANGS.indexOf(l) !== -1; }
   function t(key, vars) { return R.t(currentLang, key, vars); }
   function $(sel) { return app.querySelector(sel); }
@@ -151,6 +170,7 @@
     syncRoute();
     updateEstimate();
     if (currentDest) selectDest(currentDest);
+    applyTheme(currentTheme(), false);
   }
 
   /* ---------- Google Maps ---------- */
@@ -573,6 +593,12 @@
     else if (el.matches(".map-link")) track("map-view-" + el.getAttribute("data-map"));
     else if (el.hasAttribute("data-quote")) track("quote-start-" + el.getAttribute("data-quote"));
 
+    if (el.matches(".theme-toggle")) {
+      var next = currentTheme() === "dark" ? "light" : "dark";
+      applyTheme(next, true);
+      track("theme-" + next);
+      return;
+    }
     if (el.matches(".lang-switch button")) {
       var l = el.getAttribute("data-lang");
       if (l !== currentLang) track("language-" + l);
