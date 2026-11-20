@@ -16,6 +16,8 @@
   (function () {
     var css = document.querySelector('link[href*="css/styles.css"]');
     if (css) R.setAssetBase(css.href.replace(/css\/styles\.css.*$/, ""));
+    // keep the tab icon valid after the URL changes on a language switch
+    document.querySelectorAll('link[rel~="icon"]').forEach(function (l) { l.setAttribute("href", l.href); });
   })();
 
   /* ---------- free, cookie-less visitor statistics ---------- */

@@ -140,12 +140,13 @@ writeFileSync(`${OUT}/_headers`, `/*
   Cache-Control: public, max-age=3600
 `);
 
-// "Page not found" page, in the 4 languages
-const nf = (l) => `<p lang="${l}"${R.isRtl(l) ? ' dir="rtl"' : ""}><a href="/${pathFor(l)}">${R.esc(R.t(l, "nav.home") || "")}</a></p>`;
+// "Page not found" page, in the 4 languages (absolute links: it can be shown at any depth)
+const BASE = new URL(SITE.siteUrl + "/").pathname;   // "/" or "/repo-name/" on GitHub Pages
+const nf = (l) => `<p lang="${l}"${R.isRtl(l) ? ' dir="rtl"' : ""}><a href="${BASE}${pathFor(l)}">${R.esc(R.t(l, "nav.home") || "")}</a></p>`;
 writeFileSync(`${OUT}/404.html`, `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex"><link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex"><link rel="icon" type="image/svg+xml" href="${BASE}images/favicon.svg">
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FBF6F3;color:#2B1915;font-family:system-ui,sans-serif;text-align:center;padding:24px}
 img{width:72px;margin:0 auto 12px}h1{font-size:2.4rem;margin:.2em 0}p{margin:.4em 0;font-size:1.1rem}a{color:#A13A26;font-weight:600}</style></head>
-<body><main><img src="/images/logo-mark.svg" alt=""><h1>404</h1>${LANGS.map(nf).join("")}</main></body></html>
+<body><main><img src="${BASE}images/logo-mark.svg" alt=""><h1>404</h1>${LANGS.map(nf).join("")}</main></body></html>
 `);
 console.log(`✓ ${OUT}/sitemap.xml, ${OUT}/robots.txt\nDone. Upload the "${OUT}" folder to your host.`);
