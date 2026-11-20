@@ -155,7 +155,9 @@ for (const lang of LANGS) {
   const rtl = R.isRtl(lang);
   const sep = lang === "fr" ? " : " : ": ";   // French puts a space before colons
   const todo = (key) => `<mark class="todo">[${R.esc(L.todo)}${sep}${R.esc(L.labels[key] || key)}]</mark>`;
-  const clean = (v) => String(v || "").trim().replace(/\.\s*$/, "");
+  const P = SITE.promises || {};
+  const clean = (v) => String(v || "").trim().replace(/\.\s*$/, "")
+    .replace(/\{wait\}/g, P.freeWaitingMinutes || "").replace(/\{cancel\}/g, P.freeCancellationHours || "");
   const contact = "WhatsApp " + SITE.whatsappDisplay + (SITE.email ? " · " + SITE.email : "");
   const starting = LEGAL_INFO.status !== "company";   // individual setting up the business
   const S = L.starting;

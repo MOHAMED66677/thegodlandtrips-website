@@ -429,9 +429,10 @@
     if (to) to.removeAttribute("list");
   }
 
-  function openQuote(service, activityName) {
+  function openQuote(service, activityName, vehicle) {
     var f = $("#quote-form");
     if (!f) return;
+    if (vehicle && $("#q-veh")) $("#q-veh").value = vehicle;
     var radio = $("#svc-" + service);
     if (radio) radio.checked = true;
     if (activityName) {
@@ -504,6 +505,7 @@
       date: d,
       dateText: dateText,
       passengers: $("#q-pax").value,
+      vehicle: $("#q-veh") && $("#q-veh").value ? t("veh." + $("#q-veh").value + ".name") : "",
       name: $("#q-name").value.trim(),
       contact: $("#q-contact").value.trim()
     };
@@ -519,8 +521,10 @@
       "• " + t("form.to") + sep + q.to,
       "• " + t("form.date") + sep + q.dateText,
       "• " + t("form.passengers") + sep + q.passengers,
+      q.vehicle ? "• " + t("form.vehicle") + sep + q.vehicle : null,
       "• " + t("form.name") + sep + q.name
     ];
+    lines = lines.filter(function (x) { return x !== null; });
     if (q.contact) lines.push("• " + t("form.contact") + sep + q.contact);
     if (lastTrip && !$("#q-estimate").hidden) lines.push("• " + t("msg.estimate") + sep + R.formatTrip(currentLang, lastTrip.km, lastTrip.min));
     var route = routeUrl();
@@ -633,7 +637,7 @@
     }
     if (el.hasAttribute("data-quote")) {
       ev.preventDefault();
-      openQuote(el.getAttribute("data-quote"), el.getAttribute("data-activity"));
+      openQuote(el.getAttribute("data-quote"), el.getAttribute("data-activity"), el.getAttribute("data-vehicle"));
       return;
     }
     if (el.matches('#quote-form button[type="submit"]')) lastSubmitter = el;

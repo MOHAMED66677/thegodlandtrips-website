@@ -8,7 +8,8 @@
 (function (root) {
   var env = root.SITE ? root : require("../content/site.js");
   var tr = root.I18N ? root : require("../content/translations.js");
-  var SITE = env.SITE, IMAGES = env.IMAGES, ACTIVITIES = env.ACTIVITIES, CATEGORIES = env.CATEGORIES, DESTINATIONS = env.DESTINATIONS || [];
+  var SITE = env.SITE, IMAGES = env.IMAGES, ACTIVITIES = env.ACTIVITIES, CATEGORIES = env.CATEGORIES, DESTINATIONS = env.DESTINATIONS || [], VEHICLES = env.VEHICLES || [];
+  var PROMISES = SITE.promises || {};
   var I18N = tr.I18N, LANGS = tr.LANGS, LANG_NAMES = tr.LANG_NAMES, LANG_SHORT = tr.LANG_SHORT, RTL_LANGS = tr.RTL_LANGS;
 
   // Base URL for local files (images/...). Set by the browser script so that
@@ -27,6 +28,8 @@
     return s.replace(/\{(\w+)\}/g, function (m, k) {
       if (k === "agency") return SITE.agencyName;
       if (k === "count") return ACTIVITIES.length;
+      if (k === "wait") return PROMISES.freeWaitingMinutes;
+      if (k === "cancel") return PROMISES.freeCancellationHours;
       return vars[k] != null ? vars[k] : m;
     });
   }
@@ -176,6 +179,12 @@
         '<datalist id="acts-list">' + ACTIVITIES.map(function (a) { return '<option value="' + e(lang, "act." + a.id + ".name") + '">'; }).join("") + "</datalist>" +
         field(lang, "q-date", "date", "form.date", 'type="date" required', "half") +
         field(lang, "q-pax", "passengers", "form.passengers", 'type="number" inputmode="numeric" min="1" max="60" value="2" required', "half", "users") +
+        (VEHICLES.length ? '<div class="field">' +
+          '<label for="q-veh">' + e(lang, "form.vehicle") + "</label>" +
+          '<div class="input-wrap">' + icon("car", "input-icon") + '<select id="q-veh" name="vehicle">' +
+            '<option value="">' + e(lang, "form.vehicleAny") + "</option>" +
+            VEHICLES.map(function (v) { return '<option value="' + esc(v.id) + '">' + e(lang, "veh." + v.id + ".name") + " (" + e(lang, "veh.seats", { n: v.seats }) + ")</option>"; }).join("") +
+          "</select></div></div>" : "") +
         field(lang, "q-name", "name", "form.name", 'type="text" required autocomplete="name" placeholder="' + e(lang, "form.namePh") + '"', "half") +
         '<div class="field half">' +
           '<label for="q-contact">' + e(lang, "form.contact") + "</label>" +
@@ -211,11 +220,26 @@
         quoteForm(lang) +
       "</div>" +
     "</section>" +
-    '<div class="trust-strip"><div class="container"><ul>' +
-      [["check", "hero.p1"], ["whatsapp", "hero.p2"], ["headset", "hero.p3"], ["shield", "hero.p4"]].map(function (p) {
-        return "<li>" + icon(p[0]) + "<span>" + e(lang, p[1]) + "</span></li>";
-      }).join("") +
-    "</ul></div></div>";
+    promiseStrip(lang);
+  }
+
+  // "Our promises" strip under the hero (each promise can be switched off in site.js)
+  function promiseStrip(lang) {
+    var items = [
+      PROMISES.freeWaitingMinutes && ["clock", "wait"],
+      PROMISES.nameSign && ["sign", "sign"],
+      PROMISES.freeChildSeats && ["heart", "seats"],
+      PROMISES.freeCancellationHours && ["calendar", "cancel"]
+    ].filter(Boolean);
+    if (!items.length) {
+      items = [["check", null, "hero.p1"], ["whatsapp", null, "hero.p2"], ["headset", null, "hero.p3"], ["shield", null, "hero.p4"]];
+      return '<div class="trust-strip"><div class="container"><ul>' + items.map(function (p) {
+        return "<li>" + icon(p[0]) + "<span>" + e(lang, p[2]) + "</span></li>";
+      }).join("") + "</ul></div></div>";
+    }
+    return '<section class="trust-strip promises" aria-label="' + e(lang, "promise.label") + '"><div class="container"><ul>' + items.map(function (p) {
+      return "<li>" + icon(p[0]) + '<span><strong>' + e(lang, "promise." + p[1] + ".title") + "</strong><small>" + e(lang, "promise." + p[1] + ".desc") + "</small></span></li>";
+    }).join("") + "</ul></div></section>";
   }
 
   function sectionHead(lang, id, titleKey, leadKey, eyebrowKey, cls) {
@@ -239,6 +263,7 @@
           '<div class="service-media">' + img(it.image) + '<span class="service-icon">' + icon(it.icon) + "</span></div>" +
           '<div class="service-body">' +
             "<h3>" + e(lang, p + ".title") + "</h3>" +
+            (SITE.showPrices && SITE.prices && SITE.prices[it.key] ? '<p class="price service-price">' + e(lang, "acts.from") + " <strong>" + esc(SITE.prices[it.key]) + " " + esc(SITE.currency) + "</strong></p>" : "") +
             "<p>" + e(lang, p + ".desc") + "</p>" +
             "<ul>" + [1, 2, 3].map(function (n) { return "<li>" + icon("check") + "<span>" + e(lang, p + ".b" + n) + "</span></li>"; }).join("") + "</ul>" +
             (it.key === "activities"
@@ -247,7 +272,27 @@
           "</div>" +
         "</article>";
       }).join("") + "</div>" +
+      vehicles(lang) +
     "</div></section>";
+  }
+
+  function vehicles(lang) {
+    if (!VEHICLES.length) return "";
+    return '<div class="vehicles" id="vehicles">' +
+      '<div class="section-head reveal vehicles-head"><h3 class="h2-like">' + e(lang, "vehicles.title") + "</h3><p>" + e(lang, "vehicles.lead") + "</p></div>" +
+      '<div class="vehicle-grid">' + VEHICLES.map(function (v, i) {
+        return '<article class="vehicle-card reveal" style="--d:' + i * 90 + 'ms">' +
+          (v.image ? '<div class="vehicle-media">' + img(v.image, { sizes: "(min-width: 900px) 33vw, 100vw" }) + "</div>"
+                   : '<div class="vehicle-art" aria-hidden="true">' + icon(v.icon, "vehicle-icon") + "</div>") +
+          '<div class="vehicle-body"><h4>' + e(lang, "veh." + v.id + ".name") + "</h4><p>" + e(lang, "veh." + v.id + ".desc") + "</p>" +
+            '<ul class="vehicle-specs">' +
+              "<li>" + icon("users") + e(lang, "veh.seats", { n: v.seats }) + "</li>" +
+              "<li>" + icon("bag") + e(lang, "veh.bags", { n: v.bags }) + "</li>" +
+              (v.ac ? "<li>" + icon("snow") + e(lang, "veh.ac") + "</li>" : "") +
+            "</ul>" +
+            '<a class="link-cta" href="#quote" data-quote="transfer" data-vehicle="' + esc(v.id) + '">' + e(lang, "veh.choose") + icon("arrow", "flip-rtl") + "</a>" +
+          "</div></article>";
+      }).join("") + "</div></div>";
   }
 
   function activityCard(lang, a, i) {

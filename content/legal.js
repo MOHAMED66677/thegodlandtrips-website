@@ -29,9 +29,9 @@ var LEGAL_INFO = {
 
   // Policies written in each language (leave "" to show "[To complete]")
   retention:    { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "24 mois" / "24 months"
-  payment:      { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
-  cancellation: { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "gratuite jusqu'à 24 h avant le service"
-  waiting:      { fr: "", ar: "", en: "", es: "", de: "", nl: "" }   // e.g. "60 minutes après l'atterrissage"
+  payment:      { fr: "en espèces au chauffeur le jour du service, en dirhams ou en euros", ar: "نقدًا للسائق يوم الخدمة، بالدرهم أو باليورو", en: "in cash to the driver on the day of the service, in dirhams or euros", es: "en efectivo al chófer el día del servicio, en dírhams o euros", de: "bar beim Fahrer am Tag der Leistung, in Dirham oder Euro", nl: "contant aan de chauffeur op de dag van de dienst, in dirham of euro" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
+  cancellation: { fr: "Toute réservation peut être annulée ou modifiée gratuitement jusqu'à {cancel} heures avant la prise en charge, par simple message WhatsApp", ar: "يمكن إلغاء أي حجز أو تعديله مجانًا حتى {cancel} ساعة قبل موعد الانطلاق، برسالة بسيطة عبر واتساب", en: "Any booking can be cancelled or changed free of charge up to {cancel} hours before pickup, with a simple WhatsApp message", es: "Toda reserva puede cancelarse o modificarse gratis hasta {cancel} horas antes de la recogida, con un simple mensaje de WhatsApp", de: "Jede Buchung kann bis {cancel} Stunden vor der Abholung kostenlos storniert oder geändert werden, per einfacher WhatsApp-Nachricht", nl: "Elke boeking kan tot {cancel} uur voor het ophalen gratis worden geannuleerd of gewijzigd, met een eenvoudig WhatsApp-bericht" },  // e.g. "gratuite jusqu'à 24 h avant le service"
+  waiting:      { fr: "{wait} minutes après l'atterrissage", ar: "{wait} دقيقة بعد الهبوط", en: "{wait} minutes after landing", es: "{wait} minutos tras el aterrizaje", de: "{wait} Minuten nach der Landung", nl: "{wait} minuten na de landing" }   // e.g. "60 minutes après l'atterrissage"
 };
 
 /* Texts. {tokens} are replaced by LEGAL_INFO / SITE values. */

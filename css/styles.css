@@ -300,6 +300,12 @@ a { color: var(--color-primary); }
 .trust-strip li { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: .95rem; line-height: 1.35; }
 .trust-strip svg { width: 40px; height: 40px; padding: 9px; border-radius: 12px; background: var(--color-band); color: var(--color-primary); }
 
+/* Promises strip (title + short description) */
+.promises li { align-items: flex-start; }
+.promises li > span { display: flex; flex-direction: column; gap: 2px; }
+.promises strong { font-weight: 700; font-size: .98rem; }
+.promises small { color: var(--color-text-muted); font-weight: 500; font-size: .84rem; line-height: 1.35; }
+
 /* ========================= QUOTE FORM ========================= */
 .quote-card {
   background: var(--color-surface); color: var(--color-text);
@@ -389,6 +395,32 @@ a { color: var(--color-primary); }
 .service-body li { display: flex; gap: 10px; font-size: .95rem; }
 .service-body li svg { width: 18px; height: 18px; margin-top: 3px; color: var(--color-primary); }
 .service-body .link-cta { margin-top: auto; }
+
+/* Vehicles */
+.vehicles { margin-top: clamp(48px, 7vw, 80px); }
+.vehicles-head { margin-bottom: 28px; }
+.h2-like { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: .4em; }
+.vehicle-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.vehicle-card { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; }
+.vehicle-art { display: grid; place-items: center; height: 150px; background: linear-gradient(135deg, var(--color-band), rgba(var(--rgb-primary), .12)); color: var(--color-primary); }
+.vehicle-art .vehicle-icon { width: 150px; height: 75px; }
+.vehicle-media { position: relative; aspect-ratio: 16 / 10; }
+.vehicle-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vehicle-body { padding: 18px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+.vehicle-body h4 { font-family: var(--font-heading); font-size: 1.2rem; margin: 0 0 4px; }
+.vehicle-body > p { color: var(--color-text-muted); margin: 0 0 12px; }
+.vehicle-specs { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.vehicle-specs li { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--color-band); font-size: .85rem; font-weight: 600; }
+.vehicle-specs svg { width: 16px; height: 16px; color: var(--color-primary); }
+.vehicle-body .link-cta { margin-top: auto; }
+.service-price { margin: -4px 0 8px; }
+/* select in the quote form, same look as inputs */
+.field select {
+  width: 100%; min-height: 50px; padding: 12px 14px; border: 1.5px solid var(--color-border); border-radius: var(--radius-sm);
+  background: var(--color-bg); color: var(--color-text); font: 400 1rem/1.3 var(--font-body); appearance: auto;
+}
+.input-icon + select { padding-inline-start: 42px; }
+.field select:focus { outline: none; background: var(--color-surface); border-color: var(--color-primary); box-shadow: 0 0 0 4px rgba(var(--rgb-primary),.14); }
 
 /* ========================= ACTIVITIES ========================= */
 .acts-head { display: grid; gap: 8px; margin-bottom: clamp(28px, 4vw, 40px); }

@@ -56,7 +56,18 @@ var SITE = {
   // Set to false once the agency's real WhatsApp number and email are filled in.
   demoMode: false,
 
-  // Show prices on activity cards? (only cards that have a price are affected)
+  // Promises shown under the hero, and used in the FAQ and the legal page.
+  // Set a value to 0 / false to stop promising it.
+  promises: {
+    freeWaitingMinutes: 60,     // free waiting time at the airport after landing
+    nameSign: true,             // driver waits in arrivals with a name sign
+    freeChildSeats: true,       // child seats free on request
+    freeCancellationHours: 24   // free cancellation / changes up to X hours before pickup
+  },
+
+  // "From" prices on the service cards and activity cards.
+  // Fill in the numbers, then set showPrices to true to display them.
+  prices: { transfer: null, disposal: null },   // e.g. transfer: 150 (airport -> Marrakech)
   showPrices: false,
   currency: "MAD"
 };
@@ -108,6 +119,18 @@ var ACTIVITIES = [
 var CATEGORIES = ["excursions", "land", "air", "sea"];
 
 /* ---------------------------------------------------------
+   VEHICLES ("Our vehicles" section + choice in the quote form)
+   - id:     name/description in translations.js ("veh.<id>.name" / ".desc")
+   - icon:   sedan | van | suv
+   - image:  optional real photo, e.g. "images/minivan.jpg" (shown instead of the icon)
+   --------------------------------------------------------- */
+var VEHICLES = [
+  { id: "sedan",   icon: "sedan", seats: 3, bags: 3, ac: true, image: "" },
+  { id: "minivan", icon: "van",   seats: 7, bags: 6, ac: true, image: "" },
+  { id: "suv",     icon: "suv",   seats: 4, bags: 3, ac: true, image: "" }
+];
+
+/* ---------------------------------------------------------
    ADDRESS SUGGESTIONS in the quote form (free, no API key)
    - Popular places below are suggested first (instant, offline),
      together with the DESTINATIONS further down.
@@ -143,4 +166,4 @@ var DESTINATIONS = [
   { id: "essaouira", lat: 31.5125, lng: -9.7700, zoom: 13, km: 190, minutes: 165 }
 ];
 
-if (typeof module !== "undefined") module.exports = { SITE: SITE, IMAGES: IMAGES, ACTIVITIES: ACTIVITIES, CATEGORIES: CATEGORIES, DESTINATIONS: DESTINATIONS, PLACES: PLACES, GEOCODER_URL: GEOCODER_URL, ROUTER_URL: ROUTER_URL };
+if (typeof module !== "undefined") module.exports = { SITE: SITE, IMAGES: IMAGES, ACTIVITIES: ACTIVITIES, CATEGORIES: CATEGORIES, DESTINATIONS: DESTINATIONS, PLACES: PLACES, VEHICLES: VEHICLES, GEOCODER_URL: GEOCODER_URL, ROUTER_URL: ROUTER_URL };

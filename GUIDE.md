@@ -113,13 +113,32 @@ Le site utilise Google Maps **sans clé API ni compte de facturation** :
 
 Ces services publics sont gratuits mais prévus pour un usage modéré : c'est largement suffisant pour une agence. Si le site devient très fréquenté, l'agence pourra passer à un service payant (Google, Mapbox…) en changeant `GEOCODER_URL` / `ROUTER_URL`.
 
-## 6. Foire aux questions (FAQ)
+## 6. Engagements, véhicules et prix
+
+**Engagements** (bandeau sous l'accueil, FAQ et page légale) : dans `content/site.js`, bloc `promises` :
+
+```js
+promises: {
+  freeWaitingMinutes: 60,     // attente offerte à l'aéroport
+  nameSign: true,             // pancarte au nom du client
+  freeChildSeats: true,       // sièges enfant gratuits
+  freeCancellationHours: 24   // annulation gratuite jusqu'à X h avant
+},
+```
+
+Changez un chiffre ici : le bandeau, la FAQ et la page légale se mettent à jour ensemble. Mettez `0` ou `false` pour retirer un engagement (pensez alors à adapter la réponse de FAQ correspondante). **Ne promettez que ce que vous tenez à chaque fois.**
+
+**Véhicules** : liste `VEHICLES` dans `content/site.js` (places, valises, climatisation). Pour afficher une vraie photo, mettez-la dans `images/` et indiquez `image: "images/minivan.jpg"`. Les noms et descriptions sont dans `translations.js` (`veh.sedan.name`…). Le client peut choisir un véhicule dans le formulaire ; son choix apparaît dans le message WhatsApp.
+
+**Prix « à partir de »** : remplissez `prices` (transfert, mise à disposition) et le champ `price` de chaque activité, puis passez `showPrices: true`.
+
+## 7. Foire aux questions (FAQ)
 
 Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les six langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
 
 ⚠️ **À valider par l'agence** : les réponses sur le paiement (`faq.a5`), l'annulation (`faq.a6`) et les sièges enfant (`faq.a4`) renvoient pour l'instant « au devis ». Remplacez-les par vos vraies conditions (ex. « paiement en espèces ou par carte au chauffeur », « annulation gratuite jusqu'à 24 h avant ») dès qu'elles sont fixées.
 
-## 7. Page légale (mentions légales, confidentialité, conditions)
+## 8. Page légale (mentions légales, confidentialité, conditions)
 
 La page `legal.html` existe dans les six langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
 
@@ -146,14 +165,14 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 
 ⚠️ **À faire vérifier** par le comptable ou un juriste de l'agence (numéros d'immatriculation, conditions d'annulation, déclaration CNDP), et les versions arabe et espagnole par un locuteur natif. Cette page a été rédigée à partir du fonctionnement réel du site, mais elle ne remplace pas un conseil juridique.
 
-## 8. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
+## 9. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
 
 - **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`, `og-de.jpg`, `og-nl.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
 - ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://thegodlandtrips.netlify.app` ou votre nom de domaine, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
 
-## 9. Statistiques de visite (gratuites, sans cookies)
+## 10. Statistiques de visite (gratuites, sans cookies)
 
 Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** service :
 
@@ -165,14 +184,6 @@ Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** 
 **Cloudflare Web Analytics** (visites et pays uniquement, sans les clics) : créez le site dans le tableau de bord Cloudflare, puis copiez le jeton dans `cloudflareAnalyticsToken`.
 
 Ces deux services ne déposent pas de cookies : aucun bandeau de consentement n'est nécessaire, et une mention s'ajoute automatiquement en bas de page. Vérifiez les conditions d'utilisation actuelles du service choisi.
-
-## 10. Afficher les prix
-
-1. Dans `content/site.js`, renseignez `price` pour chaque activité (ex. `price: 450`).
-2. Passez `showPrices: false` à `showPrices: true`.
-3. Vérifiez la devise : `currency: "MAD"`.
-
-« À partir de 450 MAD » s'affiche alors sur les fiches qui ont un prix.
 
 ## 11. Changer les couleurs
 
