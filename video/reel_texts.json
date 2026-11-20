@@ -1,0 +1,68 @@
+{
+  "en": {
+    "hook1": "Marrakech.", "hook2": "Zero transport", "hook3": "stress.",
+    "prob1": "No haggling.", "prob2": "No waiting.",
+    "turn1": "One site.", "turn2": "Every ride.",
+    "svcKicker": "All in one place", "svcTitle": "Transfers.<br>Private driver.<br>Day trips.",
+    "actsLabel": "activities", "actsSub": "Desert · Waterfalls · Quads · Balloons",
+    "quote1": "Quote in", "quote2": "under 1 minute",
+    "bubTitle": "Hello, I would like a quote:", "bub1": "• Transfer · Airport → Medina", "bub2": "• 12 Dec · 4 passengers",
+    "langs1": "Speaks your", "langs2": "language",
+    "cta1": "Your Marrakech,", "cta2": "sorted.", "ctaBtn": "Request your quote"
+  },
+  "fr": {
+    "hook1": "Marrakech.", "hook2": "Zéro stress", "hook3": "de transport.",
+    "prob1": "Pas de marchandage.", "prob2": "Pas d'attente.",
+    "turn1": "Un seul site.", "turn2": "Tous vos trajets.",
+    "svcKicker": "Tout en un", "svcTitle": "Transferts.<br>Chauffeur privé.<br>Excursions.",
+    "actsLabel": "activités", "actsSub": "Désert · Cascades · Quad · Montgolfière",
+    "quote1": "Un devis en", "quote2": "moins d'1 minute",
+    "bubTitle": "Bonjour, je souhaite un devis :", "bub1": "• Transfert · Aéroport → Médina", "bub2": "• 12 déc. · 4 passagers",
+    "langs1": "Parle votre", "langs2": "langue",
+    "cta1": "Votre Marrakech,", "cta2": "sans souci.", "ctaBtn": "Demander un devis"
+  },
+  "ar": {
+    "hook1": "مراكش.", "hook2": "تنقّل", "hook3": "بدون هموم.",
+    "prob1": "بدون مساومة.", "prob2": "بدون انتظار.",
+    "turn1": "موقع واحد.", "turn2": "لكل رحلاتك.",
+    "svcKicker": "كل شيء في مكان واحد", "svcTitle": "النقل من المطار.<br>سائق خاص.<br>رحلات يومية.",
+    "actsLabel": "نشاطًا", "actsSub": "صحراء · شلالات · كواد · منطاد",
+    "quote1": "عرض سعر", "quote2": "في أقل من دقيقة",
+    "bubTitle": "مرحبًا، أرغب في عرض سعر:", "bub1": "• نقل · المطار ← المدينة القديمة", "bub2": "• 12 دجنبر · 4 ركاب",
+    "langs1": "يتحدث", "langs2": "لغتك",
+    "cta1": "مراكش،", "cta2": "بكل راحة.", "ctaBtn": "اطلب عرض سعر"
+  },
+  "es": {
+    "hook1": "Marrakech.", "hook2": "Cero estrés", "hook3": "con el transporte.",
+    "prob1": "Sin regateos.", "prob2": "Sin esperas.",
+    "turn1": "Una sola web.", "turn2": "Todos sus trayectos.",
+    "svcKicker": "Todo en uno", "svcTitle": "Traslados.<br>Chófer privado.<br>Excursiones.",
+    "actsLabel": "actividades", "actsSub": "Desierto · Cascadas · Quad · Globo",
+    "quote1": "Presupuesto en", "quote2": "menos de 1 minuto",
+    "bubTitle": "Hola, me gustaría un presupuesto:", "bub1": "• Traslado · Aeropuerto → Medina", "bub2": "• 12 dic. · 4 pasajeros",
+    "langs1": "Habla su", "langs2": "idioma",
+    "cta1": "Su Marrakech,", "cta2": "sin complicaciones.", "ctaBtn": "Pedir presupuesto"
+  },
+  "de": {
+    "hook1": "Marrakech.", "hook2": "Null Stress", "hook3": "beim Transport.",
+    "prob1": "Kein Feilschen.", "prob2": "Kein Warten.",
+    "turn1": "Eine Website.", "turn2": "Jede Fahrt.",
+    "svcKicker": "Alles an einem Ort", "svcTitle": "Transfers.<br>Privatfahrer.<br>Tagesausflüge.",
+    "actsLabel": "Aktivitäten", "actsSub": "Wüste · Wasserfälle · Quad · Ballon",
+    "quote1": "Angebot in", "quote2": "unter 1 Minute",
+    "bubTitle": "Hallo, ich hätte gern ein Angebot:", "bub1": "• Transfer · Flughafen → Medina", "bub2": "• 12. Dez. · 4 Personen",
+    "langs1": "Spricht Ihre", "langs2": "Sprache",
+    "cta1": "Ihr Marrakech,", "cta2": "ganz entspannt.", "ctaBtn": "Angebot anfordern"
+  },
+  "nl": {
+    "hook1": "Marrakech.", "hook2": "Nul stress", "hook3": "met vervoer.",
+    "prob1": "Geen afdingen.", "prob2": "Geen wachttijd.",
+    "turn1": "Eén website.", "turn2": "Elke rit.",
+    "svcKicker": "Alles op één plek", "svcTitle": "Transfers.<br>Privéchauffeur.<br>Dagtochten.",
+    "actsLabel": "activiteiten", "actsSub": "Woestijn · Watervallen · Quad · Ballon",
+    "quote1": "Offerte in", "quote2": "minder dan 1 minuut",
+    "bubTitle": "Hallo, ik zou graag een offerte ontvangen:", "bub1": "• Transfer · Luchthaven → Medina", "bub2": "• 12 dec. · 4 personen",
+    "langs1": "Spreekt uw", "langs2": "taal",
+    "cta1": "Uw Marrakech,", "cta2": "zorgeloos.", "ctaBtn": "Offerte aanvragen"
+  }
+}

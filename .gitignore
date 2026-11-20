@@ -15,3 +15,6 @@ node_modules/
 
 # Local Claude app settings
 .claude/
+
+# Rendered language videos (regenerate with video/render.py --lang xx)
+video/output/
