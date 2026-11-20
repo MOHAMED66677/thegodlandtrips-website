@@ -129,23 +129,32 @@ for (const lang of LANGS) {
   const todo = (key) => `<mark class="todo">[${R.esc(L.todo)}${sep}${R.esc(L.labels[key] || key)}]</mark>`;
   const clean = (v) => String(v || "").trim().replace(/\.\s*$/, "");
   const contact = "WhatsApp " + SITE.whatsappDisplay + (SITE.email ? " · " + SITE.email : "");
+  const starting = LEGAL_INFO.status !== "company";   // individual setting up the business
+  const S = L.starting;
   const values = {
-    site: SITE.agencyName, company: LEGAL_INFO.companyName, legalForm: LEGAL_INFO.legalForm,
-    address: LEGAL_INFO.address, rc: LEGAL_INFO.rc, ice: LEGAL_INFO.ice, taxId: LEGAL_INFO.taxId,
+    site: SITE.agencyName, owner: LEGAL_INFO.ownerName,
+    // while starting, the owner is the data controller and the city stands for the address
+    company: starting ? LEGAL_INFO.ownerName : LEGAL_INFO.companyName, legalForm: LEGAL_INFO.legalForm,
+    address: LEGAL_INFO.address || (starting ? LEGAL_INFO.city : ""), rc: LEGAL_INFO.rc, ice: LEGAL_INFO.ice, taxId: LEGAL_INFO.taxId,
     director: LEGAL_INFO.director, license: LEGAL_INFO.tourismLicense, insurance: LEGAL_INFO.insurance,
-    cndp: LEGAL_INFO.cndp, contact,
+    cndp: LEGAL_INFO.cndp || (starting ? S.inProgress : ""), contact,
     retention: clean(LEGAL_INFO.retention[lang]), payment: clean(LEGAL_INFO.payment[lang]),
     cancellation: clean(LEGAL_INFO.cancellation[lang]), waiting: clean(LEGAL_INFO.waiting[lang]),
   };
   const fill = (txt) => R.esc(txt).replace(/\{(\w+)\}/g, (m, k) => {
     if (!(k in values)) return m;
     const v = clean(values[k]);
-    return v ? `<span${k === "contact" ? ' dir="ltr"' : ""}>${R.esc(v)}</span>` : todo(k);
+    return v ? `<span${k === "contact" ? ' dir="ltr"' : ""}>${R.esc(v)}</span>` : todo(starting && k === "company" ? "owner" : k);
   });
   const block = (b) => {
     if (typeof b === "string") return `<p>${fill(b)}</p>`;
     if (b.h3) return `<h3>${R.esc(b.h3)}</h3>`;
     if (b.ul) return `<ul>${b.ul.map((x) => `<li>${fill(x)}</li>`).join("")}</ul>`;
+    if (b.dl && starting) {
+      // individual: owner, status, city, contact (company fields come later)
+      const rows = [[S.owner, "{owner}"], [S.status, S.statusValue], [S.city, LEGAL_INFO.city], [b.dl.find((r) => r[1] === "{contact}")[0], "{contact}"]];
+      return `<dl class="legal-dl">${rows.map(([dt, dd]) => `<div><dt>${R.esc(dt)}</dt><dd>${fill(dd)}</dd></div>`).join("")}</dl><p class="legal-note">${R.esc(S.note)}</p>`;
+    }
     if (b.dl) return `<dl class="legal-dl">${b.dl.map(([dt, dd]) => `<div><dt>${R.esc(dt)}</dt><dd>${fill(dd)}</dd></div>`).join("")}</dl>`;
     return "";
   };

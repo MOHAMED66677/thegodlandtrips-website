@@ -123,7 +123,9 @@ Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a
 
 La page `legal.html` existe dans les quatre langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
 
-Pour la compléter, ouvrez `content/legal.js` et remplissez `LEGAL_INFO` :
+**Activité en cours de création** (pas encore d'entreprise) : laissez `status: "starting"` et indiquez seulement votre nom dans `ownerName`. La page affiche alors « Responsable du site », « Activité en cours de création » et la ville, et masque les numéros d'entreprise. Pensez à obtenir l'autorisation de transport touristique et une assurance adaptée **avant** d'accepter des clients payants (renseignements : CRI Marrakech-Safi ou un comptable).
+
+**Une fois l'entreprise immatriculée** : passez à `status: "company"` et remplissez tous les champs de `LEGAL_INFO` :
 
 ```js
 companyName: "TheGodLandTrips SARL",

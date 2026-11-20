@@ -8,6 +8,13 @@
       (and the Arabic/Spanish versions by native speakers).
    ========================================================= */
 var LEGAL_INFO = {
+  // "starting": the business is being set up by an individual (no company yet).
+  //             The page names the owner and hides the company fields.
+  // "company":  once registered, switch to "company" and fill in every field.
+  status: "starting",
+  ownerName: "",        // your full name (person responsible for the site)
+  city: "Marrakech",
+
   companyName: "",      // e.g. "TheGodLandTrips SARL"
   legalForm: "",        // e.g. "SARL", "SARL AU", "Auto-entrepreneur"
   address: "",          // registered office (full postal address)
@@ -32,12 +39,13 @@ var LEGAL_TEXT = {
   /* ============================ FRANÇAIS ============================ */
   fr: {
     pageTitle: "Mentions légales et confidentialité",
-    intro: "Cette page présente l'entreprise qui édite le site {site}, la façon dont vos informations sont utilisées et les conditions de nos services.",
+    intro: "Cette page présente l'éditeur du site {site}, la façon dont vos informations sont utilisées et les conditions de nos services.",
+    starting: { owner: "Responsable du site", status: "Statut", statusValue: "Activité en cours de création (immatriculation en cours)", city: "Ville", note: "Les numéros d'immatriculation, d'autorisation et d'assurance seront publiés ici dès leur obtention.", inProgress: "en cours" },
     back: "Retour à l'accueil",
     toc: "Sur cette page",
     updated: "Dernière mise à jour",
     todo: "À compléter",
-    labels: { company: "raison sociale", legalForm: "forme juridique", address: "adresse du siège", rc: "n° RC", ice: "n° ICE", taxId: "n° IF", director: "nom du responsable", license: "n° d'autorisation", insurance: "assureur et n° de police", cndp: "n° de déclaration CNDP", retention: "durée", payment: "modalités de paiement", cancellation: "conditions d'annulation", waiting: "temps d'attente inclus" },
+    labels: { owner: "votre nom et prénom", company: "raison sociale", legalForm: "forme juridique", address: "adresse du siège", rc: "n° RC", ice: "n° ICE", taxId: "n° IF", director: "nom du responsable", license: "n° d'autorisation", insurance: "assureur et n° de police", cndp: "n° de déclaration CNDP", retention: "durée", payment: "modalités de paiement", cancellation: "conditions d'annulation", waiting: "temps d'attente inclus" },
     sections: [
       { id: "editor", title: "1. Éditeur du site", blocks: [
         { dl: [["Raison sociale", "{company}"], ["Forme juridique", "{legalForm}"], ["Siège social", "{address}"], ["Contact", "{contact}"], ["Registre de commerce (RC)", "{rc}"], ["ICE", "{ice}"], ["Identifiant fiscal (IF)", "{taxId}"], ["Directeur de la publication", "{director}"], ["Autorisation de transport touristique / agence", "{license}"], ["Assurance responsabilité civile professionnelle", "{insurance}"]] }
@@ -47,7 +55,7 @@ var LEGAL_TEXT = {
       ]},
       { id: "credits", title: "3. Crédits", blocks: [
         { ul: [
-          "Photos d'illustration : Unsplash (licence Unsplash), en attendant les photos de l'agence.",
+          "Photos d'illustration : Unsplash (licence Unsplash), en attendant nos propres photos.",
           "Cartes : Google Maps. Recherche d'adresses : Photon (komoot), données © contributeurs OpenStreetMap. Estimation des trajets : OSRM.",
           "Polices de caractères : Inter, Space Grotesk et Cairo (licence SIL Open Font License)."
         ]}
@@ -94,12 +102,13 @@ var LEGAL_TEXT = {
   /* ============================ العربية ============================ */
   ar: {
     pageTitle: "الإشعار القانوني والخصوصية",
-    intro: "تعرّف هذه الصفحة بالشركة التي تنشر الموقع {site}، وبطريقة استخدام معلوماتك، وبشروط خدماتنا.",
+    intro: "تعرّف هذه الصفحة بناشر الموقع {site}، وبطريقة استخدام معلوماتك، وبشروط خدماتنا.",
+    starting: { owner: "المسؤول عن الموقع", status: "الوضعية", statusValue: "نشاط في طور الإنشاء (التسجيل جارٍ)", city: "المدينة", note: "ستُنشر هنا أرقام التسجيل والترخيص والتأمين فور الحصول عليها.", inProgress: "قيد الإنجاز" },
     back: "العودة إلى الرئيسية",
     toc: "في هذه الصفحة",
     updated: "آخر تحديث",
     todo: "يُستكمل لاحقًا",
-    labels: { company: "اسم الشركة", legalForm: "الشكل القانوني", address: "عنوان المقر", rc: "رقم السجل التجاري", ice: "رقم التعريف الموحد للمقاولة", taxId: "رقم التعريف الضريبي", director: "اسم المسؤول", license: "رقم الترخيص", insurance: "شركة التأمين ورقم البوليصة", cndp: "رقم التصريح لدى اللجنة الوطنية", retention: "المدة", payment: "طريقة الدفع", cancellation: "شروط الإلغاء", waiting: "مدة الانتظار المشمولة" },
+    labels: { owner: "الاسم الكامل", company: "اسم الشركة", legalForm: "الشكل القانوني", address: "عنوان المقر", rc: "رقم السجل التجاري", ice: "رقم التعريف الموحد للمقاولة", taxId: "رقم التعريف الضريبي", director: "اسم المسؤول", license: "رقم الترخيص", insurance: "شركة التأمين ورقم البوليصة", cndp: "رقم التصريح لدى اللجنة الوطنية", retention: "المدة", payment: "طريقة الدفع", cancellation: "شروط الإلغاء", waiting: "مدة الانتظار المشمولة" },
     sections: [
       { id: "editor", title: "1. ناشر الموقع", blocks: [
         { dl: [["اسم الشركة", "{company}"], ["الشكل القانوني", "{legalForm}"], ["المقر الاجتماعي", "{address}"], ["التواصل", "{contact}"], ["السجل التجاري", "{rc}"], ["رقم التعريف الموحد للمقاولة (ICE)", "{ice}"], ["رقم التعريف الضريبي (IF)", "{taxId}"], ["مدير النشر", "{director}"], ["ترخيص النقل السياحي / الوكالة", "{license}"], ["تأمين المسؤولية المدنية المهنية", "{insurance}"]] }
@@ -109,7 +118,7 @@ var LEGAL_TEXT = {
       ]},
       { id: "credits", title: "3. حقوق المحتوى", blocks: [
         { ul: [
-          "الصور التوضيحية: Unsplash (ترخيص Unsplash)، في انتظار صور الوكالة.",
+          "الصور التوضيحية: Unsplash (ترخيص Unsplash)، في انتظار صورنا الخاصة.",
           "الخرائط: خرائط Google. البحث عن العناوين: Photon (komoot)، البيانات © المساهمون في OpenStreetMap. تقدير المسارات: OSRM.",
           "الخطوط: Inter وSpace Grotesk وCairo (ترخيص SIL Open Font License)."
         ]}
@@ -156,12 +165,13 @@ var LEGAL_TEXT = {
   /* ============================ ENGLISH ============================ */
   en: {
     pageTitle: "Legal notice and privacy",
-    intro: "This page presents the company that publishes the website {site}, how your information is used, and the terms of our services.",
+    intro: "This page presents who publishes the website {site}, how your information is used, and the terms of our services.",
+    starting: { owner: "Person responsible for the site", status: "Status", statusValue: "Business being set up (registration in progress)", city: "City", note: "Registration, licence and insurance numbers will be published here as soon as they are obtained.", inProgress: "in progress" },
     back: "Back to home",
     toc: "On this page",
     updated: "Last updated",
     todo: "To complete",
-    labels: { company: "company name", legalForm: "legal form", address: "registered address", rc: "RC number", ice: "ICE number", taxId: "tax ID (IF)", director: "manager's name", license: "licence number", insurance: "insurer and policy number", cndp: "CNDP declaration number", retention: "duration", payment: "payment terms", cancellation: "cancellation terms", waiting: "included waiting time" },
+    labels: { owner: "your full name", company: "company name", legalForm: "legal form", address: "registered address", rc: "RC number", ice: "ICE number", taxId: "tax ID (IF)", director: "manager's name", license: "licence number", insurance: "insurer and policy number", cndp: "CNDP declaration number", retention: "duration", payment: "payment terms", cancellation: "cancellation terms", waiting: "included waiting time" },
     sections: [
       { id: "editor", title: "1. Website publisher", blocks: [
         { dl: [["Company name", "{company}"], ["Legal form", "{legalForm}"], ["Registered office", "{address}"], ["Contact", "{contact}"], ["Trade register (RC)", "{rc}"], ["ICE", "{ice}"], ["Tax ID (IF)", "{taxId}"], ["Publication director", "{director}"], ["Tourist transport / travel agency licence", "{license}"], ["Professional liability insurance", "{insurance}"]] }
@@ -171,7 +181,7 @@ var LEGAL_TEXT = {
       ]},
       { id: "credits", title: "3. Credits", blocks: [
         { ul: [
-          "Illustration photos: Unsplash (Unsplash licence), until the agency's own photos are added.",
+          "Illustration photos: Unsplash (Unsplash licence), until our own photos are added.",
           "Maps: Google Maps. Address search: Photon (komoot), data © OpenStreetMap contributors. Route estimates: OSRM.",
           "Fonts: Inter, Space Grotesk and Cairo (SIL Open Font License)."
         ]}
@@ -218,12 +228,13 @@ var LEGAL_TEXT = {
   /* ============================ ESPAÑOL ============================ */
   es: {
     pageTitle: "Aviso legal y privacidad",
-    intro: "Esta página presenta a la empresa que edita el sitio {site}, cómo se utiliza su información y las condiciones de nuestros servicios.",
+    intro: "Esta página presenta al editor del sitio {site}, cómo se utiliza su información y las condiciones de nuestros servicios.",
+    starting: { owner: "Responsable del sitio", status: "Situación", statusValue: "Actividad en creación (registro en curso)", city: "Ciudad", note: "Los números de registro, autorización y seguro se publicarán aquí en cuanto se obtengan.", inProgress: "en trámite" },
     back: "Volver al inicio",
     toc: "En esta página",
     updated: "Última actualización",
     todo: "Por completar",
-    labels: { company: "razón social", legalForm: "forma jurídica", address: "domicilio social", rc: "n.º RC", ice: "n.º ICE", taxId: "n.º IF", director: "nombre del responsable", license: "n.º de autorización", insurance: "aseguradora y n.º de póliza", cndp: "n.º de declaración CNDP", retention: "duración", payment: "condiciones de pago", cancellation: "condiciones de cancelación", waiting: "tiempo de espera incluido" },
+    labels: { owner: "su nombre completo", company: "razón social", legalForm: "forma jurídica", address: "domicilio social", rc: "n.º RC", ice: "n.º ICE", taxId: "n.º IF", director: "nombre del responsable", license: "n.º de autorización", insurance: "aseguradora y n.º de póliza", cndp: "n.º de declaración CNDP", retention: "duración", payment: "condiciones de pago", cancellation: "condiciones de cancelación", waiting: "tiempo de espera incluido" },
     sections: [
       { id: "editor", title: "1. Editor del sitio", blocks: [
         { dl: [["Razón social", "{company}"], ["Forma jurídica", "{legalForm}"], ["Domicilio social", "{address}"], ["Contacto", "{contact}"], ["Registro mercantil (RC)", "{rc}"], ["ICE", "{ice}"], ["Identificador fiscal (IF)", "{taxId}"], ["Director de la publicación", "{director}"], ["Autorización de transporte turístico / agencia", "{license}"], ["Seguro de responsabilidad civil profesional", "{insurance}"]] }
@@ -233,7 +244,7 @@ var LEGAL_TEXT = {
       ]},
       { id: "credits", title: "3. Créditos", blocks: [
         { ul: [
-          "Fotos ilustrativas: Unsplash (licencia Unsplash), a la espera de las fotos de la agencia.",
+          "Fotos ilustrativas: Unsplash (licencia Unsplash), a la espera de nuestras propias fotos.",
           "Mapas: Google Maps. Búsqueda de direcciones: Photon (komoot), datos © colaboradores de OpenStreetMap. Estimación de trayectos: OSRM.",
           "Tipografías: Inter, Space Grotesk y Cairo (licencia SIL Open Font License)."
         ]}
