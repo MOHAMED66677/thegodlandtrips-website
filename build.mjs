@@ -8,7 +8,7 @@ import { createHash } from "node:crypto";
 
 const require = createRequire(import.meta.url);
 const { SITE, ACTIVITIES } = require("./content/site.js");
-const { LANGS, DEFAULT_LANG } = require("./content/translations.js");
+const { LANGS, DEFAULT_LANG, LANG_NAMES, LANG_SHORT } = require("./content/translations.js");
 const R = require("./js/render.js");
 
 const OUT = "dist";
@@ -112,6 +112,103 @@ for (const lang of LANGS) {
   mkdirSync(dir, { recursive: true });
   writeFileSync(`${dir}index.html`, html);
   console.log(`✓ ${dir}index.html`);
+}
+
+// ---------------- Legal page: one per language (legal.html) ----------------
+const { LEGAL_INFO, LEGAL_TEXT } = require("./content/legal.js");
+const sprite = (template.match(/<svg width="0" height="0"[\s\S]*?<\/svg>/) || [""])[0];
+const fontsLink = (template.match(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*>/) || [""])[0];
+const themeScript = (template.match(/<script>\s*\/\* apply the saved theme[\s\S]*?<\/script>/) || [""])[0];
+const cssHref = template.match(/href="(css\/styles\.css[^"]*)"/)[1];
+
+for (const lang of LANGS) {
+  const L = LEGAL_TEXT[lang];
+  const prefix = lang === DEFAULT_LANG ? "" : "../";
+  const rtl = R.isRtl(lang);
+  const sep = lang === "fr" ? " : " : ": ";   // French puts a space before colons
+  const todo = (key) => `<mark class="todo">[${R.esc(L.todo)}${sep}${R.esc(L.labels[key] || key)}]</mark>`;
+  const clean = (v) => String(v || "").trim().replace(/\.\s*$/, "");
+  const contact = "WhatsApp " + SITE.whatsappDisplay + (SITE.email ? " · " + SITE.email : "");
+  const values = {
+    site: SITE.agencyName, company: LEGAL_INFO.companyName, legalForm: LEGAL_INFO.legalForm,
+    address: LEGAL_INFO.address, rc: LEGAL_INFO.rc, ice: LEGAL_INFO.ice, taxId: LEGAL_INFO.taxId,
+    director: LEGAL_INFO.director, license: LEGAL_INFO.tourismLicense, insurance: LEGAL_INFO.insurance,
+    cndp: LEGAL_INFO.cndp, contact,
+    retention: clean(LEGAL_INFO.retention[lang]), payment: clean(LEGAL_INFO.payment[lang]),
+    cancellation: clean(LEGAL_INFO.cancellation[lang]), waiting: clean(LEGAL_INFO.waiting[lang]),
+  };
+  const fill = (txt) => R.esc(txt).replace(/\{(\w+)\}/g, (m, k) => {
+    if (!(k in values)) return m;
+    const v = clean(values[k]);
+    return v ? `<span${k === "contact" ? ' dir="ltr"' : ""}>${R.esc(v)}</span>` : todo(k);
+  });
+  const block = (b) => {
+    if (typeof b === "string") return `<p>${fill(b)}</p>`;
+    if (b.h3) return `<h3>${R.esc(b.h3)}</h3>`;
+    if (b.ul) return `<ul>${b.ul.map((x) => `<li>${fill(x)}</li>`).join("")}</ul>`;
+    if (b.dl) return `<dl class="legal-dl">${b.dl.map(([dt, dd]) => `<div><dt>${R.esc(dt)}</dt><dd>${fill(dd)}</dd></div>`).join("")}</dl>`;
+    return "";
+  };
+  const legalUrl = (l) => `${SITE.siteUrl}/${pathFor(l)}legal.html`;
+  const updated = new Date(LEGAL_INFO.updated + "T12:00:00").toLocaleDateString(lang === "ar" ? "ar-MA" : lang, { year: "numeric", month: "long", day: "numeric" });
+  const langLinks = LANGS.map((l) =>
+    `<a href="${prefix}${pathFor(l)}legal.html" lang="${l}"${l === lang ? ' aria-current="page"' : ""} title="${R.esc(LANG_NAMES[l])}"><span aria-hidden="true">${R.esc(LANG_SHORT[l])}</span><span class="visually-hidden">${R.esc(LANG_NAMES[l])}</span></a>`).join("");
+
+  const page = `<!doctype html>
+<html lang="${lang}" dir="${rtl ? "rtl" : "ltr"}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${R.esc(L.pageTitle)} | ${R.esc(SITE.agencyName)}</title>
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#A13A26">
+  <link rel="canonical" href="${legalUrl(lang)}">
+  ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${legalUrl(l)}">`).join("\n  ")}
+  <link rel="icon" type="image/svg+xml" href="${prefix}images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  ${fontsLink}
+  ${themeScript}
+  <link rel="stylesheet" href="${prefix}${cssHref}">
+</head>
+<body class="legal-body">
+  ${sprite}
+  <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
+  <header class="legal-header"><div class="container legal-header-inner">
+    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-mark.svg" alt="" width="36" height="40"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <nav class="lang-switch lang-links" aria-label="${R.esc(R.t(lang, "lang.label"))}">${langLinks}</nav>
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
+  </div></header>
+  <main id="legal-main" class="container legal-main">
+    <a class="link-cta legal-back" href="./"><svg class="flip-rtl" aria-hidden="true" width="18" height="18" style="transform:${rtl ? "none" : "scaleX(-1)"}"><use href="#i-arrow"/></svg>${R.esc(L.back)}</a>
+    <h1>${R.esc(L.pageTitle)}</h1>
+    <p class="legal-intro">${fill(L.intro)}</p>
+    <p class="legal-updated">${R.esc(L.updated)}${sep}${R.esc(updated)}</p>
+    <nav class="legal-toc" aria-label="${R.esc(L.toc)}"><p>${R.esc(L.toc)}</p><ol>${L.sections.map((s) => `<li><a href="#${s.id}">${R.esc(s.title.replace(/^\d+\.\s*/, ""))}</a></li>`).join("")}</ol></nav>
+    ${L.sections.map((s) => `<section id="${s.id}" aria-labelledby="${s.id}-t"><h2 id="${s.id}-t">${R.esc(s.title)}</h2>${s.blocks.map(block).join("")}</section>`).join("\n    ")}
+  </main>
+  <footer class="site-footer legal-footer"><div class="container footer-bottom">
+    <p>© ${new Date().getFullYear()} ${R.esc(SITE.agencyName)}. ${R.esc(R.t(lang, "footer.rights"))}</p>
+    <p><a href="./">${R.esc(L.back)}</a></p>
+  </div></footer>
+  <script>
+    (function () {
+      var html = document.documentElement, btn = document.querySelector(".theme-toggle"), meta = document.querySelector('meta[name="theme-color"]');
+      function apply(t, save) {
+        html.setAttribute("data-theme", t);
+        btn.setAttribute("aria-pressed", String(t === "dark"));
+        if (meta) meta.setAttribute("content", t === "dark" ? "#15100E" : "#A13A26");
+        if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
+      }
+      apply(html.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
+      btn.addEventListener("click", function () { apply(html.getAttribute("data-theme") === "dark" ? "light" : "dark", true); });
+    })();
+  </script>
+</body>
+</html>
+`;
+  writeFileSync(`${OUT}/${pathFor(lang)}legal.html`, page);
+  console.log(`✓ ${OUT}/${pathFor(lang)}legal.html`);
 }
 
 const today = new Date().toISOString().slice(0, 10);

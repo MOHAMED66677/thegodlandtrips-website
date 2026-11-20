@@ -217,6 +217,8 @@ var I18N = {
     "demo.notice": "Version de démonstration : les coordonnées sont fictives et aucune demande n'est envoyée.",
     "nav.home": "Page introuvable · Retour à l'accueil",
     "theme.dark": "Mode sombre",
+    "footer.legal": "Mentions légales et confidentialité",
+    "form.privacyMore": "En savoir plus",
     "footer.privacy": "Nous ne collectons que les informations nécessaires pour répondre à votre demande."
   },
 
@@ -426,6 +428,8 @@ var I18N = {
     "demo.notice": "نسخة تجريبية: بيانات الاتصال غير حقيقية ولا يتم إرسال أي طلب.",
     "nav.home": "الصفحة غير موجودة · العودة إلى الرئيسية",
     "theme.dark": "الوضع الداكن",
+    "footer.legal": "الإشعار القانوني والخصوصية",
+    "form.privacyMore": "اعرف المزيد",
     "footer.privacy": "لا نجمع إلا المعلومات اللازمة للرد على طلبك."
   },
 
@@ -635,6 +639,8 @@ var I18N = {
     "demo.notice": "Demo version: the contact details are placeholders and no request is sent.",
     "nav.home": "Page not found · Back to home",
     "theme.dark": "Dark mode",
+    "footer.legal": "Legal notice & privacy",
+    "form.privacyMore": "Learn more",
     "footer.privacy": "We only collect the information needed to answer your request."
   },
 
@@ -844,6 +850,8 @@ var I18N = {
     "demo.notice": "Versión de demostración: los datos de contacto son ficticios y no se envía ninguna solicitud.",
     "nav.home": "Página no encontrada · Volver al inicio",
     "theme.dark": "Modo oscuro",
+    "footer.legal": "Aviso legal y privacidad",
+    "form.privacyMore": "Más información",
     "footer.privacy": "Solo recogemos la información necesaria para responder a su solicitud."
   }
 };

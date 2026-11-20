@@ -178,7 +178,7 @@
           '<button type="submit" class="btn btn-action btn-block btn-lg" value="whatsapp">' + icon("whatsapp") + "<span>" + e(lang, "form.sendWa") + "</span></button>" +
           (SITE.email || SITE.formEndpoint ? '<button type="submit" class="btn btn-quiet btn-block" value="email">' + icon("mail") + "<span>" + e(lang, "form.sendEmail") + "</span></button>" : "") +
         "</div>" +
-        '<p class="privacy-note">' + icon("lock") + "<span>" + e(lang, "form.privacy") + "</span></p>" +
+        '<p class="privacy-note">' + icon("lock") + "<span>" + e(lang, "form.privacy") + ' <a href="legal.html#privacy">' + e(lang, "form.privacyMore") + "</a></span></p>" +
       "</form></div>";
   }
 
@@ -380,7 +380,7 @@
           (SITE.address ? "<li>" + esc(SITE.address) + "</li>" : "") + "</ul></div>" +
         '<div><h3 class="footer-title">' + e(lang, "footer.lang") + "</h3>" + langSwitch(lang, "lang-switch-footer") + "</div>" +
       "</div>" +
-      '<div class="footer-bottom"><p>© ' + new Date().getFullYear() + " " + esc(SITE.agencyName) + ". " + e(lang, "footer.rights") + "</p>" +
+      '<div class="footer-bottom"><p>© ' + new Date().getFullYear() + " " + esc(SITE.agencyName) + ". " + e(lang, "footer.rights") + ' · <a href="legal.html">' + e(lang, "footer.legal") + "</a></p>" +
         "<p>" + icon("lock") + e(lang, "footer.privacy") + (SITE.goatcounterCode || SITE.cloudflareAnalyticsToken ? " " + e(lang, "footer.stats") : "") + "</p></div>" +
     "</div></footer>" +
     (SITE.demoMode ? '<div class="demo-badge" role="note">' + icon("lock") + "<span>" + e(lang, "demo.badge") + "</span></div>" : "") +

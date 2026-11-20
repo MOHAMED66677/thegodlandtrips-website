@@ -8,6 +8,7 @@ Ce guide explique comment modifier les textes, les prix, les activités, les cou
 |---|---|
 | `content/site.js` | Nom de l'agence, WhatsApp, e-mail, adresse, liste des activités et prix |
 | `content/translations.js` | **Tous les textes** du site, en français, arabe, anglais et espagnol |
+| `content/legal.js` | Page légale : informations officielles de l'agence et textes juridiques |
 | `css/styles.css` | Couleurs et polices (tout en haut du fichier) |
 
 Les autres fichiers (`index.html`, `js/`, `build.mjs`) n'ont normalement pas besoin d'être modifiés.
@@ -118,14 +119,39 @@ Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a
 
 ⚠️ **À valider par l'agence** : les réponses sur le paiement (`faq.a5`), l'annulation (`faq.a6`) et les sièges enfant (`faq.a4`) renvoient pour l'instant « au devis ». Remplacez-les par vos vraies conditions (ex. « paiement en espèces ou par carte au chauffeur », « annulation gratuite jusqu'à 24 h avant ») dès qu'elles sont fixées.
 
-## 7. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
+## 7. Page légale (mentions légales, confidentialité, conditions)
+
+La page `legal.html` existe dans les quatre langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
+
+Pour la compléter, ouvrez `content/legal.js` et remplissez `LEGAL_INFO` :
+
+```js
+companyName: "TheGodLandTrips SARL",
+legalForm: "SARL",
+address: "N° …, Rue …, Marrakech",
+rc: "…", ice: "…", taxId: "…",
+director: "Prénom Nom",
+tourismLicense: "…",          // autorisation de transport touristique / agence
+insurance: "Assureur – police n° …",
+cndp: "…",                    // déclaration auprès de la CNDP
+retention:    { fr: "24 mois", ar: "24 شهرًا", en: "24 months", es: "24 meses" },
+payment:      { fr: "…", ar: "…", en: "…", es: "…" },
+cancellation: { fr: "…", ar: "…", en: "…", es: "…" },
+waiting:      { fr: "…", ar: "…", en: "…", es: "…" },
+```
+
+Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le même fichier.
+
+⚠️ **À faire vérifier** par le comptable ou un juriste de l'agence (numéros d'immatriculation, conditions d'annulation, déclaration CNDP), et les versions arabe et espagnole par un locuteur natif. Cette page a été rédigée à partir du fonctionnement réel du site, mais elle ne remplace pas un conseil juridique.
+
+## 8. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
 
 - **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
 - ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://thegodlandtrips.netlify.app` ou votre nom de domaine, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
 
-## 8. Statistiques de visite (gratuites, sans cookies)
+## 9. Statistiques de visite (gratuites, sans cookies)
 
 Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** service :
 
@@ -138,7 +164,7 @@ Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** 
 
 Ces deux services ne déposent pas de cookies : aucun bandeau de consentement n'est nécessaire, et une mention s'ajoute automatiquement en bas de page. Vérifiez les conditions d'utilisation actuelles du service choisi.
 
-## 9. Afficher les prix
+## 10. Afficher les prix
 
 1. Dans `content/site.js`, renseignez `price` pour chaque activité (ex. `price: 450`).
 2. Passez `showPrices: false` à `showPrices: true`.
@@ -146,7 +172,7 @@ Ces deux services ne déposent pas de cookies : aucun bandeau de consentement n'
 
 « À partir de 450 MAD » s'affiche alors sur les fiches qui ont un prix.
 
-## 10. Changer les couleurs
+## 11. Changer les couleurs
 
 Tout en haut de `css/styles.css` :
 
@@ -160,7 +186,7 @@ Tout en haut de `css/styles.css` :
 
 Changez un code couleur ici et il est mis à jour sur tout le site. Si vous changez `--color-primary`, mettez aussi à jour `--rgb-primary` avec la même couleur (convertisseur : [htmlcolorcodes.com](https://htmlcolorcodes.com)). Gardez un texte foncé sur fond clair pour la lisibilité.
 
-## 11. Réception des demandes de devis
+## 12. Réception des demandes de devis
 
 Le formulaire propose deux boutons :
 
@@ -173,7 +199,7 @@ Le formulaire propose deux boutons :
 
 Seules les informations utiles sont demandées (service, trajet, date, passagers, nom, contact), et une mention de confidentialité est affichée.
 
-## 12. Voir le site et le mettre en ligne
+## 13. Voir le site et le mettre en ligne
 
 **Voir le site en local :** double-cliquez sur `index.html`.
 
@@ -195,6 +221,7 @@ Cette commande crée un dossier `dist/` contenant une page par langue (`/`, `/ar
 - [ ] Les photos d'exemple ont été remplacées par celles de l'agence
 - [ ] Les distances et temps de trajet de la carte ont été vérifiés
 - [ ] Les réponses de la FAQ (paiement, annulation, sièges enfant) ont été validées
+- [ ] La page légale ne contient plus aucun encadré « À compléter » et a été relue par un comptable ou un juriste
 - [ ] `siteUrl` contient la vraie adresse du site (sinon pas d'aperçu des liens)
 - [ ] Le partage d'un lien sur WhatsApp affiche bien l'aperçu
 - [ ] La liste des activités et les durées ont été validées par l'agence
