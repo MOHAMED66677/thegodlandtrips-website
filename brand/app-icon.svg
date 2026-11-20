@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><rect width="512" height="512" rx="112" fill="#A13A26"/><g transform="translate(106,86) scale(3)">
+  <defs><clipPath id="a-win"><path d="M20 103 V67.5 A36 36 0 1 1 80 67.5 V103 Z"/></clipPath></defs>
+  <path d="M11 112 V70.2 A45 45 0 1 1 89 70.2 V112 Z" fill="#FBF6F3"/>
+  <path d="M20 103 V67.5 A36 36 0 1 1 80 67.5 V103 Z" fill="#F5E6E0"/>
+  <g clip-path="url(#a-win)">
+    <circle cx="43" cy="57" r="15.5" fill="#F0A63A"/>
+    <!-- Koutoubia minaret on the horizon -->
+    <path d="M62.5 74 V47 h9.5 V74 Z M64 47 V41.5 h6.5 V47 Z M66.3 41.5 V36.5 h2 V41.5 Z" fill="#A13A26" opacity=".9"/>
+    <path d="M0 73 Q24 62 48 70 T104 66 V120 H0 Z" fill="#A13A26" opacity=".45"/>
+    <path d="M0 86 Q28 72 56 82 T104 79 V120 H0 Z" fill="#A13A26"/>
+    <path d="M30 104 C39 96 46 90 48 77.5 L51 77.5 C53 89 58 96 70 104 Z" fill="#F5E6E0"/>
+  </g></g></svg>

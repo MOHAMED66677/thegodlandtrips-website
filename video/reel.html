@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Marrakech reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Inter:wght@500;700;800&family=Space+Grotesk:wght@600;700&display=block">
+<style>
+  :root {
+    --red: #A13A26; --dark: #2E100B; --ink: #2B1915; --amber: #F0A63A; --cream: #FBF6F3; --sand: #F5E6E0;
+  }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  body { font-family: Inter, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; perspective: 1900px; perspective-origin: 50% 45%; }
+  .abs { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+  .fill { position: absolute; inset: 0; }
+  .cover { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .h { font-family: "Space Grotesk", Inter, sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; }
+  .center { text-align: center; }
+
+  /* Devices */
+  .phone { width: 480px; height: 1000px; border-radius: 72px; background: #111; padding: 16px; box-sizing: border-box;
+           box-shadow: 0 60px 120px rgba(20,5,2,.55), inset 0 0 0 3px #2a2a2a; transform-style: preserve-3d; }
+  .phone .screen { width: 100%; height: 100%; border-radius: 58px; overflow: hidden; background: #fff; position: relative; }
+  .phone .screen img { width: 100%; display: block; position: absolute; left: 0; top: 0; }
+  .phone .notch { position: absolute; top: 30px; left: 50%; width: 130px; height: 34px; margin-left: -65px; background: #111; border-radius: 20px; }
+  .laptop { width: 860px; transform-style: preserve-3d; }
+  .laptop .lid { width: 860px; height: 548px; background: #161616; border-radius: 26px 26px 8px 8px; padding: 20px; box-sizing: border-box; box-shadow: 0 50px 100px rgba(20,5,2,.45); }
+  .laptop .lid img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px; display: block; }
+  .laptop .base { width: 1000px; height: 30px; margin-left: -70px; background: linear-gradient(#d9d4d1, #a9a3a0); border-radius: 0 0 30px 30px; }
+  .card-shot { border-radius: 28px; overflow: hidden; box-shadow: 0 40px 80px rgba(20,5,2,.45); background: #fff; }
+  .card-shot img { width: 100%; display: block; }
+
+  /* Captions */
+  #cap { position: absolute; left: 60px; right: 60px; top: 1238px; height: 140px; display: flex; justify-content: center; align-items: center; z-index: 50; }
+  #cap .pill { display: inline-flex; gap: 18px; padding: 18px 34px; border-radius: 26px; background: rgba(26,8,5,.78);
+               box-shadow: 0 12px 40px rgba(0,0,0,.35); font: 800 64px/1.1 Inter, sans-serif; color: #fff; letter-spacing: -0.01em; }
+  #cap .w { transition: none; }
+  #cap .w.on { color: var(--amber); }
+
+  .kicker { font: 700 30px/1 Inter, sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+  .chip { display: inline-flex; align-items: center; gap: 14px; padding: 16px 28px; border-radius: 999px; font: 700 32px/1 Inter, sans-serif; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 34px 64px; border-radius: 999px; background: var(--amber); color: var(--ink);
+         font: 800 54px/1 Inter, sans-serif; box-shadow: 0 20px 50px rgba(240,166,58,.45); white-space: nowrap; }
+  .bubble { background: #fff; border-radius: 34px 34px 34px 8px; padding: 26px 30px; width: 520px; box-sizing: border-box; box-shadow: 0 30px 70px rgba(20,5,2,.35); font: 500 28px/1.4 Inter, sans-serif; color: var(--ink); }
+  .bubble b { font-weight: 800; }
+  .wa-dot { width: 74px; height: 74px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 16px 40px rgba(0,0,0,.3); }
+  .grain { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size: 26px 26px; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="cap"><span class="pill" id="pill"></span></div>
+
+<script src="build/timeline.js"></script>
+<script>
+/* ===================== helpers ===================== */
+const TL = window.TIMELINE;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const k = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - clamp(x), 3);
+const eio = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const eob = x => { x = clamp(x); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const lerp = (a, b, x) => a + (b - a) * x;
+const $ = (h) => { const d = document.createElement('div'); d.innerHTML = h.trim(); return d.firstElementChild; };
+function place(el, o) {
+  const { x = 540, y = 960, z = 0, rx = 0, ry = 0, rz = 0, s = 1, op = 1 } = o;
+  el.style.transform = `translate3d(${x}px, ${y}px, ${z}px) translate(-50%, -50%) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+  el.style.opacity = op;
+}
+const stage = document.getElementById('stage');
+const scenes = {};
+function scene(id, bg) {
+  const el = $(`<div class="scene" id="sc-${id}"></div>`);
+  if (bg) el.style.background = bg;
+  stage.appendChild(el);
+  scenes[id] = { el, items: {} };
+  return el;
+}
+function add(sc, name, html) { const el = $(html); el.classList.add('abs'); scenes[sc].el.appendChild(el); scenes[sc].items[name] = el; return el; }
+const phone = (src) => `<div class="phone"><div class="screen"><img src="${src}"></div><div class="notch"></div></div>`;
+const ICON = {
+  wa: '<svg width="40" height="40" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.3.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 .9c.3.2.5.2.5.4.1.1.1.7-.1 1.3Z"/></svg>',
+  compass: '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#F0A63A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.8 5.41a2 2 0 0 1-1.27 1.27L7.76 16.24l1.8-5.41a2 2 0 0 1 1.27-1.27z"/></svg>',
+};
+
+/* ===================== 1. HOOK ===================== */
+scene('hook', '#2E100B');
+add('hook', 'bg', `<div class="fill"><img class="cover" src="assets/koutoubia.jpg"></div>`);
+add('hook', 'shade', `<div class="fill" style="background:linear-gradient(180deg,rgba(46,16,11,.82) 0%,rgba(46,16,11,.35) 38%,rgba(46,16,11,.55) 70%,rgba(46,16,11,.92) 100%)"></div>`);
+add('hook', 'kick', `<img src="../brand/logo-horizontal-white.svg" style="width:600px;filter:drop-shadow(0 6px 24px rgba(0,0,0,.35))">`);
+add('hook', 'l1', `<div class="h" style="font-size:176px;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.35)">Marrakech.</div>`);
+add('hook', 'l2', `<div class="h" style="font-size:112px;color:#F0A63A">Zero transport</div>`);
+add('hook', 'l3', `<div class="h" style="font-size:112px;color:#F0A63A">stress.</div>`);
+add('hook', 'ph', phone('shots/m_en_hero.png'));
+
+/* ===================== 2. PROBLEM ===================== */
+scene('problem', 'radial-gradient(900px 700px at 50% 40%, #4a1a10, #1a0906)');
+add('problem', 'grain', `<div class="grain" style="width:1080px;height:1920px"></div>`);
+add('problem', 'clock', `<svg width="300" height="300" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#F0A63A" stroke-width="5"/><line id="hh" x1="50" y1="50" x2="50" y2="26" stroke="#fff" stroke-width="6" stroke-linecap="round"/><line id="mh" x1="50" y1="50" x2="50" y2="14" stroke="#F0A63A" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="5" fill="#fff"/></svg>`);
+['No haggling.', 'No waiting.'].forEach((txt, i) => {
+  add('problem', 'p' + i, `<div style="position:absolute"><div class="h" style="font-size:132px;color:#fff;position:relative">${txt}<span class="strike" style="position:absolute;left:-12px;top:52%;height:16px;background:#F0A63A;border-radius:8px;width:0"></span></div></div>`);
+});
+
+/* ===================== 3. TURN ===================== */
+scene('turn', 'radial-gradient(1000px 800px at 50% 30%, #fff, #F5E6E0)');
+add('turn', 't1', `<div class="h" style="font-size:132px;color:#2B1915">One site.</div>`);
+add('turn', 't2', `<div class="h" style="font-size:132px;color:#A13A26">Every ride.</div>`);
+add('turn', 'lap', `<div class="laptop"><div class="lid"><img src="shots/d_en_hero.png"></div><div class="base"></div></div>`);
+add('turn', 'ph', phone('shots/m_en_hero.png'));
+
+/* ===================== 4. SERVICES ===================== */
+scene('services', 'linear-gradient(160deg, #B5462F, #8A2F1E)');
+add('services', 'grain', `<div class="grain" style="width:1080px;height:1920px"></div>`);
+add('services', 'k', `<div class="kicker" style="color:#F0A63A">All in one place</div>`);
+add('services', 't', `<div class="h center" style="font-size:96px;color:#fff;line-height:1.08">Transfers.<br>Private driver.<br>Day trips.</div>`);
+[0, 1, 2].forEach(i => add('services', 'c' + i, `<div class="card-shot" style="width:300px"><img src="shots/svc_${i}.png"></div>`));
+
+/* ===================== 5. ACTIVITIES ===================== */
+scene('acts', '#1a0906');
+add('acts', 'bg', `<div class="fill" style="opacity:.28;filter:blur(18px)"><img class="cover" src="assets/lanterns.jpg"></div>`);
+add('acts', 'num', `<div class="h" style="font-size:300px;color:#F0A63A">13</div>`);
+add('acts', 'lbl', `<div class="h" style="font-size:96px;color:#fff">activities</div>`);
+add('acts', 'sub', `<div style="font:600 34px/1 Inter;color:rgba(255,255,255,.8);letter-spacing:.04em">Desert · Waterfalls · Quads · Balloons</div>`);
+for (let i = 0; i < 13; i++) add('acts', 'a' + i, `<div class="card-shot" style="width:360px"><img src="shots/act_${String(i).padStart(2, '0')}.png"></div>`);
+
+/* ===================== 6. QUOTE ===================== */
+scene('quote', 'radial-gradient(1000px 800px at 60% 30%, #fff, #F5E6E0)');
+add('quote', 't1', `<div class="h" style="font-size:112px;color:#2B1915">Quote in</div>`);
+add('quote', 't2', `<div class="h" style="font-size:112px;color:#A13A26">under 1 minute</div>`);
+add('quote', 'ph', phone('shots/m_en_hero.png'));
+add('quote', 'form', `<div class="card-shot" style="width:400px;height:640px;border-radius:30px"><img src="shots/m_en_form.png"></div>`);
+add('quote', 'bub', `<div style="display:flex;gap:18px;align-items:flex-end"><div class="wa-dot">${ICON.wa}</div><div class="bubble"><b>Hello, I would like a quote:</b><br>• Transfer · Airport → Medina<br>• 12 Dec · 4 passengers</div></div>`);
+
+/* ===================== 7. LANGUAGES ===================== */
+scene('langs', 'linear-gradient(170deg, #3D1610, #1a0906)');
+add('langs', 'grain', `<div class="grain" style="width:1080px;height:1920px"></div>`);
+add('langs', 't', `<div class="h" style="font-size:104px;color:#fff">Speaks their</div>`);
+add('langs', 't2', `<div class="h" style="font-size:104px;color:#F0A63A">language</div>`);
+const LANGS = [['fr', 'FR'], ['ar', 'عربي'], ['en', 'EN'], ['es', 'ES']];
+LANGS.forEach(([l, lab], i) => {
+  add('langs', 'p' + i, phone(`shots/m_${l}_hero.png`));
+  add('langs', 'l' + i, `<div class="chip" style="background:#F0A63A;color:#2B1915;font-size:40px;${l === 'ar' ? 'font-family:Cairo' : ''}">${lab}</div>`);
+});
+
+/* ===================== 8. CTA ===================== */
+scene('cta', '#2E100B');
+add('cta', 'bg', `<div class="fill"><img class="cover" src="assets/koutoubia.jpg"></div>`);
+add('cta', 'shade', `<div class="fill" style="background:linear-gradient(180deg,rgba(46,16,11,.9),rgba(161,58,38,.75) 55%,rgba(46,16,11,.95))"></div>`);
+add('cta', 'logo', `<img src="../brand/logo-horizontal-white.svg" style="width:820px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))">`);
+add('cta', 't1', `<div class="h center" style="font-size:118px;color:#fff;line-height:1.05">Your Marrakech,<br><span style="color:#F0A63A">sorted.</span></div>`);
+add('cta', 'btn', `<div class="btn">Request your quote</div>`);
+add('cta', 'wa', `<div style="display:flex;align-items:center;gap:20px;color:#fff;font:700 40px/1 Inter"><div class="wa-dot" style="width:64px;height:64px">${ICON.wa}</div>+212 6 00 00 00 00</div>`);
+add('cta', 'langs', `<div style="font:600 32px/1 Inter;color:rgba(255,255,255,.8);letter-spacing:.06em">FR · <span style="font-family:Cairo">عربي</span> · EN · ES</div>`);
+
+/* ===================== captions ===================== */
+const CHUNKS = [];
+(function buildChunks() {
+  const bySc = {};
+  // merge "The God Land Trips." into the brand name
+  for (let i = 0; i + 3 < TL.words.length; i++) {
+    const w = TL.words;
+    if (w[i].w === 'The' && w[i + 1].w === 'God' && w[i + 2].w === 'Land' && /^Trips/.test(w[i + 3].w)) {
+      w.splice(i, 4, { ...w[i], w: 'TheGodLand' + w[i + 3].w, end: w[i + 3].end });
+    }
+  }
+  TL.words.forEach((w, i) => { (bySc[w.scene] = bySc[w.scene] || []).push({ ...w, i }); });
+  Object.values(bySc).forEach(ws => {
+    let cur = [];
+    ws.forEach((w, j) => {
+      cur.push(w);
+      const endPunct = /[.,?!:]$/.test(w.w);
+      if (cur.length >= 3 || endPunct || j === ws.length - 1) { CHUNKS.push(cur); cur = []; }
+    });
+  });
+})();
+const pill = document.getElementById('pill');
+let lastChunk = -1;
+function renderCaption(t) {
+  let ci = -1;
+  for (let i = 0; i < CHUNKS.length; i++) {
+    const c = CHUNKS[i], s = c[0].start, e = c[c.length - 1].end + 0.3;
+    const nextS = i + 1 < CHUNKS.length ? CHUNKS[i + 1][0].start : Infinity;
+    if (t >= s && t < Math.min(e, nextS)) { ci = i; break; }
+  }
+  const cap = document.getElementById('cap');
+  if (ci < 0) { cap.style.opacity = 0; return; }
+  cap.style.opacity = 1;
+  if (ci !== lastChunk) {
+    pill.innerHTML = CHUNKS[ci].map(w => `<span class="w">${w.w}</span>`).join('');
+    lastChunk = ci;
+  }
+  const spans = pill.children;
+  CHUNKS[ci].forEach((w, j) => spans[j].classList.toggle('on', t >= w.start && t < w.end + 0.05));
+  const c0 = CHUNKS[ci][0].start;
+  const pop = eob(k(t, c0, c0 + 0.18));
+  pill.style.transform = `scale(${lerp(0.86, 1, pop)})`;
+}
+
+/* ===================== scene renderers (lt = local time) ===================== */
+const R = {
+  hook(lt) {
+    const it = scenes.hook.items;
+    place(it.bg, { s: 1.16 - 0.1 * eo(k(lt, 0, 3.4)), y: 960 });
+    place(it.shade, {});
+    place(it.kick, { x: 540, y: 262, op: 1 });
+    const a = eo(k(lt, 0, .5));
+    place(it.l1, { x: 540, y: 458 - (1 - a) * 30, s: lerp(1.08, 1, a) });
+    place(it.l2, { x: 540, y: 608 + (1 - eo(k(lt, 0, .6))) * 40 });
+    place(it.l3, { x: 540, y: 728 + (1 - eo(k(lt, 0, .7))) * 50 });
+    const p = eo(k(lt, .35, 1.5));
+    place(it.ph, { x: 540, y: lerp(2200, 1110, p) + Math.sin(lt * 1.6) * 10, z: 0, rx: lerp(55, 16, p), ry: lerp(-32, -10 + Math.sin(lt) * 3, p), rz: lerp(10, 2, p), s: .62 });
+  },
+  problem(lt) {
+    const it = scenes.problem.items;
+    place(it.grain, {});
+    place(it.clock, { x: 540, y: 470, s: lerp(.6, 1, eob(k(lt, 0, .4))), rz: 0 });
+    document.getElementById('hh').setAttribute('transform', `rotate(${lt * 140} 50 50)`);
+    document.getElementById('mh').setAttribute('transform', `rotate(${lt * 900} 50 50)`);
+    const starts = [0.15, 1.75];
+    [0, 1].forEach(i => {
+      const a = eob(k(lt, starts[i], starts[i] + .4));
+      place(it['p' + i], { x: 540, y: 800 + i * 190 + (1 - a) * 60, op: k(lt, starts[i], starts[i] + .2), rx: (1 - a) * 50 });
+      it['p' + i].querySelector('.strike').style.width = `calc(${eo(k(lt, starts[i] + .55, starts[i] + .95)) * 100}% + 24px)`;
+    });
+  },
+  turn(lt) {
+    const it = scenes.turn.items;
+    const a = eob(k(lt, 0, .45)), b = eob(k(lt, .25, .7));
+    place(it.t1, { x: 540, y: 300 + (1 - a) * 60, op: k(lt, 0, .2) });
+    place(it.t2, { x: 540, y: 440 + (1 - b) * 60, op: k(lt, .25, .45) });
+    const p = eo(k(lt, 0, 1.3));
+    place(it.lap, { x: 520, y: 830, z: lerp(-500, -60, p), rx: 8, ry: lerp(-55, -16, p) + Math.sin(lt * 1.2) * 2, s: .92 });
+    const q = eo(k(lt, .3, 1.5));
+    place(it.ph, { x: lerp(1400, 850, q), y: 960 + Math.sin(lt * 1.7) * 10, z: 220, rx: 6, ry: lerp(-40, -18, q), rz: 4, s: .52 });
+  },
+  services(lt) {
+    const it = scenes.services.items;
+    place(it.grain, {});
+    place(it.k, { x: 540, y: 230, op: k(lt, 0, .3) });
+    place(it.t, { x: 540, y: 420 + (1 - eob(k(lt, 0, .5))) * 60, op: k(lt, 0, .25) });
+    const at = [0.1, 1.45, 3.0];
+    [0, 1, 2].forEach(i => {
+      const f = eob(k(lt, at[i], at[i] + .6));
+      const active = k(lt, at[i], at[i] + .3) * (1 - k(lt, (at[i + 1] || 99), (at[i + 1] || 99) + .3));
+      place(it['c' + i], { x: 200 + i * 340, y: 930 - active * 40 + Math.sin(lt * 1.5 + i) * 6, z: active * 120, ry: lerp(-100, (i - 1) * -10, f), rx: 6, s: 1 + active * .06, op: k(lt, at[i], at[i] + .15) });
+    });
+  },
+  acts(lt, dur) {
+    const it = scenes.acts.items;
+    place(it.bg, { s: 1.1 });
+    const n = Math.round(lerp(1, 13, eo(k(lt, 0, 1.1))));
+    it.num.textContent = n;
+    place(it.num, { x: 540, y: 300, s: lerp(.7, 1, eob(k(lt, 0, .4))) });
+    place(it.lbl, { x: 540, y: 470, op: k(lt, .1, .35) });
+    place(it.sub, { x: 540, y: 560, op: k(lt, .4, .7) });
+    const c = lerp(-.5, 12, eio(k(lt, .2, dur - .2)));
+    for (let i = 0; i < 13; i++) {
+      const d = i - c, ad = Math.abs(d), sg = Math.sign(d);
+      const near = Math.min(ad, 1);
+      const x = 540 + sg * (near * 300 + Math.max(0, ad - 1) * 120);
+      place(it['a' + i], { x, y: 935, z: -near * 220 - Math.max(0, ad - 1) * 90, ry: -sg * near * 52, s: 1, op: clamp(3.4 - ad) });
+      it['a' + i].style.zIndex = 100 - Math.round(ad * 10);
+    }
+  },
+  quote(lt) {
+    const it = scenes.quote.items;
+    place(it.t1, { x: 540, y: 270 + (1 - eob(k(lt, 0, .45))) * 60, op: k(lt, 0, .2) });
+    place(it.t2, { x: 540, y: 400 + (1 - eob(k(lt, .2, .65))) * 60, op: k(lt, .2, .4) });
+    const p = eo(k(lt, 0, .9));
+    place(it.ph, { x: lerp(-200, 330, p), y: 900, rx: 6, ry: lerp(40, 22, p), rz: -3, s: .6 });
+    const f = eob(k(lt, .5, 1.3));
+    place(it.form, { x: lerp(330, 700, f), y: lerp(930, 900, f) + Math.sin(lt * 1.6) * 8, z: lerp(0, 90, f), ry: lerp(22, -14, f), rx: 4, s: lerp(.55, 1, f), op: k(lt, .5, .7) });
+    const b = eob(k(lt, 1.9, 2.4));
+    place(it.bub, { x: 440, y: 1110, z: 200, s: lerp(.4, 1, b), op: k(lt, 1.9, 2.05), rz: lerp(-8, -2, b) });
+  },
+  langs(lt) {
+    const it = scenes.langs.items;
+    place(it.grain, {});
+    place(it.t, { x: 540, y: 240 + (1 - eob(k(lt, 0, .45))) * 50, op: k(lt, 0, .2) });
+    place(it.t2, { x: 540, y: 355 + (1 - eob(k(lt, .15, .6))) * 50, op: k(lt, .15, .35) });
+    const fan = eob(k(lt, .2, 1.1));
+    const wordAt = [0.35, 0.95, 1.5, 2.0];
+    [0, 1, 2, 3].forEach(i => {
+      const ang = lerp(0, (i - 1.5) * 10, fan);
+      const lift = eo(k(lt, wordAt[i], wordAt[i] + .35)) * (1 - eo(k(lt, wordAt[i] + .55, wordAt[i] + .9)));
+      // rotate around a pivot well below the phones
+      const r = 1300, rad = ang * Math.PI / 180;
+      const cx = 540 + Math.sin(rad) * r, cy = 2220 - Math.cos(rad) * r;
+      place(it['p' + i], { x: cx, y: cy - lift * 60, z: lift * 150 + i * 2, rz: ang, ry: -ang * .5, s: .46 });
+      place(it['l' + i], { x: 540 + Math.sin(rad) * (r + 285), y: 2220 - Math.cos(rad) * (r + 285) - lift * 60, z: 200, rz: ang, s: .8 + lift * .35, op: k(lt, .6 + i * .1, .8 + i * .1) });
+    });
+  },
+  cta(lt) {
+    const it = scenes.cta.items;
+    place(it.bg, { s: 1.04 + .06 * eo(k(lt, 0, 4)) });
+    place(it.shade, {});
+    place(it.logo, { x: 540, y: 340, s: lerp(.6, 1, eob(k(lt, 0, .5))), op: k(lt, 0, .2) });
+    place(it.t1, { x: 540, y: 620 + (1 - eob(k(lt, .15, .6))) * 60, op: k(lt, .15, .35) });
+    const pulse = 1 + Math.max(0, Math.sin((lt - 1) * 4)) * .035 * k(lt, 1, 1.3);
+    place(it.btn, { x: 540, y: 900, s: lerp(.5, 1, eob(k(lt, .7, 1.2))) * pulse, op: k(lt, .7, .85) });
+    place(it.wa, { x: 540, y: 1060, op: k(lt, 1.1, 1.4) });
+    place(it.langs, { x: 540, y: 1150, op: k(lt, 1.3, 1.6) });
+  },
+};
+
+/* ===================== timeline driver ===================== */
+const ORDER = TL.scenes.map(s => s.id);
+const OVER = 0.32;     // transition overlap
+window.seek = function (t) {
+  ORDER.forEach((id, i) => {
+    const s = TL.scenes[i];
+    const el = scenes[id].el;
+    const nextStart = i + 1 < ORDER.length ? TL.scenes[i + 1].start : Infinity;
+    const visible = t >= s.start && t < nextStart + OVER;
+    el.style.display = visible ? 'block' : 'none';
+    el.style.zIndex = i;
+    if (!visible) return;
+    const lt = t - s.start;
+    // incoming transition: fade + rise + slight zoom (first scene is visible at frame 0)
+    const a = i === 0 ? 1 : eo(k(lt, 0, OVER));
+    el.style.opacity = a;
+    el.style.transform = i === 0 ? 'none' : `translateY(${(1 - a) * 90}px) scale(${lerp(1.06, 1, a)})`;
+    R[id](lt, s.end - s.start);
+  });
+  renderCaption(t);
+};
+window.READY = (async () => {
+  await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+  await document.fonts.load('700 100px "Space Grotesk"'); await document.fonts.load('800 60px Inter'); await document.fonts.load('700 40px Cairo');
+  await document.fonts.ready;
+  window.seek(0);
+  return true;
+})();
+window.seek(0);
+</script>
+</body>
+</html>

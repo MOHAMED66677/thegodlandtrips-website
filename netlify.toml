@@ -1,0 +1,8 @@
+# Netlify: how to build and publish the site
+# Every push to GitHub rebuilds the site automatically.
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"

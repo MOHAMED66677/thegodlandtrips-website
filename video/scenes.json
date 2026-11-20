@@ -1,0 +1,50 @@
+[
+  {
+    "id": "hook",
+    "text": "Marrakech. Zero transport stress.",
+    "vo": "Landing in Marrakech? Skip the stress.",
+    "visual": "Koutoubia photo, white logo on top, big kinetic text, phone flies in"
+  },
+  {
+    "id": "problem",
+    "text": "No haggling. No waiting.",
+    "vo": "No haggling with taxis. No waiting at arrivals.",
+    "visual": "dark scene, struck-through words, clock"
+  },
+  {
+    "id": "turn",
+    "text": "One site. Every ride.",
+    "vo": "Meet the new website for your trip.",
+    "visual": "3D laptop + phone rotate in showing the hero"
+  },
+  {
+    "id": "services",
+    "text": "Transfers · Driver · Trips",
+    "vo": "Airport transfers, a private driver, and day trips, all in one place.",
+    "visual": "three service cards flip in 3D"
+  },
+  {
+    "id": "acts",
+    "text": "13 activities",
+    "vo": "Thirteen activities. Desert, waterfalls, quad bikes and hot-air balloons.",
+    "visual": "3D coverflow of activity photos"
+  },
+  {
+    "id": "quote",
+    "text": "Quote in under 1 minute",
+    "vo": "Get a quote in under a minute, straight on WhatsApp. No account needed.",
+    "visual": "phone scrolls to the form, WhatsApp bubble pops"
+  },
+  {
+    "id": "langs",
+    "text": "FR · عربي · EN · ES",
+    "vo": "In French, Arabic, English and Spanish.",
+    "visual": "four phones fan out, one per language"
+  },
+  {
+    "id": "cta",
+    "text": "Request your quote",
+    "vo": "Your Marrakech, sorted. The God Land Trips. Request your quote today.",
+    "visual": "TheGodLandTrips logo, amber button, WhatsApp"
+  }
+]
