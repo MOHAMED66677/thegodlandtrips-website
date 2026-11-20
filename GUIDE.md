@@ -132,13 +132,30 @@ Changez un chiffre ici : le bandeau, la FAQ et la page légale se mettent à jou
 
 **Prix « à partir de »** : remplissez `prices` (transfert, mise à disposition) et le champ `price` de chaque activité, puis passez `showPrices: true`.
 
-## 7. Foire aux questions (FAQ)
+## 7. Pages des activités
+
+Chaque activité a sa propre page dans les six langues (78 pages), créée automatiquement par `node build.mjs` : `/activity/quad-marrakech.html` (français), `/en/activity/quad-marrakech.html`, etc. Elle reprend la photo, le nom, la description courte (`act.<id>.desc`) et la description longue (`act.<id>.long`, dans `translations.js`), la durée, ce qui est inclus, la carte (si l'activité a un `place`), le prix si `showPrices` est activé, et les liens vers 3 autres activités.
+
+- L'adresse de la page vient du champ `slug` de l'activité dans `content/site.js`. **Ne la changez plus une fois le site connu de Google** (les anciens liens ne marcheraient plus).
+- Le bouton « Demander un devis » ouvre le formulaire avec l'activité déjà choisie.
+- Une nouvelle activité ajoutée à `ACTIVITIES` avec un `slug` et ses textes `act.<id>.name`, `.desc` et `.long` dans les six langues obtient sa page toute seule.
+
+## 8. Votre propre nom de domaine (ex. thegodlandtrips.com)
+
+1. **Achetez le domaine** chez un registraire (Namecheap, OVH, Hostinger, Genious pour un .ma…), environ 120 à 150 MAD/an pour un .com.
+2. Dans la gestion DNS du domaine, créez :
+   - 4 enregistrements **A** pour `@` : `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - 1 enregistrement **CNAME** pour `www` : `mohamed66677.github.io`
+3. Sur GitHub : **Settings → Pages → Custom domain** : saisissez `thegodlandtrips.com`, enregistrez, puis cochez **Enforce HTTPS** dès que c'est possible (quelques minutes à quelques heures).
+4. Dans `content/site.js`, remplacez `siteUrl` par `https://thegodlandtrips.com`, puis publiez. Les aperçus de liens, le sitemap, Google et `security.txt` utilisent alors le nouveau domaine.
+
+## 9. Foire aux questions (FAQ)
 
 Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les six langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
 
 ⚠️ **À valider par l'agence** : les réponses sur le paiement (`faq.a5`), l'annulation (`faq.a6`) et les sièges enfant (`faq.a4`) renvoient pour l'instant « au devis ». Remplacez-les par vos vraies conditions (ex. « paiement en espèces ou par carte au chauffeur », « annulation gratuite jusqu'à 24 h avant ») dès qu'elles sont fixées.
 
-## 8. Page légale (mentions légales, confidentialité, conditions)
+## 10. Page légale (mentions légales, confidentialité, conditions)
 
 La page `legal.html` existe dans les six langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
 
@@ -165,14 +182,14 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 
 ⚠️ **À faire vérifier** par le comptable ou un juriste de l'agence (numéros d'immatriculation, conditions d'annulation, déclaration CNDP), et les versions arabe et espagnole par un locuteur natif. Cette page a été rédigée à partir du fonctionnement réel du site, mais elle ne remplace pas un conseil juridique.
 
-## 9. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
+## 11. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
 
 - **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`, `og-de.jpg`, `og-nl.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
 - ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://thegodlandtrips.netlify.app` ou votre nom de domaine, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
 
-## 10. Statistiques de visite (gratuites, sans cookies)
+## 12. Statistiques de visite (gratuites, sans cookies)
 
 Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** service :
 
@@ -185,7 +202,7 @@ Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** 
 
 Ces deux services ne déposent pas de cookies : aucun bandeau de consentement n'est nécessaire, et une mention s'ajoute automatiquement en bas de page. Vérifiez les conditions d'utilisation actuelles du service choisi.
 
-## 11. Changer les couleurs
+## 13. Changer les couleurs
 
 Tout en haut de `css/styles.css` :
 
@@ -199,7 +216,7 @@ Tout en haut de `css/styles.css` :
 
 Changez un code couleur ici et il est mis à jour sur tout le site. Si vous changez `--color-primary`, mettez aussi à jour `--rgb-primary` avec la même couleur (convertisseur : [htmlcolorcodes.com](https://htmlcolorcodes.com)). Gardez un texte foncé sur fond clair pour la lisibilité.
 
-## 12. Réception des demandes de devis
+## 14. Réception des demandes de devis
 
 Le formulaire propose deux boutons :
 
@@ -212,7 +229,7 @@ Le formulaire propose deux boutons :
 
 Seules les informations utiles sont demandées (service, trajet, date, passagers, nom, contact), et une mention de confidentialité est affichée.
 
-## 13. Voir le site et le mettre en ligne
+## 15. Voir le site et le mettre en ligne
 
 **Voir le site en local :** double-cliquez sur `index.html`.
 

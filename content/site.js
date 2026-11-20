@@ -97,23 +97,24 @@ var IMAGES = {
    - safety:    true = guided activity, "safety equipment provided" is shown
    - price:     number or null  [À REMPLACER when prices are known]
    - image:     photo (same format as IMAGES above)
+   - slug:      address of the activity page, e.g. activity/quad-marrakech.html
    To add an activity: add one line here AND its name/description
    in the four languages in translations.js.
    --------------------------------------------------------- */
 var ACTIVITIES = [
-  { id: "medina",      category: "excursions", duration: "halfDay",   safety: false, price: null, place: "medina", image: "photo-1580746738099-1cb74f972feb" },
-  { id: "ouzoud",      category: "excursions", duration: "fullDay",   safety: false, price: null, place: "ouzoud", image: "photo-1758622159686-7f61d8a81aa5" },
-  { id: "essaouira",   category: "excursions", duration: "fullDay",   safety: false, price: null, place: "essaouira", image: "photo-1624802746702-60ca95bdb605" },
-  { id: "ourika",      category: "excursions", duration: "fullDay",   safety: false, price: null, place: "ourika", image: "photo-1638278958562-be34bf8946c3" },
-  { id: "agafay",      category: "excursions", duration: "evening",   safety: false, price: null, place: "agafay", image: "photo-1673283579119-d108cbd0ed7f" },
-  { id: "quad",        category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1624664929003-3da28050c0bf" },
-  { id: "buggy",       category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1519021228607-ef6e4c22d821" },
-  { id: "motocross",   category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1765568562583-4252b2d854b0" },
-  { id: "paintball",   category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1588432892836-99b9aa3feb8a" },
-  { id: "balloon",     category: "air",        duration: "sunrise",   safety: true,  price: null, image: "photo-1744669448689-c6d32c503209" },
-  { id: "paragliding", category: "air",        duration: "onRequest", safety: true,  price: null, image: "photo-1471247511763-88a722fc9919" },
-  { id: "jetski",      category: "sea",        duration: "m30to60",   safety: true,  price: null, image: "photo-1505867798796-639ec7e8cdf5" },
-  { id: "aquajet",     category: "sea",        duration: "onRequest", safety: true,  price: null, image: "photo-1505408990643-cb9bbf4bfe2c" }
+  { id: "medina",      slug: "medina-souks-marrakech", category: "excursions", duration: "halfDay",   safety: false, price: null, place: "medina", image: "photo-1580746738099-1cb74f972feb" },
+  { id: "ouzoud",      slug: "ouzoud-waterfalls", category: "excursions", duration: "fullDay",   safety: false, price: null, place: "ouzoud", image: "photo-1758622159686-7f61d8a81aa5" },
+  { id: "essaouira",   slug: "essaouira-day-trip", category: "excursions", duration: "fullDay",   safety: false, price: null, place: "essaouira", image: "photo-1624802746702-60ca95bdb605" },
+  { id: "ourika",      slug: "ourika-valley", category: "excursions", duration: "fullDay",   safety: false, price: null, place: "ourika", image: "photo-1638278958562-be34bf8946c3" },
+  { id: "agafay",      slug: "agafay-desert", category: "excursions", duration: "evening",   safety: false, price: null, place: "agafay", image: "photo-1673283579119-d108cbd0ed7f" },
+  { id: "quad",        slug: "quad-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1624664929003-3da28050c0bf" },
+  { id: "buggy",       slug: "buggy-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1519021228607-ef6e4c22d821" },
+  { id: "motocross",   slug: "motocross-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1765568562583-4252b2d854b0" },
+  { id: "paintball",   slug: "paintball-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1588432892836-99b9aa3feb8a" },
+  { id: "balloon",     slug: "hot-air-balloon-marrakech", category: "air",        duration: "sunrise",   safety: true,  price: null, image: "photo-1744669448689-c6d32c503209" },
+  { id: "paragliding", slug: "paragliding-marrakech", category: "air",        duration: "onRequest", safety: true,  price: null, image: "photo-1471247511763-88a722fc9919" },
+  { id: "jetski",      slug: "jet-ski-marrakech", category: "sea",        duration: "m30to60",   safety: true,  price: null, image: "photo-1505867798796-639ec7e8cdf5" },
+  { id: "aquajet",     slug: "aquajet-marrakech", category: "sea",        duration: "onRequest", safety: true,  price: null, image: "photo-1505408990643-cb9bbf4bfe2c" }
 ];
 
 var CATEGORIES = ["excursions", "land", "air", "sea"];

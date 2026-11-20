@@ -7,7 +7,7 @@ import { createRequire } from "node:module";
 import { createHash } from "node:crypto";
 
 const require = createRequire(import.meta.url);
-const { SITE, ACTIVITIES, GEOCODER_URL, ROUTER_URL } = require("./content/site.js");
+const { SITE, ACTIVITIES, DESTINATIONS, GEOCODER_URL, ROUTER_URL } = require("./content/site.js");
 const { LANGS, DEFAULT_LANG, LANG_NAMES, LANG_SHORT } = require("./content/translations.js");
 const R = require("./js/render.js");
 
@@ -255,6 +255,164 @@ for (const lang of LANGS) {
   console.log(`✓ ${OUT}/${pathFor(lang)}legal.html`);
 }
 
+// ---------------- Activity pages: one per activity and language ----------------
+// /activity/<slug>.html (French) and /<lang>/activity/<slug>.html
+const actUrl = (l, a) => `${SITE.siteUrl}/${pathFor(l)}activity/${a.slug}.html`;
+const unsplash = (id, w) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=${w}`;
+const CAT_ICON = { excursions: "map", land: "mountain", air: "wind", sea: "waves" };
+const ic = (n, cls = "", s = 20) => `<svg aria-hidden="true" width="${s}" height="${s}"${cls ? ` class="${cls}"` : ""}><use href="#i-${n}"/></svg>`;
+const PAGE_SCRIPT = `(function () {
+  var html = document.documentElement, btn = document.querySelector(".theme-toggle"), meta = document.querySelector('meta[name="theme-color"]');
+  function apply(t, save) {
+    html.setAttribute("data-theme", t);
+    btn.setAttribute("aria-pressed", String(t === "dark"));
+    if (meta) meta.setAttribute("content", t === "dark" ? "#15100E" : "#A13A26");
+    if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
+  }
+  apply(html.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
+  btn.addEventListener("click", function () { apply(html.getAttribute("data-theme") === "dark" ? "light" : "dark", true); });
+  var lb = document.querySelector(".lang-menu-btn"), ll = document.getElementById("lang-list");
+  function menu(open) { lb.setAttribute("aria-expanded", String(open)); ll.hidden = !open; if (open) { var c = ll.querySelector("[aria-current]"); if (c) c.focus(); } }
+  lb.addEventListener("click", function () { menu(lb.getAttribute("aria-expanded") !== "true"); });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".lang-menu")) menu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !ll.hidden) { menu(false); lb.focus(); } });
+})();`;
+let actCount = 0;
+for (const lang of LANGS) {
+  const t = (k, v) => R.t(lang, k, v), e = (k, v) => R.esc(R.t(lang, k, v));
+  const up = lang === DEFAULT_LANG ? "../" : "../../";     // to the site root (css/, images/)
+  const home = "../";                                       // home page in this language
+  const rtl = R.isRtl(lang);
+  const sep = lang === "fr" ? " : " : ": ";
+  mkdirSync(`${OUT}/${pathFor(lang)}activity`, { recursive: true });
+  for (const a of ACTIVITIES) {
+    if (!a.slug) continue;
+    const name = t(`act.${a.id}.name`);
+    const dest = a.place && DESTINATIONS.find((d) => d.id === a.place);
+    const isPhoto = a.image && /^photo-/.test(a.image);
+    const imgSrc = isPhoto ? unsplash(a.image, 1400) : (a.image ? up + a.image : "");
+    const imgSet = isPhoto ? [800, 1400, 2000].map((w) => `${unsplash(a.image, w)} ${w}w`).join(", ") : "";
+    const P = SITE.promises || {};
+    const included = ["inc.pickup", "inc.vehicle", ...(a.safety ? ["inc.safety", "inc.instructor"] : [])];
+    const info = [
+      ["clock", "info.duration", t(`dur.${a.duration}`)],
+      ["pin", "info.departure", t("info.departureValue")],
+      ...(dest && dest.km ? [["car", "info.distance", R.formatTrip(lang, dest.km, dest.minutes)]] : []),
+      ["check", "info.price", SITE.showPrices && a.price ? `${t("acts.from")} ${a.price} ${SITE.currency}` : t("info.priceQuote")],
+      ...(P.freeCancellationHours ? [["calendar", "info.cancel", t("info.cancelValue")]] : []),
+    ];
+    const others = ACTIVITIES.filter((o) => o.id !== a.id && o.slug && o.category === a.category)
+      .concat(ACTIVITIES.filter((o) => o.id !== a.id && o.slug && o.category !== a.category)).slice(0, 3);
+    const quoteHref = `${home}?activity=${a.id}#quote`;
+    const waHref = R.waLink(`${t("msg.intro")} ${name}`);
+    const title = `${name}${lang === "ar" ? "، مراكش" : ", Marrakech"} | ${SITE.agencyName}`;
+    const desc = `${t(`act.${a.id}.desc`)} ${t("page.metaTail")}`;
+    const ogImg = isPhoto ? unsplash(a.image, 1200) : `${SITE.siteUrl}/images/og-${lang}.jpg`;
+    const ld = {
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "TouristTrip", name, description: t(`act.${a.id}.long`), image: isPhoto ? unsplash(a.image, 1200) : undefined,
+          url: actUrl(lang, a), inLanguage: lang, touristType: t(`cat.${a.category}`),
+          provider: { "@type": "TravelAgency", name: SITE.agencyName, url: urlFor(lang) },
+          ...(SITE.showPrices && a.price ? { offers: { "@type": "Offer", price: a.price, priceCurrency: SITE.currency } } : {}) },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: t("page.home"), item: urlFor(lang) },
+          { "@type": "ListItem", position: 2, name: t("nav.activities"), item: `${urlFor(lang)}#activities` },
+          { "@type": "ListItem", position: 3, name, item: actUrl(lang, a) } ] },
+      ],
+    };
+    const langLinks = LANGS.map((l) => `<li><a href="${up}${pathFor(l)}activity/${a.slug}.html" lang="${l}"${l === lang ? ' aria-current="page"' : ""}><span class="lang-code" aria-hidden="true">${R.esc(LANG_SHORT[l])}</span>${R.esc(LANG_NAMES[l])}</a></li>`).join("");
+    const page = `<!doctype html>
+<html lang="${lang}" dir="${rtl ? "rtl" : "ltr"}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${R.esc(title)}</title>
+  <meta name="description" content="${R.esc(desc)}">
+  ${SITE.demoMode || SITE.hideFromSearch ? '<meta name="robots" content="noindex, nofollow">' : ""}
+  <meta name="theme-color" content="#A13A26">
+  <link rel="canonical" href="${actUrl(lang, a)}">
+  ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${actUrl(l, a)}">`).join("\n  ")}
+  <link rel="alternate" hreflang="x-default" href="${actUrl(DEFAULT_LANG, a)}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${R.esc(title)}">
+  <meta property="og:description" content="${R.esc(desc)}">
+  <meta property="og:url" content="${actUrl(lang, a)}">
+  <meta property="og:image" content="${R.esc(ogImg)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
+  <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  ${fontsLink}
+  ${themeScript}
+  <link rel="stylesheet" href="${up}${cssHref}">
+</head>
+<body class="act-body">
+  ${sprite}
+  <a class="skip-link" href="#main">${e("skip")}</a>
+  <header class="legal-header"><div class="container legal-header-inner">
+    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-mark.svg" alt="" width="36" height="40"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
+  </div></header>
+  <main id="main">
+    <section class="act-hero">
+      ${imgSrc ? `<img class="act-hero-img" src="${R.esc(imgSrc)}"${imgSet ? ` srcset="${R.esc(imgSet)}" sizes="100vw"` : ""} alt="" width="2000" height="1333" fetchpriority="high">` : ""}
+      <div class="container act-hero-inner">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="${home}">${e("page.home")}</a><span aria-hidden="true">›</span><a href="${home}#activities">${e("nav.activities")}</a><span aria-hidden="true">›</span><span aria-current="page">${R.esc(name)}</span></nav>
+        <h1>${R.esc(name)}</h1>
+        <p class="lead">${e(`act.${a.id}.desc`)}</p>
+        <ul class="act-badges">
+          <li>${ic(CAT_ICON[a.category], "", 16)}${e(`cat.${a.category}`)}</li>
+          <li>${ic("clock", "", 16)}${e(`dur.${a.duration}`)}</li>
+          ${a.safety ? `<li>${ic("shield", "", 16)}${e("acts.safety")}</li>` : ""}
+        </ul>
+        <a class="btn btn-action btn-lg" href="${quoteHref}">${e("acts.cta")}</a>
+      </div>
+    </section>
+    <div class="container act-layout">
+      <article class="act-main">
+        <p class="act-long">${e(`act.${a.id}.long`)}</p>
+        <h2>${e("page.included")}</h2>
+        <ul class="inc-list">${included.map((k) => `<li>${ic("check", "", 18)}<span>${e(k)}</span></li>`).join("")}</ul>
+        ${dest ? `<h2>${e("page.map")}</h2>
+        <div class="map-frame act-map"><iframe title="${e("map.iframeTitle", { name: R.destName(lang, dest) })}" src="${R.esc(R.mapsEmbed(dest, lang))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>` : ""}
+      </article>
+      <aside class="act-side">
+        <div class="act-card">
+          <h2>${e("page.info")}</h2>
+          <dl class="act-info">${info.map(([i, k, v]) => `<div>${ic(i, "", 20)}<dt>${e(k)}</dt><dd>${R.esc(v)}</dd></div>`).join("")}</dl>
+          <h3>${e("page.ctaTitle")}</h3>
+          <p>${e("page.ctaText")}</p>
+          <a class="btn btn-action btn-block" href="${quoteHref}">${e("acts.cta")}</a>
+          <a class="btn btn-quiet btn-block" href="${R.esc(waHref)}" target="_blank" rel="noopener">${ic("whatsapp")}${e("contact.whatsapp")}</a>
+        </div>
+      </aside>
+    </div>
+    <section class="section section-band act-others"><div class="container">
+      <h2>${e("page.others")}</h2>
+      <div class="activity-grid">${others.map((o) => `<article class="activity-card is-in">
+        <div class="activity-media">${/^photo-/.test(o.image || "") ? `<img src="${R.esc(unsplash(o.image, 800))}" alt="" loading="lazy" width="800" height="600">` : ""}<span class="chip chip-cat">${ic(CAT_ICON[o.category], "", 15)}${e(`cat.${o.category}`)}</span><span class="chip chip-dur">${ic("clock", "", 15)}${e(`dur.${o.duration}`)}</span></div>
+        <div class="activity-body"><h3><a class="act-link" href="${o.slug}.html">${e(`act.${o.id}.name`)}</a></h3><p>${e(`act.${o.id}.desc`)}</p>
+        <div class="activity-foot"><a class="map-link" href="${o.slug}.html">${ic("arrow", "flip-rtl", 17)}${e("act.details")}</a></div></div></article>`).join("")}</div>
+    </div></section>
+  </main>
+  <footer class="site-footer legal-footer"><div class="container footer-bottom">
+    <p>© ${new Date().getFullYear()} ${R.esc(SITE.agencyName)}. ${e("footer.rights")}</p>
+    <p><a href="${home}legal.html">${e("footer.legal")}</a> · <a href="${home}">${e("page.home")}</a></p>
+  </div></footer>
+  <script>${PAGE_SCRIPT}</script>
+</body>
+</html>
+`;
+    writeFileSync(`${OUT}/${pathFor(lang)}activity/${a.slug}.html`, secure(page));
+    actCount++;
+  }
+}
+console.log(`✓ ${actCount} activity pages`);
+
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(`${OUT}/sitemap.xml`,
 `<?xml version="1.0" encoding="UTF-8"?>
@@ -264,6 +422,11 @@ ${LANGS.map((l) => `  <url>
     <lastmod>${today}</lastmod>
 ${LANGS.map((a) => `    <xhtml:link rel="alternate" hreflang="${a}" href="${urlFor(a)}"/>`).join("\n")}
   </url>`).join("\n")}
+${ACTIVITIES.filter((a) => a.slug).flatMap((act) => LANGS.map((l) => `  <url>
+    <loc>${actUrl(l, act)}</loc>
+    <lastmod>${today}</lastmod>
+${LANGS.map((x) => `    <xhtml:link rel="alternate" hreflang="${x}" href="${actUrl(x, act)}"/>`).join("\n")}
+  </url>`)).join("\n")}
 </urlset>
 `);
 writeFileSync(`${OUT}/robots.txt`, SITE.demoMode || SITE.hideFromSearch

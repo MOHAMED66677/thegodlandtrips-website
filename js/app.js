@@ -794,4 +794,11 @@
   });
 
   setLang(initialLang(), { initial: true });
+
+  // Coming from an activity page ("Request a quote"): prefill the form
+  (function prefillFromUrl() {
+    var id = new URLSearchParams(location.search).get("activity");
+    var a = id && ACTIVITIES.filter(function (x) { return x.id === id; })[0];
+    if (a) setTimeout(function () { openQuote("activity", t("act." + a.id + ".name")); }, 60);
+  })();
 })();

@@ -329,10 +329,11 @@
         '<span class="chip chip-dur"><span class="visually-hidden">' + e(lang, "acts.duration") + (lang === "fr" ? " : " : ": ") + "</span>" + icon("clock") + e(lang, "dur." + a.duration) + "</span>" +
       "</div>" +
       '<div class="activity-body">' +
-        "<h3>" + esc(name) + "</h3>" +
+        "<h3>" + (a.slug ? '<a class="act-link" href="activity/' + esc(a.slug) + '.html">' + esc(name) + "</a>" : esc(name)) + "</h3>" +
         "<p>" + e(lang, "act." + a.id + ".desc") + "</p>" +
         (a.safety ? '<p class="safety">' + icon("shield") + e(lang, "acts.safety") + "</p>" : "") +
         '<div class="activity-foot">' + price +
+          (a.slug ? '<a class="map-link" href="activity/' + esc(a.slug) + '.html">' + icon("arrow", "flip-rtl") + e(lang, "act.details") + "</a>" : "") +
           (a.place ? '<button type="button" class="map-link" data-map="' + esc(a.place) + '">' + icon("pin") + e(lang, "acts.onMap") + "</button>" : "") +
           '<a class="btn btn-action btn-sm" href="#quote" data-quote="activity" data-activity="' + esc(name) + '" aria-label="' + e(lang, "acts.ctaAria", { name: name }) + '">' + e(lang, "acts.cta") + "</a>" +
         "</div>" +
