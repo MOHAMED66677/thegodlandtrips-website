@@ -7,11 +7,39 @@ import { createRequire } from "node:module";
 import { createHash } from "node:crypto";
 
 const require = createRequire(import.meta.url);
-const { SITE, ACTIVITIES } = require("./content/site.js");
+const { SITE, ACTIVITIES, GEOCODER_URL, ROUTER_URL } = require("./content/site.js");
 const { LANGS, DEFAULT_LANG, LANG_NAMES, LANG_SHORT } = require("./content/translations.js");
 const R = require("./js/render.js");
 
 const OUT = "dist";
+
+// ---------------- Security: Content Security Policy ----------------
+// GitHub Pages can't send security headers, so each page carries its policy in a
+// <meta> tag. Only the services the site really uses are allowed; inline scripts
+// are allowed by their exact SHA-256 fingerprint, so injected code can't run.
+const originOf = (u) => { try { return new URL(u).origin; } catch { return ""; } };
+function secure(html) {
+  const hashes = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)]
+    // browsers turn Windows line endings (CRLF) into LF before checking the fingerprint
+    .map((m) => `'sha256-${createHash("sha256").update(m[1].replace(/\r\n?/g, "\n"), "utf8").digest("base64")}'`);
+  const statsScript = [SITE.goatcounterCode && "https://gc.zgo.at", SITE.cloudflareAnalyticsToken && "https://static.cloudflareinsights.com"].filter(Boolean);
+  const statsConnect = [SITE.goatcounterCode && `https://${SITE.goatcounterCode}.goatcounter.com`, SITE.cloudflareAnalyticsToken && "https://cloudflareinsights.com"].filter(Boolean);
+  const csp = [
+    "default-src 'self'",
+    ["script-src 'self'", ...hashes, ...statsScript].join(" "),
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    ["img-src 'self' data: https://images.unsplash.com", ...statsConnect].join(" "),
+    ["connect-src 'self'", originOf(GEOCODER_URL), originOf(ROUTER_URL), SITE.formEndpoint && originOf(SITE.formEndpoint), ...statsConnect].filter(Boolean).join(" "),
+    "frame-src https://maps.google.com https://www.google.com",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests",
+  ].join("; ");
+  return html.replace(/<meta charset="utf-8">/, (m) =>
+    `${m}\n  <meta http-equiv="Content-Security-Policy" content="${csp}">\n  <meta name="referrer" content="strict-origin-when-cross-origin">`);
+}
 // Version tags (?v=<content hash>) on CSS/JS files: after each update, browsers
 // download the new files instead of reusing old ones from their cache.
 const version = (file) => createHash("md5").update(readFileSync(file)).digest("hex").slice(0, 8);
@@ -110,7 +138,7 @@ for (const lang of LANGS) {
 
   const dir = `${OUT}/${pathFor(lang)}`;
   mkdirSync(dir, { recursive: true });
-  writeFileSync(`${dir}index.html`, html);
+  writeFileSync(`${dir}index.html`, secure(html));
   console.log(`✓ ${dir}index.html`);
 }
 
@@ -216,7 +244,7 @@ for (const lang of LANGS) {
 </body>
 </html>
 `;
-  writeFileSync(`${OUT}/${pathFor(lang)}legal.html`, page);
+  writeFileSync(`${OUT}/${pathFor(lang)}legal.html`, secure(page));
   console.log(`✓ ${OUT}/${pathFor(lang)}legal.html`);
 }
 
@@ -254,10 +282,21 @@ writeFileSync(`${OUT}/_headers`, `/*
 // "Page not found" page, in the 4 languages (absolute links: it can be shown at any depth)
 const BASE = new URL(SITE.siteUrl + "/").pathname;   // "/" or "/repo-name/" on GitHub Pages
 const nf = (l) => `<p lang="${l}"${R.isRtl(l) ? ' dir="rtl"' : ""}><a href="${BASE}${pathFor(l)}">${R.esc(R.t(l, "nav.home") || "")}</a></p>`;
-writeFileSync(`${OUT}/404.html`, `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+writeFileSync(`${OUT}/404.html`, secure(`<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex"><link rel="icon" type="image/svg+xml" href="${BASE}images/favicon.svg">
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FBF6F3;color:#2B1915;font-family:system-ui,sans-serif;text-align:center;padding:24px}
 img{width:72px;margin:0 auto 12px}h1{font-size:2.4rem;margin:.2em 0}p{margin:.4em 0;font-size:1.1rem}a{color:#A13A26;font-weight:600}</style></head>
 <body><main><img src="${BASE}images/logo-mark.svg" alt=""><h1>404</h1>${LANGS.map(nf).join("")}</main></body></html>
-`);
+`));
+
+// security.txt: how to report a security problem (used at the domain root once a custom domain is set)
+mkdirSync(`${OUT}/.well-known`, { recursive: true });
+const expires = new Date(Date.now() + 365 * 864e5).toISOString().replace(/\.\d+Z$/, "Z");
+writeFileSync(`${OUT}/.well-known/security.txt`, [
+  `Contact: ${SITE.email ? "mailto:" + SITE.email : "https://wa.me/" + SITE.whatsapp}`,
+  `Expires: ${expires}`,
+  "Preferred-Languages: fr, en, ar, es",
+  `Canonical: ${SITE.siteUrl}/.well-known/security.txt`,
+  "",
+].join("\n"));
 console.log(`✓ ${OUT}/sitemap.xml, ${OUT}/robots.txt\nDone. Upload the "${OUT}" folder to your host.`);

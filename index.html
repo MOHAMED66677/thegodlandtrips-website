@@ -13,6 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap">
   <script>
+    /* security: never show the site inside another site's frame (clickjacking):
+       hide everything, then try to open the site normally in the whole window */
+    if (window.top !== window.self) {
+      document.documentElement.style.display = "none";
+      try { window.top.location.replace(window.self.location.href); } catch (e) {}
+    }
     /* apply the saved theme (or the device setting) before the page is drawn: no white flash */
     (function () {
       var t = null;
