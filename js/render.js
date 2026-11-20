@@ -33,7 +33,8 @@
   function e(lang, key, vars) { return esc(t(lang, key, vars)); }
 
   function icon(name, cls) {
-    return '<svg aria-hidden="true" focusable="false"' + (cls ? ' class="' + cls + '"' : "") + '><use href="#i-' + name + '"/></svg>';
+    // width/height = safe default size even if the stylesheet is missing or outdated
+    return '<svg aria-hidden="true" focusable="false" width="24" height="24"' + (cls ? ' class="' + cls + '"' : "") + '><use href="#i-' + name + '"/></svg>';
   }
 
   /* Photo: Unsplash id ("photo-...") -> responsive CDN image, otherwise local file */
@@ -108,7 +109,7 @@
   // Light/dark switch: a pressed button = dark mode on
   function themeToggle(lang, withLabel) {
     return '<button type="button" class="theme-toggle" aria-pressed="false"' + (withLabel ? "" : ' aria-label="' + e(lang, "theme.dark") + '"') + ">" +
-      '<svg class="i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true"><use href="#i-sun"/></svg>' +
+      '<svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg>' +
       (withLabel ? "<span>" + e(lang, "theme.dark") + "</span>" : "") + "</button>";
   }
 

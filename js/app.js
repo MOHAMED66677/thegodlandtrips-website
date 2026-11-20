@@ -253,7 +253,7 @@
     var icons = { act: "map", plane: "plane", pin: "pin", osm: "pin" };
     var html = items.map(function (it, i) {
       return '<li role="option" id="' + input.id + "-opt-" + i + '" data-i="' + i + '" aria-selected="false">' +
-        '<svg aria-hidden="true"><use href="#i-' + icons[it.kind] + '"/></svg><span><strong>' + R.esc(it.name) + "</strong>" +
+        '<svg aria-hidden="true" width="18" height="18"><use href="#i-' + icons[it.kind] + '"/></svg><span><strong>' + R.esc(it.name) + "</strong>" +
         (it.sub ? "<small>" + R.esc(it.sub) + "</small>" : "") + "</span></li>";
     }).join("");
     if (state === "loading") html += '<li class="ac-note" role="presentation">' + R.esc(t("ac.searching")) + "</li>";

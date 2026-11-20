@@ -4,6 +4,7 @@
 // engines index every language. Run with:  node build.mjs
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from "node:fs";
 import { createRequire } from "node:module";
+import { createHash } from "node:crypto";
 
 const require = createRequire(import.meta.url);
 const { SITE, ACTIVITIES } = require("./content/site.js");
@@ -11,7 +12,11 @@ const { LANGS, DEFAULT_LANG } = require("./content/translations.js");
 const R = require("./js/render.js");
 
 const OUT = "dist";
-const template = readFileSync("index.html", "utf8");
+// Version tags (?v=<content hash>) on CSS/JS files: after each update, browsers
+// download the new files instead of reusing old ones from their cache.
+const version = (file) => createHash("md5").update(readFileSync(file)).digest("hex").slice(0, 8);
+const template = readFileSync("index.html", "utf8")
+  .replace(/(href|src)="((?:css|js|content)\/[^"?]+\.(?:css|js))"/g, (m, attr, file) => `${attr}="${file}?v=${version(file)}"`);
 const pathFor = (l) => (l === DEFAULT_LANG ? "" : `${l}/`);
 const urlFor = (l) => `${SITE.siteUrl}/${pathFor(l)}`;
 const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES" };
