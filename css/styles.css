@@ -176,6 +176,33 @@ a { color: var(--color-primary); }
 .lang-switch button:hover { color: var(--color-text); }
 .lang-switch button[aria-pressed="true"] { background: var(--color-primary); color: var(--color-on-primary); }
 
+/* Header language menu (6 languages) */
+.lang-menu { position: relative; }
+.lang-menu-btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); padding: 0 12px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--color-band); color: var(--color-text); font: 700 .85rem/1 var(--font-body);
+}
+.lang-menu-btn svg { width: 20px; height: 20px; }
+.lang-menu-btn .lang-chevron { width: 16px; height: 16px; transition: transform .2s; }
+.lang-menu-btn[aria-expanded="true"] .lang-chevron { transform: rotate(180deg); }
+.lang-current:lang(ar), :root[lang="ar"] .lang-current { font-family: var(--font-arabic); }
+.site-header.is-top:not(.menu-open) .lang-menu-btn { background: rgba(255,255,255,.14); color: #fff; }
+.lang-list {
+  position: absolute; z-index: 120; top: calc(100% + 8px); inset-inline-end: 0; min-width: 210px; margin: 0; padding: 6px; list-style: none;
+  background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(var(--rgb-shadow), .2);
+}
+.lang-list[hidden] { display: none; }
+.lang-list button, .lang-list a {
+  width: 100%; display: flex; align-items: center; gap: 12px; min-height: var(--tap); padding: 0 12px; border: 0; border-radius: 10px;
+  background: transparent; color: var(--color-text); font: 500 .98rem/1.2 var(--font-body); text-align: start; text-decoration: none; cursor: pointer;
+}
+.lang-list button:hover, .lang-list a:hover, .lang-list button:focus-visible, .lang-list a:focus-visible { background: var(--color-band); }
+.lang-list [aria-pressed="true"], .lang-list [aria-current="page"] { color: var(--color-primary); font-weight: 700; }
+.lang-list [lang="ar"] { font-family: var(--font-arabic); }
+.lang-code { display: inline-grid; place-items: center; min-width: 34px; height: 24px; padding: 0 6px; border-radius: 6px; background: var(--color-band); color: var(--color-text-muted); font-size: .75rem; font-weight: 700; }
+.lang-list [aria-pressed="true"] .lang-code, .lang-list [aria-current="page"] .lang-code { background: var(--color-primary); color: var(--color-on-primary); }
+
 .menu-toggle {
   display: none; width: var(--tap); height: var(--tap); border: 0; border-radius: 999px;
   background: transparent; color: inherit; cursor: pointer; place-items: center;

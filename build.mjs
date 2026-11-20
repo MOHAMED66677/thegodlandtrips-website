@@ -47,7 +47,7 @@ const template = readFileSync("index.html", "utf8")
   .replace(/(href|src)="((?:css|js|content)\/[^"?]+\.(?:css|js))"/g, (m, attr, file) => `${attr}="${file}?v=${version(file)}"`);
 const pathFor = (l) => (l === DEFAULT_LANG ? "" : `${l}/`);
 const urlFor = (l) => `${SITE.siteUrl}/${pathFor(l)}`;
-const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES" };
+const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES", de: "de_DE", nl: "nl_NL" };
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
@@ -189,7 +189,7 @@ for (const lang of LANGS) {
   const legalUrl = (l) => `${SITE.siteUrl}/${pathFor(l)}legal.html`;
   const updated = new Date(LEGAL_INFO.updated + "T12:00:00").toLocaleDateString(lang === "ar" ? "ar-MA" : lang, { year: "numeric", month: "long", day: "numeric" });
   const langLinks = LANGS.map((l) =>
-    `<a href="${prefix}${pathFor(l)}legal.html" lang="${l}"${l === lang ? ' aria-current="page"' : ""} title="${R.esc(LANG_NAMES[l])}"><span aria-hidden="true">${R.esc(LANG_SHORT[l])}</span><span class="visually-hidden">${R.esc(LANG_NAMES[l])}</span></a>`).join("");
+    `<li><a href="${prefix}${pathFor(l)}legal.html" lang="${l}"${l === lang ? ' aria-current="page"' : ""}><span class="lang-code" aria-hidden="true">${R.esc(LANG_SHORT[l])}</span>${R.esc(LANG_NAMES[l])}</a></li>`).join("");
 
   const page = `<!doctype html>
 <html lang="${lang}" dir="${rtl ? "rtl" : "ltr"}">
@@ -213,7 +213,7 @@ for (const lang of LANGS) {
   <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
   <header class="legal-header"><div class="container legal-header-inner">
     <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-mark.svg" alt="" width="36" height="40"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
-    <nav class="lang-switch lang-links" aria-label="${R.esc(R.t(lang, "lang.label"))}">${langLinks}</nav>
+    <nav class="lang-menu" aria-label="${R.esc(R.t(lang, "lang.label"))}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list"><svg aria-hidden="true" width="20" height="20"><use href="#i-globe"/></svg><span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${R.esc(R.t(lang, "lang.label"))} (${R.esc(LANG_NAMES[lang])})</span><svg class="lang-chevron" aria-hidden="true" width="16" height="16"><use href="#i-chevron"/></svg></button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
   </div></header>
   <main id="legal-main" class="container legal-main">
@@ -239,6 +239,11 @@ for (const lang of LANGS) {
       }
       apply(html.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
       btn.addEventListener("click", function () { apply(html.getAttribute("data-theme") === "dark" ? "light" : "dark", true); });
+      var lb = document.querySelector(".lang-menu-btn"), ll = document.getElementById("lang-list");
+      function menu(open) { lb.setAttribute("aria-expanded", String(open)); ll.hidden = !open; if (open) { var c = ll.querySelector("[aria-current]"); if (c) c.focus(); } }
+      lb.addEventListener("click", function () { menu(lb.getAttribute("aria-expanded") !== "true"); });
+      document.addEventListener("click", function (e) { if (!e.target.closest(".lang-menu")) menu(false); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !ll.hidden) { menu(false); lb.focus(); } });
     })();
   </script>
 </body>

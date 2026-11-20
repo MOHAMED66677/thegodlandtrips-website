@@ -28,10 +28,10 @@ var LEGAL_INFO = {
   updated: "2026-11-20",
 
   // Policies written in each language (leave "" to show "[To complete]")
-  retention:    { fr: "", ar: "", en: "", es: "" },  // e.g. "24 mois" / "24 months"
-  payment:      { fr: "", ar: "", en: "", es: "" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
-  cancellation: { fr: "", ar: "", en: "", es: "" },  // e.g. "gratuite jusqu'à 24 h avant le service"
-  waiting:      { fr: "", ar: "", en: "", es: "" }   // e.g. "60 minutes après l'atterrissage"
+  retention:    { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "24 mois" / "24 months"
+  payment:      { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
+  cancellation: { fr: "", ar: "", en: "", es: "", de: "", nl: "" },  // e.g. "gratuite jusqu'à 24 h avant le service"
+  waiting:      { fr: "", ar: "", en: "", es: "", de: "", nl: "" }   // e.g. "60 minutes après l'atterrissage"
 };
 
 /* Texts. {tokens} are replaced by LEGAL_INFO / SITE values. */
@@ -286,7 +286,134 @@ var LEGAL_TEXT = {
         "Estas condiciones se rigen por el derecho marroquí. En caso de litigio se buscará primero una solución amistosa; en su defecto, serán competentes los tribunales de Marrakech."
       ]}
     ]
+  },
+  /* ============================ DEUTSCH ============================ */
+  de: {
+    pageTitle: "Impressum und Datenschutz",
+    intro: "Diese Seite stellt den Betreiber der Website {site} vor, erklärt, wie Ihre Daten verwendet werden, und nennt die Bedingungen unserer Leistungen.",
+    back: "Zur Startseite",
+    toc: "Auf dieser Seite",
+    updated: "Zuletzt aktualisiert",
+    todo: "Zu ergänzen",
+    starting: { owner: "Verantwortlich für die Website", status: "Status", statusValue: "Tätigkeit im Aufbau (Registrierung läuft)", city: "Stadt", note: "Registrierungs-, Genehmigungs- und Versicherungsnummern werden hier veröffentlicht, sobald sie vorliegen.", inProgress: "in Bearbeitung" },
+    labels: { owner: "Ihr vollständiger Name", company: "Firmenname", legalForm: "Rechtsform", address: "Firmensitz", rc: "RC-Nummer", ice: "ICE-Nummer", taxId: "Steuernummer (IF)", director: "Name des Verantwortlichen", license: "Genehmigungsnummer", insurance: "Versicherer und Policennummer", cndp: "CNDP-Meldenummer", retention: "Dauer", payment: "Zahlungsbedingungen", cancellation: "Stornobedingungen", waiting: "inklusive Wartezeit" },
+    sections: [
+      { id: "editor", title: "1. Betreiber der Website", blocks: [
+        { dl: [["Firmenname", "{company}"], ["Rechtsform", "{legalForm}"], ["Firmensitz", "{address}"], ["Kontakt", "{contact}"], ["Handelsregister (RC)", "{rc}"], ["ICE", "{ice}"], ["Steuernummer (IF)", "{taxId}"], ["Verantwortlich für den Inhalt", "{director}"], ["Genehmigung für touristischen Transport / Reisebüro", "{license}"], ["Berufshaftpflichtversicherung", "{insurance}"]] }
+      ]},
+      { id: "hosting", title: "2. Hosting", blocks: [
+        "Die Website wird von GitHub, Inc. (Dienst GitHub Pages) gehostet, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA."
+      ]},
+      { id: "credits", title: "3. Bildnachweise und Dienste", blocks: [
+        { ul: [
+          "Illustrationsfotos: Unsplash (Unsplash-Lizenz), bis eigene Fotos vorliegen.",
+          "Karten: Google Maps. Adresssuche: Photon (komoot), Daten © OpenStreetMap-Mitwirkende. Fahrzeitschätzung: OSRM.",
+          "Schriftarten: Inter, Space Grotesk und Cairo (SIL Open Font License)."
+        ]}
+      ]},
+      { id: "privacy", title: "4. Datenschutz", blocks: [
+        "Wir halten das marokkanische Gesetz Nr. 09-08 zum Schutz natürlicher Personen bei der Verarbeitung personenbezogener Daten ein. Für Besucher mit Wohnsitz in der Europäischen Union wenden wir zudem die Grundsätze der DSGVO an.",
+        { h3: "Verantwortlicher" },
+        "{company}, {address}. Kontakt: {contact}. Meldung bei der CNDP: {cndp}.",
+        { h3: "Welche Daten wir erheben" },
+        { ul: [
+          "Über das Angebotsformular: Ihr Name, Ihre WhatsApp-Nummer oder E-Mail-Adresse, die gewünschte Leistung, Abfahrts- und Zielort, Datum und Personenzahl.",
+          "Diese Daten werden nicht auf der Website gespeichert: Sie senden sie uns selbst per WhatsApp (ein Dienst von Meta) oder per E-Mail, wenn Sie die vom Formular vorbereitete Nachricht bestätigen."
+        ]},
+        { h3: "Wofür wir sie verwenden" },
+        "Ausschließlich, um Ihre Anfrage zu beantworten, Ihr Angebot zu erstellen und Ihren Transfer oder Ihre Aktivität zu organisieren. Sie werden weder verkauft noch für Werbung verwendet.",
+        { h3: "Speicherdauer" },
+        "Unser Austausch wird so lange aufbewahrt, wie es für die Bearbeitung Ihrer Anfrage und die Betreuung Ihrer Buchung nötig ist, höchstens {retention}.",
+        { h3: "Von der Website genutzte Drittanbieter" },
+        { ul: [
+          "Adresssuche: Der Text, den Sie in die Felder „Abfahrt“ und „Ziel“ eingeben, wird an Photon (komoot, Deutschland) gesendet, um Adressen vorzuschlagen; die gewählten Positionen werden an OSRM gesendet, um die Fahrzeit zu schätzen.",
+          "Google Maps: Die eingebettete Karte und die Links „In Google Maps öffnen“ stammen von Google, das gemäß seiner Datenschutzerklärung eigene Cookies verwenden kann.",
+          "Statistik: Wenn aktiviert, nutzen wir einen anonymen Besucherstatistik-Dienst ohne Cookies (GoatCounter oder Cloudflare Web Analytics).",
+          "Einstellungen: Ihre Wahl von Sprache und Farbmodus (hell oder dunkel) wird nur in Ihrem Browser gespeichert, ohne jedes Tracking."
+        ]},
+        { h3: "Ihre Rechte" },
+        "Sie können jederzeit Auskunft über Ihre Daten, deren Berichtigung oder Löschung verlangen oder der Verwendung widersprechen, indem Sie uns kontaktieren: {contact}. Sie können sich auch an die CNDP (www.cndp.ma) oder, wenn Sie in der Europäischen Union wohnen, an die Datenschutzbehörde Ihres Landes wenden."
+      ]},
+      { id: "terms", title: "5. Buchung, Zahlung und Stornierung", blocks: [
+        "Jede über die Website gesendete Anfrage ist eine unverbindliche Angebotsanfrage. Die Buchung wird verbindlich, sobald wir Ihnen unser Angebot gesendet und Sie es schriftlich bestätigt haben (WhatsApp oder E-Mail).",
+        { h3: "Preis und Zahlung" },
+        "Es gilt der im angenommenen Angebot genannte Preis. Zahlungsbedingungen: {payment}.",
+        { h3: "Stornierung und Änderung" },
+        "{cancellation}.",
+        { h3: "Verspätungen und Wartezeit" },
+        "Bei Flughafentransfers verfolgen wir Ihren Flug und passen die Abholzeit an die tatsächliche Landezeit an. Inklusive Wartezeit: {waiting}.",
+        { h3: "Aktivitäten" },
+        "Die Teilnehmer müssen die Sicherheitsanweisungen der Trainer befolgen. Für manche Aktivitäten (Quad, Buggy, Heißluftballon, Paragliding, Jetski…) gelten Alters-, Gesundheits- oder Wetterbedingungen, die im Angebot genannt werden. Bei schlechtem Wetter kann eine Aktivität zu Ihrer Sicherheit verschoben oder abgesagt werden.",
+        { h3: "Anwendbares Recht" },
+        "Diese Bedingungen unterliegen marokkanischem Recht. Bei Streitigkeiten wird zunächst eine gütliche Lösung gesucht; andernfalls sind die zuständigen Gerichte in Marrakech zuständig."
+      ]}
+    ]
+  },
+
+  /* ============================ NEDERLANDS ============================ */
+  nl: {
+    pageTitle: "Juridische informatie en privacy",
+    intro: "Deze pagina stelt de beheerder van de website {site} voor, legt uit hoe uw gegevens worden gebruikt en vermeldt de voorwaarden van onze diensten.",
+    back: "Terug naar de startpagina",
+    toc: "Op deze pagina",
+    updated: "Laatst bijgewerkt",
+    todo: "Nog in te vullen",
+    starting: { owner: "Verantwoordelijke voor de website", status: "Status", statusValue: "Activiteit in oprichting (registratie loopt)", city: "Stad", note: "Registratie-, vergunnings- en verzekeringsnummers worden hier gepubliceerd zodra ze beschikbaar zijn.", inProgress: "in behandeling" },
+    labels: { owner: "uw volledige naam", company: "bedrijfsnaam", legalForm: "rechtsvorm", address: "maatschappelijke zetel", rc: "RC-nummer", ice: "ICE-nummer", taxId: "fiscaal nummer (IF)", director: "naam van de verantwoordelijke", license: "vergunningsnummer", insurance: "verzekeraar en polisnummer", cndp: "CNDP-aangiftenummer", retention: "duur", payment: "betalingsvoorwaarden", cancellation: "annuleringsvoorwaarden", waiting: "inbegrepen wachttijd" },
+    sections: [
+      { id: "editor", title: "1. Beheerder van de website", blocks: [
+        { dl: [["Bedrijfsnaam", "{company}"], ["Rechtsvorm", "{legalForm}"], ["Maatschappelijke zetel", "{address}"], ["Contact", "{contact}"], ["Handelsregister (RC)", "{rc}"], ["ICE", "{ice}"], ["Fiscaal nummer (IF)", "{taxId}"], ["Verantwoordelijke uitgever", "{director}"], ["Vergunning toeristisch vervoer / reisbureau", "{license}"], ["Beroepsaansprakelijkheidsverzekering", "{insurance}"]] }
+      ]},
+      { id: "hosting", title: "2. Hosting", blocks: [
+        "De website wordt gehost door GitHub, Inc. (dienst GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, Verenigde Staten."
+      ]},
+      { id: "credits", title: "3. Credits", blocks: [
+        { ul: [
+          "Illustratiefoto's: Unsplash (Unsplash-licentie), tot onze eigen foto's beschikbaar zijn.",
+          "Kaarten: Google Maps. Adres zoeken: Photon (komoot), gegevens © OpenStreetMap-bijdragers. Schatting van de reistijd: OSRM.",
+          "Lettertypen: Inter, Space Grotesk en Cairo (SIL Open Font License)."
+        ]}
+      ]},
+      { id: "privacy", title: "4. Bescherming van persoonsgegevens", blocks: [
+        "Wij respecteren de Marokkaanse wet nr. 09-08 betreffende de bescherming van natuurlijke personen bij de verwerking van persoonsgegevens. Voor bezoekers die in de Europese Unie wonen, passen wij ook de beginselen van de AVG toe.",
+        { h3: "Verwerkingsverantwoordelijke" },
+        "{company}, {address}. Contact: {contact}. Aangifte bij de CNDP: {cndp}.",
+        { h3: "Welke gegevens wij verzamelen" },
+        { ul: [
+          "Via het offerteformulier: uw naam, uw WhatsApp-nummer of e-mailadres, de gewenste dienst, de vertrek- en bestemmingsplaats, de datum en het aantal personen.",
+          "Deze gegevens worden niet op de website opgeslagen: u stuurt ze ons zelf via WhatsApp (een dienst van Meta) of per e-mail, wanneer u het door het formulier voorbereide bericht bevestigt."
+        ]},
+        { h3: "Waarvoor wij ze gebruiken" },
+        "Uitsluitend om uw aanvraag te beantwoorden, uw offerte op te stellen en uw transfer of activiteit te organiseren. Ze worden nooit verkocht of voor reclame gebruikt.",
+        { h3: "Bewaartermijn" },
+        "Onze uitwisselingen worden bewaard zolang nodig is voor de behandeling van uw aanvraag en de opvolging van uw boeking, maximaal {retention}.",
+        { h3: "Diensten van derden die de website gebruikt" },
+        { ul: [
+          "Adres zoeken: de tekst die u in de velden „Vertrek” en „Bestemming” typt, wordt naar Photon (komoot, Duitsland) gestuurd om adressen voor te stellen; de gekozen posities worden naar OSRM gestuurd om de reistijd te schatten.",
+          "Google Maps: de ingesloten kaart en de links „Openen in Google Maps” worden geleverd door Google, dat volgens zijn privacybeleid eigen cookies kan gebruiken.",
+          "Statistieken: indien ingeschakeld, gebruiken wij een anonieme bezoekersstatistiek zonder cookies (GoatCounter of Cloudflare Web Analytics).",
+          "Voorkeuren: uw keuze van taal en weergave (licht of donker) wordt alleen in uw browser bewaard, zonder enige tracking."
+        ]},
+        { h3: "Uw rechten" },
+        "U kunt op elk moment inzage, correctie of verwijdering van uw gegevens vragen, of bezwaar maken tegen het gebruik ervan, door contact met ons op te nemen: {contact}. U kunt zich ook wenden tot de CNDP (www.cndp.ma) of, als u in de Europese Unie woont, tot de gegevensbeschermingsautoriteit van uw land."
+      ]},
+      { id: "terms", title: "5. Boeking, betaling en annulering", blocks: [
+        "Elke aanvraag via de website is een vrijblijvende offerteaanvraag. De boeking is definitief zodra wij u onze offerte hebben gestuurd en u die schriftelijk hebt bevestigd (WhatsApp of e-mail).",
+        { h3: "Prijs en betaling" },
+        "De geldende prijs is de prijs in de aanvaarde offerte. Betalingsvoorwaarden: {payment}.",
+        { h3: "Annulering en wijziging" },
+        "{cancellation}.",
+        { h3: "Vertraging en wachttijd" },
+        "Bij luchthaventransfers volgen wij uw vlucht en passen wij het ophaaltijdstip aan de werkelijke landingstijd aan. Inbegrepen wachttijd: {waiting}.",
+        { h3: "Activiteiten" },
+        "Deelnemers moeten de veiligheidsinstructies van de begeleiders opvolgen. Voor sommige activiteiten (quad, buggy, luchtballon, paragliding, jetski…) gelden voorwaarden qua leeftijd, gezondheid of weer, die in de offerte worden vermeld. Bij slecht weer kan een activiteit voor uw veiligheid worden uitgesteld of geannuleerd."
+        ,
+        { h3: "Toepasselijk recht" },
+        "Deze voorwaarden vallen onder het Marokkaanse recht. Bij een geschil wordt eerst een minnelijke oplossing gezocht; lukt dat niet, dan zijn de bevoegde rechtbanken van Marrakech bevoegd."
+      ]}
+    ]
   }
+
 };
 
 if (typeof module !== "undefined") module.exports = { LEGAL_INFO: LEGAL_INFO, LEGAL_TEXT: LEGAL_TEXT };

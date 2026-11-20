@@ -158,8 +158,9 @@
     if (!opts.initial) {
       storageSet(lang);
       updateUrl(lang);
-      var btn = app.querySelector('.lang-switch button[data-lang="' + lang + '"]');
-      if (btn) btn.focus();
+      // keep the keyboard focus where the visitor chose the language
+      var btn = opts.from === "footer" ? app.querySelector('.lang-switch-footer button[data-lang="' + lang + '"]') : app.querySelector(".lang-menu-btn");
+      if (btn) btn.focus({ preventScroll: opts.from !== "footer" });
     }
   }
 
@@ -599,10 +600,12 @@
       track("theme-" + next);
       return;
     }
-    if (el.matches(".lang-switch button")) {
+    if (el.matches(".lang-menu-btn")) { toggleLangMenu(el.getAttribute("aria-expanded") !== "true"); return; }
+    if (el.matches(".lang-switch button, .lang-list button")) {
       var l = el.getAttribute("data-lang");
+      toggleLangMenu(false);
       if (l !== currentLang) track("language-" + l);
-      if (l !== currentLang) setLang(l);
+      if (l !== currentLang) setLang(l, { from: el.closest(".lang-switch-footer") ? "footer" : "header" });
       return;
     }
     if (el.matches(".filters button")) { applyFilter(el.getAttribute("data-filter"), true); return; }
@@ -634,6 +637,33 @@
       return;
     }
     if (el.matches('#quote-form button[type="submit"]')) lastSubmitter = el;
+  });
+
+  // header language menu: open/close, close on outside click and Escape
+  function toggleLangMenu(open, focusBtn) {
+    var btn = $(".lang-menu-btn"), list = $("#lang-list");
+    if (!btn || !list) return;
+    btn.setAttribute("aria-expanded", String(open));
+    list.hidden = !open;
+    if (open) { var cur = list.querySelector('[aria-pressed="true"]') || list.querySelector("button"); if (cur) cur.focus(); }
+    else if (focusBtn) btn.focus();
+  }
+  document.addEventListener("click", function (ev) {
+    if (!ev.target.closest || !ev.target.closest(".lang-menu")) toggleLangMenu(false);
+  }, true);
+  document.addEventListener("keydown", function (ev) {
+    var list = $("#lang-list");
+    if (!list || list.hidden) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll("button"));
+    var i = items.indexOf(document.activeElement);
+    if (ev.key === "Escape") { ev.preventDefault(); toggleLangMenu(false, true); }
+    else if (ev.key === "ArrowDown") { ev.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (ev.key === "ArrowUp") { ev.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    else if (ev.key === "Tab" && i === -1) toggleLangMenu(false);
+  });
+  document.addEventListener("focusout", function (ev) {
+    var menu = $(".lang-menu");
+    if (menu && ev.relatedTarget && !menu.contains(ev.relatedTarget)) toggleLangMenu(false);
   });
 
   // autocomplete: keyboard, focus, mouse

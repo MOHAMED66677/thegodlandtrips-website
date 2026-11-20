@@ -7,7 +7,7 @@ Ce guide explique comment modifier les textes, les prix, les activités, les cou
 | Fichier | Ce qu'il contient |
 |---|---|
 | `content/site.js` | Nom de l'agence, WhatsApp, e-mail, adresse, liste des activités et prix |
-| `content/translations.js` | **Tous les textes** du site, en français, arabe, anglais et espagnol |
+| `content/translations.js` | **Tous les textes** du site, en français, arabe, anglais, espagnol, allemand et néerlandais |
 | `content/legal.js` | Page légale : informations officielles de l'agence et textes juridiques |
 | `css/styles.css` | Couleurs et polices (tout en haut du fichier) |
 
@@ -34,7 +34,7 @@ Ouvrez `content/translations.js`. Chaque texte a une clé, par exemple :
 "hero.title": "Votre séjour au Maroc, sans souci de transport",
 ```
 
-Changez le texte entre guillemets **dans chacune des quatre langues** (sections `fr`, `ar`, `en`, `es`). Ne modifiez pas la clé à gauche.
+Changez le texte entre guillemets **dans chacune des six langues** (sections `fr`, `ar`, `en`, `es`, `de`, `nl`). Ne modifiez pas la clé à gauche.
 
 - `{agency}` est remplacé automatiquement par le nom de l'agence.
 - `{count}` est remplacé par le nombre d'activités.
@@ -54,7 +54,7 @@ Changez le texte entre guillemets **dans chacune des quatre langues** (sections 
 - `safety` : `true` affiche « Équipement de sécurité fourni »
 - `price` : un nombre (ex. `450`) ou `null`
 
-**b. Dans `content/translations.js`**, ajoutez le nom et la description dans les quatre langues :
+**b. Dans `content/translations.js`**, ajoutez le nom et la description dans les six langues :
 
 ```js
 "act.surf.name": "Surf",
@@ -63,7 +63,7 @@ Changez le texte entre guillemets **dans chacune des quatre langues** (sections 
 
 Pour **retirer** une activité, supprimez sa ligne dans `site.js` (les textes peuvent rester).
 
-Pour une **nouvelle durée**, ajoutez une clé `"dur.xxx"` dans les quatre langues.
+Pour une **nouvelle durée**, ajoutez une clé `"dur.xxx"` dans les six langues.
 
 ## 4. Photos
 
@@ -115,13 +115,13 @@ Ces services publics sont gratuits mais prévus pour un usage modéré : c'est l
 
 ## 6. Foire aux questions (FAQ)
 
-Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les quatre langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
+Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les six langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
 
 ⚠️ **À valider par l'agence** : les réponses sur le paiement (`faq.a5`), l'annulation (`faq.a6`) et les sièges enfant (`faq.a4`) renvoient pour l'instant « au devis ». Remplacez-les par vos vraies conditions (ex. « paiement en espèces ou par carte au chauffeur », « annulation gratuite jusqu'à 24 h avant ») dès qu'elles sont fixées.
 
 ## 7. Page légale (mentions légales, confidentialité, conditions)
 
-La page `legal.html` existe dans les quatre langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
+La page `legal.html` existe dans les six langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
 
 **Activité en cours de création** (pas encore d'entreprise) : laissez `status: "starting"` et indiquez seulement votre nom dans `ownerName`. La page affiche alors « Responsable du site », « Activité en cours de création » et la ville, et masque les numéros d'entreprise. Pensez à obtenir l'autorisation de transport touristique et une assurance adaptée **avant** d'accepter des clients payants (renseignements : CRI Marrakech-Safi ou un comptable).
 
@@ -148,7 +148,7 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 
 ## 8. Aperçu des liens (WhatsApp, Facebook…) et référencement Google
 
-- **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
+- **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`, `og-de.jpg`, `og-nl.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
 - ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://thegodlandtrips.netlify.app` ou votre nom de domaine, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
@@ -227,6 +227,6 @@ Cette commande crée un dossier `dist/` contenant une page par langue (`/`, `/ar
 - [ ] `siteUrl` contient la vraie adresse du site (sinon pas d'aperçu des liens)
 - [ ] Le partage d'un lien sur WhatsApp affiche bien l'aperçu
 - [ ] La liste des activités et les durées ont été validées par l'agence
-- [ ] Les quatre langues ont été relues par un locuteur natif
+- [ ] Les six langues ont été relues par un locuteur natif
 - [ ] Une demande test a été envoyée par WhatsApp **et** par e-mail
 - [ ] Le site a été testé sur un téléphone

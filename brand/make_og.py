@@ -51,7 +51,7 @@ async def main():
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1200, "height": 630})
         await pg.goto("file:///" + tmp.replace("\\", "/"), wait_until="networkidle")
-        for lang in ["fr", "ar", "en", "es"]:
+        for lang in ["fr", "ar", "en", "es", "de", "nl"]:
             await pg.evaluate(f"setLang('{lang}')")
             await pg.evaluate("document.fonts.ready")
             await pg.wait_for_timeout(200)

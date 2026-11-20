@@ -99,6 +99,19 @@
       }).join("") + "</div>";
   }
 
+  // Header language picker: "🌐 FR ▾" button opening the list of languages
+  function langMenu(lang) {
+    return '<div class="lang-menu">' +
+      '<button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">' +
+        icon("globe") + '<span class="lang-current" aria-hidden="true">' + esc(LANG_SHORT[lang]) + "</span>" +
+        '<span class="visually-hidden">' + e(lang, "lang.label") + " (" + esc(LANG_NAMES[lang]) + ")</span>" + icon("chevron", "lang-chevron") +
+      "</button>" +
+      '<ul class="lang-list" id="lang-list" hidden>' + LANGS.map(function (l) {
+        return '<li><button type="button" data-lang="' + l + '" lang="' + l + '" aria-pressed="' + (l === lang) + '">' +
+          '<span class="lang-code" aria-hidden="true">' + esc(LANG_SHORT[l]) + "</span>" + esc(LANG_NAMES[l]) + "</button></li>";
+      }).join("") + "</ul></div>";
+  }
+
   function navLinks(lang) {
     return '<li><a href="#services">' + e(lang, "nav.services") + "</a></li>" +
       '<li><a href="#activities">' + e(lang, "nav.activities") + "</a></li>" +
@@ -119,7 +132,7 @@
         '<a class="brand" href="#top">' + brandInner() + "</a>" +
         '<nav class="main-nav" id="main-nav" aria-label="' + e(lang, "nav.label") + '"><ul>' + navLinks(lang) +
           '<li class="theme-row">' + themeToggle(lang, true) + "</li></ul></nav>" +
-        langSwitch(lang) +
+        langMenu(lang) +
         '<a class="btn btn-action btn-sm header-cta" href="#quote" data-quote="transfer">' + e(lang, "hero.ctaQuote") + "</a>" +
         themeToggle(lang) +
         '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="' + e(lang, "nav.menu") + '">' + icon("menu") + "</button>" +
