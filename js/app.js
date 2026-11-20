@@ -106,8 +106,10 @@
     Array.prototype.forEach.call(f.elements, function (el) {
       if (!el.name) return;
       if (el.type === "radio") { if (el.checked) data[el.name] = el.value; }
+      else if (el.type === "checkbox") data[el.name] = el.checked ? "yes" : "";
       else data[el.name] = el.value;
     });
+    var more = $("#q-more"); data.__more = more && more.open ? "1" : "";
     return data;
   }
   function writeForm(data) {
@@ -116,8 +118,10 @@
     Array.prototype.forEach.call(f.elements, function (el) {
       if (!el.name || data[el.name] == null) return;
       if (el.type === "radio") el.checked = el.value === data[el.name];
+      else if (el.type === "checkbox") el.checked = data[el.name] === "yes";
       else el.value = data[el.name];
     });
+    var more = $("#q-more"); if (more && data.__more) more.open = true;
   }
 
   /* ---------- language ---------- */
@@ -170,6 +174,7 @@
     syncServiceUI();
     syncRoute();
     updateEstimate();
+    updateVehicleHint();
     if (currentDest) selectDest(currentDest);
     applyTheme(currentTheme(), false);
   }
@@ -427,12 +432,44 @@
     // suggestions for "To" depend on the service (activities when "Activity")
     var to = $("#q-to");
     if (to) to.removeAttribute("list");
+    var flight = $("#q-flight-field");
+    if (flight) flight.hidden = f.service.value !== "transfer";
+    var ret = $("#q-return"), box = $("#q-return-fields");
+    if (ret && box) {
+      box.hidden = !ret.checked;
+      ret.setAttribute("aria-expanded", String(ret.checked));
+      var rd = $("#q-rdate"); if (rd) rd.min = $("#q-date").value || todayISO();
+    }
+  }
+
+  // Suggest a bigger vehicle when the chosen one is too small
+  function bestVehicle(pax, bags) {
+    return VEHICLES.filter(function (v) { return v.seats >= pax && v.bags >= bags; })[0] || null;
+  }
+  function updateVehicleHint() {
+    var hint = $("#q-veh-hint"), sel = $("#q-veh");
+    if (!hint || !sel) return;
+    var pax = parseInt($("#q-pax").value, 10) || 0, bags = parseInt(($("#q-bags") || {}).value, 10) || 0;
+    var chosen = VEHICLES.filter(function (v) { return v.id === sel.value; })[0];
+    var maxSeats = Math.max.apply(null, VEHICLES.map(function (v) { return v.seats; }));
+    var text = "", rec = null;
+    if (pax > maxSeats) text = t("veh.hintMax", { n: maxSeats });
+    else if (chosen && (pax > chosen.seats || bags > chosen.bags)) {
+      rec = bestVehicle(pax, bags);
+      if (rec) text = t(bags ? "veh.hint" : "veh.hintPax", { n: pax, b: bags, v: t("veh." + rec.id + ".name") });
+    }
+    hint.hidden = !text;
+    hint.querySelector("span").textContent = text;
+    var btn = $("#q-veh-switch");
+    btn.hidden = !rec;
+    if (rec) { btn.textContent = t("veh.hintBtn", { v: t("veh." + rec.id + ".name") }); btn.setAttribute("data-veh", rec.id); }
+    if (text) { var more = $("#q-more"); if (more) more.open = true; }
   }
 
   function openQuote(service, activityName, vehicle) {
     var f = $("#quote-form");
     if (!f) return;
-    if (vehicle && $("#q-veh")) $("#q-veh").value = vehicle;
+    if (vehicle && $("#q-veh")) { $("#q-veh").value = vehicle; var more = $("#q-more"); if (more) more.open = true; }
     var radio = $("#svc-" + service);
     if (radio) radio.checked = true;
     if (activityName) {
@@ -442,6 +479,7 @@
       $("#q-to-coords").value = d ? d.lat + "," + d.lng : "";
     }
     syncServiceUI();
+    updateVehicleHint();
     syncRoute();
     updateEstimate();
     clearStatus();
@@ -482,6 +520,16 @@
     check("#q-date", !d ? t("form.errRequired") : (d < todayISO() ? t("form.errDate") : ""));
     var p = parseInt($("#q-pax").value, 10);
     check("#q-pax", p >= 1 && p <= 60 ? "" : t("form.errRequired"));
+    var fl = $("#q-flight");
+    if (fl) {
+      var fv = fl.value.trim();
+      check("#q-flight", fv && !$("#q-flight-field").hidden && !/^[A-Za-z0-9]{2}\s?\d{1,4}[A-Za-z]?$/.test(fv) ? t("form.errFlight") : "");
+    }
+    if ($("#q-return") && $("#q-return").checked) {
+      var rd = $("#q-rdate").value, tm = $("#q-time").value, rt = $("#q-rtime").value;
+      var before = rd && d && (rd < d || (rd === d && tm && rt && rt <= tm));
+      check("#q-rdate", !rd ? t("form.errRequired") : (before ? t("form.errReturn") : ""));
+    } else if ($("#q-rdate")) setError($("#q-rdate"), "");
     var c = $("#q-contact").value.trim();
     var cMsg = "";
     if (!c && mode === "email") cMsg = t("form.errRequired");
@@ -497,7 +545,17 @@
     try {
       dateText = new Date(d + "T12:00:00").toLocaleDateString(currentLang + (currentLang === "ar" ? "-MA" : ""), { weekday: "long", year: "numeric", month: "long", day: "numeric" });
     } catch (e) {}
+    var fmt = function (iso) {
+      try { return new Date(iso + "T12:00:00").toLocaleDateString(currentLang + (currentLang === "ar" ? "-MA" : ""), { weekday: "long", year: "numeric", month: "long", day: "numeric" }); }
+      catch (e) { return iso; }
+    };
+    var ret = $("#q-return") && $("#q-return").checked;
     return {
+      time: $("#q-time").value,
+      flight: f.service.value === "transfer" ? $("#q-flight").value.trim().toUpperCase() : "",
+      bags: ($("#q-bags") || {}).value || "",
+      kids: (($("#q-kids") || {}).value || "").trim(),
+      returnText: ret && $("#q-rdate").value ? fmt($("#q-rdate").value) + ($("#q-rtime").value ? " · " + $("#q-rtime").value : "") : "",
       service: f.service.value,
       serviceLabel: t("svc." + f.service.value),
       from: $("#q-from").value.trim(),
@@ -519,8 +577,12 @@
       "• " + t("form.service") + sep + q.serviceLabel,
       "• " + t("form.from") + sep + q.from,
       "• " + t("form.to") + sep + q.to,
-      "• " + t("form.date") + sep + q.dateText,
+      "• " + t("form.date") + sep + q.dateText + (q.time ? " · " + q.time : ""),
+      q.flight ? "• " + t("form.flight") + sep + q.flight : null,
+      q.returnText ? "• " + t("msg.return") + sep + q.returnText : null,
       "• " + t("form.passengers") + sep + q.passengers,
+      q.bags ? "• " + t("form.bags") + sep + q.bags : null,
+      q.kids ? "• " + t("form.kids") + sep + q.kids : null,
       q.vehicle ? "• " + t("form.vehicle") + sep + q.vehicle : null,
       "• " + t("form.name") + sep + q.name
     ];
@@ -635,6 +697,12 @@
       if (btn) btn.focus({ preventScroll: true });
       return;
     }
+    if (el.id === "q-veh-switch") {
+      $("#q-veh").value = el.getAttribute("data-veh");
+      updateVehicleHint();
+      $("#q-veh").focus();
+      return;
+    }
     if (el.hasAttribute("data-quote")) {
       ev.preventDefault();
       openQuote(el.getAttribute("data-quote"), el.getAttribute("data-activity"), el.getAttribute("data-vehicle"));
@@ -707,11 +775,14 @@
   });
 
   document.addEventListener("change", function (ev) {
-    if (ev.target.name === "service") syncServiceUI();
+    if (ev.target.name === "service" || ev.target.id === "q-return" || ev.target.id === "q-date") { syncServiceUI(); }
+    if (ev.target.id === "q-return" && ev.target.checked) { var rd = $("#q-rdate"); if (rd) rd.focus(); }
+    if (ev.target.id === "q-veh" || ev.target.id === "q-pax" || ev.target.id === "q-bags") updateVehicleHint();
   });
 
   document.addEventListener("input", function (ev) {
     if (ev.target.id === "q-from" || ev.target.id === "q-to") { syncRoute(); acOnInput(ev.target); }
+    if (ev.target.id === "q-pax" || ev.target.id === "q-bags") updateVehicleHint();
     if (ev.target.getAttribute && ev.target.getAttribute("aria-invalid") === "true") setError(ev.target, "");
   });
 

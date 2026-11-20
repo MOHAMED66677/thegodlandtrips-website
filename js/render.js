@@ -178,13 +178,36 @@
         acField(lang, "q-to", "to", "form.to", "form.toPh", "flag") +
         '<datalist id="acts-list">' + ACTIVITIES.map(function (a) { return '<option value="' + e(lang, "act." + a.id + ".name") + '">'; }).join("") + "</datalist>" +
         field(lang, "q-date", "date", "form.date", 'type="date" required', "half") +
-        field(lang, "q-pax", "passengers", "form.passengers", 'type="number" inputmode="numeric" min="1" max="60" value="2" required', "half", "users") +
+        field(lang, "q-time", "time", "form.time", 'type="time" step="300"', "half") +
+        // flight number: only shown for airport transfers
+        '<div class="field" id="q-flight-field">' +
+          '<label for="q-flight">' + e(lang, "form.flight") + "</label>" +
+          '<div class="input-wrap">' + icon("plane", "input-icon") +
+          '<input id="q-flight" name="flight" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" dir="ltr" maxlength="10" placeholder="' + e(lang, "form.flightPh") + '" aria-describedby="q-flight-hint q-flight-err"></div>' +
+          '<small class="field-hint" id="q-flight-hint">' + e(lang, "form.flightHint") + "</small>" +
+          '<span class="field-error" id="q-flight-err" aria-live="polite"></span></div>' +
+        field(lang, "q-pax", "passengers", "form.passengers", 'type="number" inputmode="numeric" min="1" max="60" value="2" required', "", "users") +
+        // return ride
+        '<div class="field check-field"><label class="check" for="q-return"><input type="checkbox" id="q-return" name="returnTrip" value="yes" aria-controls="q-return-fields">' +
+          "<span>" + e(lang, "form.return") + "</span></label></div>" +
+        '<div class="field sub-grid" id="q-return-fields" hidden>' +
+          field(lang, "q-rdate", "returnDate", "form.returnDate", 'type="date"', "half") +
+          field(lang, "q-rtime", "returnTime", "form.returnTime", 'type="time" step="300"', "half") +
+        "</div>" +
+        // optional details, folded
+        '<details class="field more-options" id="q-more"><summary>' + icon("bag") + "<span>" + e(lang, "form.more") + "</span>" + icon("chevron", "more-chev") + "</summary>" +
+        '<div class="sub-grid">' +
+        field(lang, "q-bags", "bags", "form.bags", 'type="number" inputmode="numeric" min="0" max="60"', "half", "bag") +
+        field(lang, "q-kids", "kids", "form.kids", 'type="text" autocomplete="off" placeholder="' + e(lang, "form.kidsPh") + '"', "half") +
         (VEHICLES.length ? '<div class="field">' +
           '<label for="q-veh">' + e(lang, "form.vehicle") + "</label>" +
           '<div class="input-wrap">' + icon("car", "input-icon") + '<select id="q-veh" name="vehicle">' +
             '<option value="">' + e(lang, "form.vehicleAny") + "</option>" +
             VEHICLES.map(function (v) { return '<option value="' + esc(v.id) + '">' + e(lang, "veh." + v.id + ".name") + " (" + e(lang, "veh.seats", { n: v.seats }) + ")</option>"; }).join("") +
-          "</select></div></div>" : "") +
+          "</select></div>" +
+          '<p class="veh-hint" id="q-veh-hint" aria-live="polite" hidden><span></span> <button type="button" class="link-cta" id="q-veh-switch"></button></p>' +
+          "</div>" : "") +
+        "</div></details>" +
         field(lang, "q-name", "name", "form.name", 'type="text" required autocomplete="name" placeholder="' + e(lang, "form.namePh") + '"', "half") +
         '<div class="field half">' +
           '<label for="q-contact">' + e(lang, "form.contact") + "</label>" +
