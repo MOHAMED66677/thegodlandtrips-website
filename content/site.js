@@ -51,7 +51,7 @@ var SITE = {
 
   // Hide the site from Google (noindex) until the official launch
   // (real photos, legal page...). Set to false on launch day.
-  hideFromSearch: true,
+  hideFromSearch: false,
 
   // DEMO MODE: true while the contact details are placeholders.
   // - the site is hidden from Google (noindex)
