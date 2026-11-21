@@ -253,6 +253,57 @@ Cette commande crée un dossier `dist/` contenant une page par langue (`/`, `/ar
 
 ⚠️ Relancez `node build.mjs` après **chaque** modification, avant de remettre le site en ligne.
 
+## 16. Avis clients
+
+La section « Ce que disent nos voyageurs » reste **cachée tant qu'il n'y a aucun avis**. Elle apparaît dès que vous ajoutez le premier.
+
+⚠️ **Uniquement de vrais avis**, recopiés mot pour mot (Google, TripAdvisor, ou un message WhatsApp d'un client qui a accepté d'être cité). Publier de faux avis est interdit (loi marocaine sur la protection du consommateur, et règles européennes pour vos clients européens) et fait perdre la confiance des visiteurs.
+
+**Ajouter un avis** : dans `content/site.js`, liste `REVIEWS`, ajoutez une ligne :
+
+```js
+var REVIEWS = [
+  { name: "Sarah M.", country: "GB", rating: 5, date: "2026-10", lang: "en",
+    text: "Our driver was waiting with a sign at 2am. Spotless car, fair price.",
+    activity: "agafay", source: "Google" },
+];
+```
+
+- `name` : prénom + initiale seulement (protection de la vie privée)
+- `country` : code du pays en 2 lettres (GB, FR, ES, DE, NL, MA, US, IT…) : le nom du pays s'affiche dans la langue du visiteur
+- `rating` : de 1 à 5 étoiles ; `date` : année-mois
+- `lang` : langue dans laquelle l'avis a été écrit. L'avis n'est pas traduit : le site indique « Écrit en anglais », etc.
+- `activity` (facultatif) : l'avis s'affiche aussi sur la page de cette activité
+- `source` (facultatif) : Google, TripAdvisor ou WhatsApp
+
+Les 6 avis les plus récents s'affichent sur l'accueil (à faire glisser sur téléphone). À partir de **3 avis**, la note moyenne s'affiche aussi sous les boutons de l'accueil.
+
+**Bouton « Laisser un avis »** : dans votre fiche Google Business Profile, cliquez sur « Demander des avis », copiez le lien (`g.page/r/…/review`) et collez-le dans `googleReviewUrl`. Si `googleBusinessUrl` est rempli, un bouton « Voir tous les avis sur Google » s'affiche aussi.
+
+### Message à envoyer au client après le trajet
+
+Envoyez-le par WhatsApp le soir même ou le lendemain (c'est là que les clients répondent le plus). Remplacez `[prénom]` et `[lien]` par le prénom du client et votre lien `googleReviewUrl`.
+
+**Français**
+> Bonjour [prénom], merci d'avoir voyagé avec TheGodLandTrips ! J'espère que tout s'est bien passé. Si vous avez une minute, votre avis nous aiderait beaucoup : [lien]. Bon séjour au Maroc !
+
+**العربية**
+> مرحبًا [prénom]، شكرًا لاختيارك TheGodLandTrips! أتمنى أن تكون رحلتك قد مرّت على ما يرام. إذا كان لديك دقيقة، فرأيك يساعدنا كثيرًا: [lien]. إقامة سعيدة في المغرب!
+
+**English**
+> Hi [prénom], thank you for travelling with TheGodLandTrips! I hope everything went well. If you have a minute, a short review would help us a lot: [lien]. Enjoy the rest of your stay in Morocco!
+
+**Español**
+> Hola [prénom], ¡gracias por viajar con TheGodLandTrips! Espero que todo haya ido bien. Si tiene un minuto, su opinión nos ayudaría mucho: [lien]. ¡Que disfrute de Marruecos!
+
+**Deutsch**
+> Hallo [prénom], vielen Dank, dass Sie mit TheGodLandTrips unterwegs waren! Ich hoffe, alles hat gut geklappt. Wenn Sie eine Minute Zeit haben, würde uns eine kurze Bewertung sehr helfen: [lien]. Genießen Sie Ihren Aufenthalt in Marokko!
+
+**Nederlands**
+> Hallo [prénom], bedankt dat u met TheGodLandTrips heeft gereisd! Ik hoop dat alles goed is verlopen. Als u even tijd heeft, zou een korte review ons erg helpen: [lien]. Geniet nog van Marokko!
+
+Quand un client répond par un compliment sur WhatsApp, demandez-lui : « Puis-je publier votre message sur notre site, avec votre prénom ? ». S'il accepte, ajoutez-le avec `source: "WhatsApp"`.
+
 ## Avant la mise en ligne
 
 - [ ] Toutes les valeurs `[À REMPLACER]` sont renseignées dans `content/site.js`

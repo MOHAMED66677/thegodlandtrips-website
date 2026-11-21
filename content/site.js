@@ -24,6 +24,10 @@ var SITE = {
   // Optional: link to the agency's Google Business Profile (Google reviews,
   // opening hours, directions). Copy it from Google Maps > Share. Leave "" to hide.
   googleBusinessUrl: "",
+  // Optional: the link that opens the "write a review" window on Google.
+  // Google Business Profile > "Ask for reviews" > copy the link (g.page/r/.../review).
+  // Shows a "Leave a review" button in the reviews section. Leave "" to hide.
+  googleReviewUrl: "",
 
   // Optional: endpoint of a form service (Web3Forms, Formspree...) so the
   // "Send by email" button posts the request without opening a mail app.
@@ -150,6 +154,28 @@ var GEOCODER_URL = "https://photon.komoot.io/api/";
 var ROUTER_URL = "https://router.project-osrm.org/route/v1/driving/";
 
 /* ---------------------------------------------------------
+   CLIENT REVIEWS  (see GUIDE.md, section "Avis clients")
+   Only REAL reviews, copied word for word from Google, TripAdvisor or a
+   WhatsApp message, with the client's permission. While this list is empty,
+   the reviews section stays hidden.
+   - name:     first name + initial, e.g. "Sarah M."
+   - country:  2-letter country code, e.g. "GB", "FR", "ES", "DE", "NL", "MA", "US"
+   - rating:   1 to 5
+   - date:     "2026-10" (year-month)
+   - lang:     language the review was written in: "fr" "ar" "en" "es" "de" "nl" "it"...
+   - text:     the review, as written by the client
+   - activity: optional, id of an activity ("quad", "agafay"...): the review
+               is then also shown on that activity's page
+   - source:   optional, "Google" | "TripAdvisor" | "WhatsApp"
+   Example:
+   { name: "Sarah M.", country: "GB", rating: 5, date: "2026-10", lang: "en",
+     text: "Our driver was waiting with a sign at 2am. Spotless car, fair price.",
+     activity: "agafay", source: "Google" },
+   --------------------------------------------------------- */
+var REVIEWS = [
+];
+
+/* ---------------------------------------------------------
    DESTINATIONS on the Google Maps section ("Where we go")
    - id:       for the name, "act.<id>.name" or "dest.<id>" in translations.js
    - lat/lng:  GPS position (right-click a place in Google Maps to copy it)
@@ -167,4 +193,4 @@ var DESTINATIONS = [
   { id: "essaouira", lat: 31.5125, lng: -9.7700, zoom: 13, km: 190, minutes: 165 }
 ];
 
-if (typeof module !== "undefined") module.exports = { SITE: SITE, IMAGES: IMAGES, ACTIVITIES: ACTIVITIES, CATEGORIES: CATEGORIES, DESTINATIONS: DESTINATIONS, PLACES: PLACES, VEHICLES: VEHICLES, GEOCODER_URL: GEOCODER_URL, ROUTER_URL: ROUTER_URL };
+if (typeof module !== "undefined") module.exports = { SITE: SITE, IMAGES: IMAGES, ACTIVITIES: ACTIVITIES, CATEGORIES: CATEGORIES, DESTINATIONS: DESTINATIONS, PLACES: PLACES, VEHICLES: VEHICLES, REVIEWS: REVIEWS, GEOCODER_URL: GEOCODER_URL, ROUTER_URL: ROUTER_URL };

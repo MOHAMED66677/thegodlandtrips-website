@@ -775,6 +775,37 @@ mark.todo {
 }
 .demo-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
+/* ========================= CLIENT REVIEWS ========================= */
+.stars { display: inline-flex; gap: 2px; color: var(--color-action); }
+.stars svg { width: 18px; height: 18px; }
+.stars svg:not(.on) { color: var(--color-border-hover); }
+.review-summary { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: -12px 0 32px; }
+.review-summary .stars svg { width: 22px; height: 22px; }
+.review-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+.review-card { margin: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.review-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.review-src { font-size: .8rem; font-weight: 600; color: var(--color-text-muted); background: var(--color-band); border-radius: 999px; padding: 3px 10px; }
+.review-card blockquote { margin: 0; flex: 1; }
+.review-card blockquote p { margin: 0; font-size: 1.02rem; line-height: 1.6; }
+.review-lang { margin: -6px 0 0; font-size: .82rem; color: var(--color-text-muted); font-style: italic; }
+.review-card figcaption { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--color-border); }
+.review-card figcaption > span:last-child { display: grid; gap: 2px; min-width: 0; }
+.review-card figcaption small { color: var(--color-text-muted); font-size: .85rem; }
+.review-avatar { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--color-primary); color: var(--color-on-primary); font-weight: 700; font-size: 1.1rem; }
+.review-act { display: inline-flex; align-items: center; gap: 5px; color: var(--color-primary) !important; font-weight: 600; }
+.review-act svg { width: 14px; height: 14px; flex: none; }
+.review-ctas { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.act-reviews { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+/* Rating badge under the hero buttons */
+.hero-rating { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 20px; color: #fff; text-decoration: none; font-weight: 600; font-size: .95rem; }
+.hero-rating .stars svg:not(.on) { color: rgba(255,255,255,.45); }
+.hero-rating:hover span { text-decoration: underline; }
+@media (max-width: 640px) {
+  /* swipe through the reviews on phones */
+  #reviews .review-grid { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 86%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  #reviews .review-card { scroll-snap-align: start; }
+}
+
 /* ========================= SCROLL REVEAL ========================= */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease) var(--d, 0ms), transform .8s var(--ease) var(--d, 0ms); }
 .js .reveal.is-in { opacity: 1; transform: none; }

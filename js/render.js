@@ -10,6 +10,9 @@
   var tr = root.I18N ? root : require("../content/translations.js");
   var SITE = env.SITE, IMAGES = env.IMAGES, ACTIVITIES = env.ACTIVITIES, CATEGORIES = env.CATEGORIES, DESTINATIONS = env.DESTINATIONS || [], VEHICLES = env.VEHICLES || [];
   var PROMISES = SITE.promises || {};
+  // Real client reviews only (content/site.js); newest first
+  var REVIEWS = (env.REVIEWS || []).filter(function (r) { return r && r.name && r.text && r.rating >= 1 && r.rating <= 5; })
+    .slice().sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
   var I18N = tr.I18N, LANGS = tr.LANGS, LANG_NAMES = tr.LANG_NAMES, LANG_SHORT = tr.LANG_SHORT, RTL_LANGS = tr.RTL_LANGS;
 
   // Base URL for local files (images/...). Set by the browser script so that
@@ -228,6 +231,71 @@
       "</form></div>";
   }
 
+  /* ---------- Reviews ---------- */
+  function locale(lang) { return lang === "ar" ? "ar-MA" : lang; }   // Latin digits in Arabic
+  function intlName(lang, type, code) {
+    try { return new Intl.DisplayNames([locale(lang)], { type: type }).of(code) || code; } catch (err) { return code; }
+  }
+  function fmtNum(lang, x) {
+    try { return Number(x).toLocaleString(locale(lang), { maximumFractionDigits: 1 }); } catch (err) { return String(x); }
+  }
+  function reviewStats() {
+    if (!REVIEWS.length) return null;
+    var sum = REVIEWS.reduce(function (s, r) { return s + Number(r.rating); }, 0);
+    return { n: REVIEWS.length, avg: Math.round(sum / REVIEWS.length * 10) / 10 };
+  }
+  function stars(lang, rating) {
+    var html = "";
+    for (var i = 1; i <= 5; i++) html += i <= Math.round(rating) ? icon("star-solid", "on") : icon("star");
+    return '<span class="stars" role="img" aria-label="' + e(lang, "reviews.stars", { n: fmtNum(lang, rating) }) + '">' + html + "</span>";
+  }
+  function reviewSummary(lang, st) {
+    return e(lang, st.n === 1 ? "reviews.summaryOne" : "reviews.summary", { avg: fmtNum(lang, st.avg), n: st.n });
+  }
+  function reviewDate(lang, d) {
+    var m = /^(\d{4})-(\d{1,2})/.exec(d || "");
+    if (!m) return "";
+    try {
+      return new Intl.DateTimeFormat(locale(lang), { month: "long", year: "numeric", timeZone: "UTC" })
+        .format(new Date(Date.UTC(+m[1], +m[2] - 1, 15)));
+    } catch (err) { return d; }
+  }
+  function reviewCard(lang, r, i, opts) {
+    opts = opts || {};
+    var meta = [r.country ? intlName(lang, "region", String(r.country).toUpperCase()) : "", reviewDate(lang, r.date)].filter(Boolean).join(" · ");
+    var other = r.lang && r.lang !== lang;
+    var act = r.activity && opts.showActivity !== false && ACTIVITIES.some(function (a) { return a.id === r.activity; });
+    return '<figure class="review-card' + (opts.reveal === false ? "" : " reveal") + '" style="--d:' + Math.min(i, 3) * 80 + 'ms">' +
+      '<div class="review-top">' + stars(lang, r.rating) + (r.source ? '<span class="review-src">' + esc(r.source) + "</span>" : "") + "</div>" +
+      "<blockquote" + (r.lang ? ' lang="' + esc(r.lang) + '" dir="' + (RTL_LANGS.indexOf(r.lang) !== -1 ? "rtl" : "auto") + '"' : "") + "><p>" + esc(r.text) + "</p></blockquote>" +
+      (other ? '<p class="review-lang">' + e(lang, "reviews.written", { lang: intlName(lang, "language", r.lang) }) + "</p>" : "") +
+      "<figcaption>" + '<span class="review-avatar" aria-hidden="true">' + esc(String(r.name).trim().charAt(0).toUpperCase()) + "</span>" +
+        "<span><strong><bdi>" + esc(r.name) + "</bdi></strong>" + (meta ? "<small>" + esc(meta) + "</small>" : "") +
+        (act ? '<small class="review-act">' + icon("map") + e(lang, "act." + r.activity + ".name") + "</small>" : "") +
+        "</span></figcaption>" +
+    "</figure>";
+  }
+  function reviewsFor(activityId) { return REVIEWS.filter(function (r) { return r.activity === activityId; }); }
+  function reviews(lang) {
+    var st = reviewStats();
+    if (!st) return "";
+    return '<section class="section" id="reviews" aria-labelledby="reviews-title"><div class="container">' +
+      sectionHead(lang, "reviews-title", "reviews.title", "reviews.lead", "reviews.kicker", "center") +
+      '<div class="review-summary reveal">' + stars(lang, st.avg) + "<strong>" + reviewSummary(lang, st) + "</strong></div>" +
+      '<div class="review-grid">' + REVIEWS.slice(0, 6).map(function (r, i) { return reviewCard(lang, r, i); }).join("") + "</div>" +
+      ((SITE.googleReviewUrl || SITE.googleBusinessUrl) ? '<div class="review-ctas reveal">' +
+        (SITE.googleReviewUrl ? '<a class="btn btn-action" href="' + esc(SITE.googleReviewUrl) + '" target="_blank" rel="noopener">' + icon("star") + e(lang, "reviews.leave") + "</a>" : "") +
+        (SITE.googleBusinessUrl ? '<a class="btn btn-quiet" href="' + esc(SITE.googleBusinessUrl) + '" target="_blank" rel="noopener">' + e(lang, "reviews.seeAll") + "</a>" : "") +
+      "</div>" : "") +
+    "</div></section>";
+  }
+  // Small rating badge under the hero buttons (from 3 reviews)
+  function heroRating(lang) {
+    var st = reviewStats();
+    if (!st || st.n < 3) return "";
+    return '<a class="hero-rating" href="#reviews">' + stars(lang, st.avg) + "<span>" + reviewSummary(lang, st) + "</span></a>";
+  }
+
   function hero(lang) {
     return '<section class="hero" id="top">' +
       '<div class="hero-media">' + img(IMAGES.hero, { eager: true, sizes: "100vw", widths: [800, 1200, 1600, 2000], w: 2000, h: 1333 }) + "</div>" +
@@ -239,7 +307,7 @@
           '<div class="hero-ctas">' +
             '<a class="btn btn-action btn-lg" href="#quote" data-quote="transfer">' + e(lang, "hero.ctaQuote") + "</a>" +
             '<a class="btn btn-glass btn-lg" href="#activities">' + e(lang, "hero.ctaActivities") + icon("arrow", "flip-rtl") + "</a>" +
-          "</div>" +
+          "</div>" + heroRating(lang) +
         "</div>" +
         quoteForm(lang) +
       "</div>" +
@@ -476,12 +544,13 @@
 
   function renderPage(lang) {
     return header(lang) +
-      '<main id="main">' + hero(lang) + services(lang) + activities(lang) + mapSection(lang) + why(lang) + how(lang) + faq(lang) + contact(lang) + "</main>" +
+      '<main id="main">' + hero(lang) + services(lang) + activities(lang) + mapSection(lang) + why(lang) + reviews(lang) + how(lang) + faq(lang) + contact(lang) + "</main>" +
       footer(lang);
   }
 
   var api = {
     renderPage: renderPage, t: t, esc: esc, waLink: waLink,
+    reviewCard: reviewCard, reviewsFor: reviewsFor,
     setAssetBase: function (b) { ASSET_BASE = b || ""; },
     formatTrip: formatTrip, faqCount: faqCount,
     mapsEmbed: mapsEmbed, mapsSearch: mapsSearch, mapsRoute: mapsRoute, destName: destName,

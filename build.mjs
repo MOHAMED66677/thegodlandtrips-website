@@ -304,6 +304,7 @@ for (const lang of LANGS) {
     const imgSrc = isPhoto ? photo(up, a.image, 1200) : (a.image ? up + a.image : "");
     const imgSet = isPhoto ? [800, 1200, 1600].map((w) => `${photo(up, a.image, w)} ${w}w`).join(", ") : "";
     const P = SITE.promises || {};
+    const actReviews = R.reviewsFor(a.id);
     const included = ["inc.pickup", "inc.vehicle", ...(a.safety ? ["inc.safety", "inc.instructor"] : [])];
     const info = [
       ["clock", "info.duration", t(`dur.${a.duration}`)],
@@ -389,6 +390,8 @@ for (const lang of LANGS) {
         <ul class="inc-list">${included.map((k) => `<li>${ic("check", "", 18)}<span>${e(k)}</span></li>`).join("")}</ul>
         ${dest ? `<h2>${e("page.map")}</h2>
         <div class="map-frame act-map"><iframe title="${e("map.iframeTitle", { name: R.destName(lang, dest) })}" src="${R.esc(R.mapsEmbed(dest, lang))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>` : ""}
+        ${actReviews.length ? `<h2>${e("reviews.actTitle")}</h2>
+        <div class="review-grid act-reviews">${actReviews.slice(0, 4).map((r, i) => R.reviewCard(lang, r, i, { reveal: false, showActivity: false })).join("")}</div>` : ""}
       </article>
       <aside class="act-side">
         <div class="act-card">
