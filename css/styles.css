@@ -486,6 +486,35 @@ a { color: var(--color-primary); }
 .filters button[aria-pressed="true"] .count { background: rgba(255,255,255,.2); color: var(--color-on-primary); }
 
 .activity-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+/* Home page: the activities on ONE horizontal row you can scroll */
+.acts-carousel { position: relative; }
+.acts-row {
+  grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 3);
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 6px;
+  padding: 6px 6px 22px; margin: -6px; scrollbar-width: thin; scrollbar-color: rgba(var(--rgb-primary), .35) transparent;
+}
+.acts-row > .activity-card { scroll-snap-align: start; }
+.acts-row > [hidden] { display: none; }
+.acts-row:focus-visible { outline: 3px solid var(--color-action); outline-offset: 4px; border-radius: var(--radius); }
+.acts-row::-webkit-scrollbar { height: 8px; }
+.acts-row::-webkit-scrollbar-thumb { background: rgba(var(--rgb-primary), .3); border-radius: 8px; }
+@media (max-width: 960px) { .acts-row { grid-auto-columns: calc((100% - 24px) / 2); } }
+@media (max-width: 640px) { .acts-row { grid-auto-columns: 84%; gap: 16px; } }
+.car-btn {
+  position: absolute; top: 118px; z-index: 2; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center; border: 1px solid var(--color-border); cursor: pointer;
+  background: var(--color-surface); color: var(--color-primary); box-shadow: var(--shadow);
+  transition: opacity .2s, transform .2s, background-color .2s;
+}
+.car-btn svg { width: 22px; height: 22px; }
+.car-btn:hover { transform: scale(1.06); background: var(--color-band); }
+.car-btn[disabled] { opacity: 0; pointer-events: none; }
+.car-prev { inset-inline-start: -22px; }
+.car-next { inset-inline-end: -22px; }
+.car-prev svg { transform: scaleX(-1); }
+[dir="rtl"] .car-prev svg { transform: none; }
+[dir="rtl"] .car-next svg { transform: scaleX(-1); }
+@media (max-width: 640px) { .car-btn { display: none; } }   /* phones: swipe */
 .activity-card {
   background: var(--color-surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
   display: flex; flex-direction: column; transition: transform .35s var(--ease), box-shadow .35s;

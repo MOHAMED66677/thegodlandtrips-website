@@ -87,6 +87,8 @@ var I18N = {
 
     "acts.title": "Excursions et activités",
     "acts.lead": "Choisissez une catégorie pour ne voir que ce qui vous intéresse. Le transport est toujours inclus.",
+    "acts.prev": "Activités précédentes",
+    "acts.next": "Activités suivantes",
     "acts.filterLabel": "Filtrer les activités par catégorie",
     "acts.all": "Tout",
     "cat.excursions": "Excursions",
@@ -383,6 +385,8 @@ var I18N = {
 
     "acts.title": "رحلات وأنشطة",
     "acts.lead": "اختر فئة لترى ما يهمك فقط. النقل مشمول دائمًا.",
+    "acts.prev": "الأنشطة السابقة",
+    "acts.next": "الأنشطة التالية",
     "acts.filterLabel": "تصفية الأنشطة حسب الفئة",
     "acts.all": "الكل",
     "cat.excursions": "رحلات",
@@ -679,6 +683,8 @@ var I18N = {
 
     "acts.title": "Tours and activities",
     "acts.lead": "Pick a category to see only what interests you. Transport is always included.",
+    "acts.prev": "Previous activities",
+    "acts.next": "Next activities",
     "acts.filterLabel": "Filter activities by category",
     "acts.all": "All",
     "cat.excursions": "Tours",
@@ -975,6 +981,8 @@ var I18N = {
 
     "acts.title": "Excursiones y actividades",
     "acts.lead": "Elija una categoría para ver solo lo que le interesa. El transporte siempre está incluido.",
+    "acts.prev": "Actividades anteriores",
+    "acts.next": "Actividades siguientes",
     "acts.filterLabel": "Filtrar actividades por categoría",
     "acts.all": "Todo",
     "cat.excursions": "Excursiones",
@@ -1266,6 +1274,8 @@ var I18N = {
     "services.seeActs": "Aktivitäten ansehen",
     "acts.title": "Ausflüge und Aktivitäten",
     "acts.lead": "Wählen Sie eine Kategorie, um nur das zu sehen, was Sie interessiert. Der Transport ist immer inklusive.",
+    "acts.prev": "Vorherige Aktivitäten",
+    "acts.next": "Weitere Aktivitäten",
     "acts.filterLabel": "Aktivitäten nach Kategorie filtern",
     "acts.all": "Alle",
     "cat.excursions": "Ausflüge",
@@ -1552,6 +1562,8 @@ var I18N = {
     "services.seeActs": "Activiteiten bekijken",
     "acts.title": "Excursies en activiteiten",
     "acts.lead": "Kies een categorie om alleen te zien wat u interesseert. Vervoer is altijd inbegrepen.",
+    "acts.prev": "Vorige activiteiten",
+    "acts.next": "Volgende activiteiten",
     "acts.filterLabel": "Activiteiten filteren op categorie",
     "acts.all": "Alles",
     "cat.excursions": "Excursies",

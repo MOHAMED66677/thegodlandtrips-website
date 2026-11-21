@@ -394,7 +394,7 @@
     var price = SITE.showPrices && a.price
       ? '<span class="price">' + e(lang, "acts.from") + " <strong>" + esc(a.price) + " " + esc(SITE.currency) + "</strong></span>"
       : "";
-    return '<article class="activity-card reveal" data-cat="' + a.category + '" style="--d:' + (i % 3) * 80 + 'ms">' +
+    return '<article class="activity-card" data-cat="' + a.category + '">' +
       '<div class="activity-media">' + img(a.image) +
         '<span class="chip chip-cat">' + icon(CAT_ICON[a.category]) + e(lang, "cat." + a.category) + "</span>" +
         '<span class="chip chip-dur"><span class="visually-hidden">' + e(lang, "acts.duration") + (lang === "fr" ? " : " : ": ") + "</span>" + icon("clock") + e(lang, "dur." + a.duration) + "</span>" +
@@ -423,7 +423,13 @@
         }).join("") + "</div>" +
       "</div>" +
       '<p class="visually-hidden" aria-live="polite" id="acts-count"></p>' +
-      '<div class="activity-grid" id="acts-grid">' + ACTIVITIES.map(function (a, i) { return activityCard(lang, a, i); }).join("") + "</div>" +
+      // one horizontal row you can scroll (arrows on wide screens, swipe on phones)
+      '<div class="acts-carousel reveal">' +
+        '<div class="activity-grid acts-row" id="acts-grid" role="region" tabindex="0" aria-label="' + e(lang, "acts.title") + '">' +
+          ACTIVITIES.map(function (a, i) { return activityCard(lang, a, i); }).join("") + "</div>" +
+        '<button type="button" class="car-btn car-prev" data-dir="-1" aria-controls="acts-grid" aria-label="' + e(lang, "acts.prev") + '">' + icon("arrow") + "</button>" +
+        '<button type="button" class="car-btn car-next" data-dir="1" aria-controls="acts-grid" aria-label="' + e(lang, "acts.next") + '">' + icon("arrow") + "</button>" +
+      "</div>" +
     "</div></section>";
   }
 

@@ -156,6 +156,7 @@
     writeForm(state);
     afterRender();
     applyFilter(currentFilter, false);
+    updateCarousel();
     setupReveal(!opts.initial);
     onScroll();
 
@@ -419,11 +420,37 @@
       if (show && announce) c.classList.add("is-in");
       if (show) shown++;
     });
+    var row = $("#acts-grid");
+    if (row && announce) row.scrollTo({ left: 0, behavior: "auto" });
+    updateCarousel();
     if (announce) {
       var live = $("#acts-count");
       if (live) live.textContent = t("acts.showing", { n: shown });
     }
   }
+
+  /* ---------- activities row: arrows + their on/off state ---------- */
+  function updateCarousel() {
+    var row = $("#acts-grid");
+    if (!row) return;
+    var max = row.scrollWidth - row.clientWidth;
+    var x = Math.abs(row.scrollLeft);              // negative in Arabic (right-to-left)
+    var prev = app.querySelector(".car-prev"), next = app.querySelector(".car-next");
+    if (prev) prev.disabled = x < 4;
+    if (next) next.disabled = x > max - 4;
+  }
+  function scrollCarousel(dir) {
+    var row = $("#acts-grid");
+    if (!row) return;
+    var rtl = document.documentElement.dir === "rtl";
+    var step = Math.max(row.clientWidth * 0.9, 260);
+    row.scrollBy({ left: dir * step * (rtl ? -1 : 1), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  // scroll events don't bubble: listen in the capture phase so it survives re-renders
+  document.addEventListener("scroll", function (ev) { if (ev.target && ev.target.id === "acts-grid") updateCarousel(); }, true);
+  window.addEventListener("resize", updateCarousel);
+  window.addEventListener("load", updateCarousel);   // once fonts and images have their final size
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateCarousel);
 
   /* ---------- quote form ---------- */
   function syncServiceUI() {
@@ -675,6 +702,7 @@
       return;
     }
     if (el.matches(".filters button")) { applyFilter(el.getAttribute("data-filter"), true); return; }
+    if (el.matches(".car-btn")) { scrollCarousel(Number(el.getAttribute("data-dir"))); return; }
     if (el.matches(".menu-toggle")) {
       var nav = $("#main-nav");
       var open = !nav.classList.contains("is-open");
