@@ -196,6 +196,8 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
 - ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://marrakechodyssey.com`, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
+- **Google Search Console** (search.google.com/search-console, propriété `marrakechodyssey.com`, vérifiée par un enregistrement TXT dans Cloudflare : ne le supprimez pas) : le sitemap y est déclaré. Vous y voyez les recherches qui amènent des visiteurs et les pages indexées.
+- **Bing et ChatGPT** : après chaque mise en ligne importante (nouvelle page, nouveaux prix), lancez `node tools/indexnow.mjs` : Bing (utilisé par ChatGPT) est prévenu immédiatement des 84 pages.
 
 ## 12. Statistiques de visite (gratuites, sans cookies)
 
