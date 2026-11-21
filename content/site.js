@@ -53,6 +53,10 @@ var SITE = {
   // (real photos, legal page...). Set to false on launch day.
   hideFromSearch: false,
 
+  // IndexNow key: lets the site tell Bing (and ChatGPT search, Yandex...) about new or
+  // changed pages instantly. Not a secret. Run "node tools/indexnow.mjs" after publishing.
+  indexNowKey: "225badf054c5dad2139a74fa3cf54fc1",
+
   // DEMO MODE: true while the contact details are placeholders.
   // - the site is hidden from Google (noindex)
   // - a small "Demo" badge is shown

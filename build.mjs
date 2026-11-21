@@ -442,6 +442,9 @@ ${LANGS.map((x) => `    <xhtml:link rel="alternate" hreflang="${x}" href="${actU
   </url>`)).join("\n")}
 </urlset>
 `);
+// IndexNow key file (see tools/indexnow.mjs)
+if (SITE.indexNowKey && !SITE.hideFromSearch) writeFileSync(`${OUT}/${SITE.indexNowKey}.txt`, SITE.indexNowKey);
+
 writeFileSync(`${OUT}/robots.txt`, SITE.demoMode || SITE.hideFromSearch
   ? `# Hidden from search engines until the official launch (hideFromSearch)\nUser-agent: *\nDisallow: /\n`
   : `User-agent: *\nAllow: /\nSitemap: ${SITE.siteUrl}/sitemap.xml\n`);
