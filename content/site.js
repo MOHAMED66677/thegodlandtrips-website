@@ -47,7 +47,7 @@ var SITE = {
 
   // Public URL of the site once online (used for SEO links and link previews).
   // No trailing slash. Change it when the site gets its own domain.
-  siteUrl: "https://mohamed66677.github.io/thegodlandtrips-website",
+  siteUrl: "https://marrakechodyssey.com",
 
   // Hide the site from Google (noindex) until the official launch
   // (real photos, legal page...). Set to false on launch day.
