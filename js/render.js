@@ -303,7 +303,6 @@
       '<div class="hero-media">' + img(IMAGES.hero, { eager: true, sizes: "100vw", widths: [800, 1200, 1600, 2000], w: 2000, h: 1333 }) + "</div>" +
       '<div class="container hero-grid">' +
         '<div class="hero-copy">' +
-          '<span class="eyebrow">' + e(lang, "hero.eyebrow") + "</span>" +
           "<h1>" + e(lang, "hero.title") + "</h1>" +
           '<p class="lead">' + e(lang, "hero.lead") + "</p>" +
           '<div class="hero-ctas">' +
@@ -338,7 +337,6 @@
 
   function sectionHead(lang, id, titleKey, leadKey, eyebrowKey, cls) {
     return '<div class="section-head reveal' + (cls ? " " + cls : "") + '">' +
-      (eyebrowKey ? '<span class="kicker">' + e(lang, eyebrowKey) + "</span>" : "") +
       '<h2 id="' + id + '">' + e(lang, titleKey) + "</h2>" +
       (leadKey ? "<p>" + e(lang, leadKey) + "</p>" : "") + "</div>";
   }
@@ -506,7 +504,6 @@
       '<div class="contact-media">' + img(IMAGES.contact, { sizes: "100vw", widths: [800, 1200, 1600, 2000], w: 2000, h: 1333 }) + "</div>" +
       '<div class="container contact-inner">' +
         '<div class="section-head reveal center">' +
-          '<span class="kicker">' + e(lang, "contact.cta") + "</span>" +
           '<h2 id="contact-title">' + e(lang, "contact.title") + "</h2><p>" + e(lang, "contact.lead") + "</p>" +
           '<div class="contact-ctas">' +
             '<a class="btn btn-action btn-lg" href="#quote" data-quote="transfer">' + e(lang, "hero.ctaQuote") + "</a>" +
