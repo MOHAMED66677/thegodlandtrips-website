@@ -2,38 +2,39 @@
    DESIGN TOKENS: every color and font is set ONCE, in this block
    ========================================================= */
 :root {
-  /* Couleur principale : rouge de Marrakech (la « ville ocre ») */
-  --color-primary: #A13A26;      /* bandeau, icônes, titres de rubrique, section contact */
-  --rgb-primary: 161, 58, 38;    /* même couleur, pour les transparences */
-  --color-primary-dark: #3D1610; /* fonds sombres (accueil, contact) */
-  --rgb-dark: 46, 16, 11;        /* voile sombre posé sur les photos */
-  --color-footer: #2A0F0A;
-  /* Couleur d'action : ambre safran, réservée aux boutons « Demander un devis » */
-  --color-action: #F0A63A;
-  --color-action-hover: #F5B655;
-  --rgb-action: 240, 166, 58;
+  /* Couleurs du logo : bleu nuit, orange terre cuite, sable */
+  --color-primary: #173059;      /* bleu nuit du logo : titres, icônes, section contact */
+  --rgb-primary: 23, 48, 89;    /* même couleur, pour les transparences */
+  --color-primary-dark: #0F1F3D; /* fonds sombres (accueil, contact) */
+  --rgb-dark: 12, 24, 48;        /* voile sombre posé sur les photos */
+  --color-footer: #0B1830;
+  /* Couleur d'action : orange terre cuite du logo, réservée aux boutons « Demander un devis » */
+  --color-action: #D9783A;
+  --color-action-hover: #E58A4C;
+  --rgb-action: 217, 120, 58;
   /* Textes et fonds */
-  --color-text: #2B1915;         /* titres et paragraphes */
-  --rgb-text: 43, 25, 21;
-  --color-text-muted: #6E524B;   /* descriptions et légendes */
-  --color-bg: #FBF6F3;           /* fond de page */
-  --color-band: #F5E6E0;         /* sections en alternance */
-  --color-band-hover: #EFD9D1;
+  --color-text: #1A2440;         /* titres et paragraphes */
+  --rgb-text: 26, 36, 64;
+  --color-text-muted: #56607A;   /* descriptions et légendes */
+  --color-bg: #FAF8F2;           /* fond de page (même crème que le logo) */
+  --color-band: #F3ECDF;         /* sections en alternance (sable) */
+  --color-band-hover: #EAE0CD;
   --color-surface: #FFFFFF;
-  --color-border: #EBDCD6;
-  --color-border-hover: #DCC3BA;
-  --color-placeholder: #9A817A;
+  --color-border: #E5DCCB;
+  --color-border-hover: #D2C4AB;
+  --color-placeholder: #868D9E;
   --color-on-primary: #FFFFFF;     /* text/icons on a red background */
-  --color-on-action: #2B1915;      /* text on the amber buttons (same in both themes) */
-  --color-brand-red: #A13A26;      /* fixed brand red (on white chips over photos) */
+  --color-on-action: #14213D;      /* text on the orange buttons (same in both themes) */
+  --color-brand-red: #173059;      /* fixed brand navy (on white chips over photos) */
   --color-header-bg: rgba(255, 255, 255, .94);
   --color-chip-bg: rgba(255, 255, 255, .94);
-  --rgb-shadow: 43, 25, 21;
+  --rgb-shadow: 15, 31, 61;
   --color-success: #1E7B4F;
   --color-error: #B3261E;
 
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-heading: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-brand: "Cinzel", Georgia, "Times New Roman", serif;   /* name in the header/footer (like the logo) */
   --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
 
   --radius: 20px;
@@ -56,21 +57,21 @@
 /* ---------- DARK THEME (chosen by the visitor, or their device setting) ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-primary: #E0745C;        /* lighter terracotta: readable on dark backgrounds */
-  --rgb-primary: 224, 116, 92;
-  --color-on-primary: #1F0E0A;
-  --color-text: #F3E7E2;
-  --color-text-muted: #C4ACA4;
-  --color-bg: #15100E;
-  --color-band: #1E1512;
-  --color-band-hover: #2A1D18;
-  --color-surface: #281B16;
-  --color-border: #3D2B24;
-  --color-border-hover: #5A4037;
-  --color-placeholder: #8F7871;
-  --color-footer: #0E0806;
-  --color-header-bg: rgba(30, 21, 18, .94);
-  --color-chip-bg: rgba(40, 27, 22, .92);
+  --color-primary: #9DBBEF;        /* light blue: readable on dark backgrounds */
+  --rgb-primary: 157, 187, 239;
+  --color-on-primary: #0B1830;
+  --color-text: #EDF0F6;
+  --color-text-muted: #A9B2C6;
+  --color-bg: #0B1324;
+  --color-band: #101B31;
+  --color-band-hover: #16233E;
+  --color-surface: #152139;
+  --color-border: #233352;
+  --color-border-hover: #344A74;
+  --color-placeholder: #7A859D;
+  --color-footer: #060C19;
+  --color-header-bg: rgba(14, 23, 42, .94);
+  --color-chip-bg: rgba(21, 33, 57, .92);
   --rgb-shadow: 0, 0, 0;
   --color-success: #6FD3A0;
   --color-error: #FF8A80;
@@ -151,11 +152,12 @@ a { color: var(--color-primary); }
 }
 .header-inner { display: flex; align-items: center; gap: 12px; height: 100%; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; font: 700 1.15rem/1.1 var(--font-heading); margin-inline-end: auto; }
-.brand-logo { width: 36px; height: 40px; flex: none; }
-.brand-name { letter-spacing: -.02em; white-space: nowrap; }
-.bp-light { font-weight: 500; color: var(--color-primary); }
-.bp-strong { font-weight: 700; color: var(--color-text); }
-.bp-accent { font-weight: 700; color: var(--color-primary); }
+.brand-logo { width: 37px; height: 48px; flex: none; object-fit: contain; }
+/* The name, set like the logo: "MARRAKECH ODYSSEY" in a classical serif, "TRAVEL" spaced out below */
+.brand-name { white-space: nowrap; font-family: var(--font-brand); text-transform: uppercase; line-height: 1; }
+.bp-light { font-weight: 600; color: var(--color-primary); }
+.bp-strong { font-weight: 700; color: var(--color-primary); font-size: 1.02em; letter-spacing: .01em; }
+.bp-accent { display: block; margin-top: 5px; font: 600 .56em/1 var(--font-body); letter-spacing: .5em; color: var(--color-action); }
 /* Over the hero photo and in the footer: white + saffron */
 .site-header.is-top:not(.menu-open) .bp-strong, .site-footer .bp-strong { color: #fff; }
 .site-header.is-top:not(.menu-open) :is(.bp-light, .bp-accent), .site-footer :is(.bp-light, .bp-accent) { color: var(--color-action); }
@@ -251,7 +253,8 @@ a { color: var(--color-primary); }
 @media (max-width: 440px) {
   .header-inner { gap: 6px; }
   .brand { font-size: .98rem; gap: 6px; }
-  .brand-logo { width: 30px; height: 34px; }
+  .brand-logo { width: 31px; height: 40px; }
+  .site-header .brand-name { font-size: .8rem; }
   .lang-switch:not(.lang-switch-footer) button { min-width: 33px; padding: 0 5px; }
 }
 @media (max-width: 359px) { .brand-name { display: none; } }

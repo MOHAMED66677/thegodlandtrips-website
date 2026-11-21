@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
+  <defs>
+    <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D47338"/><stop offset="1" stop-color="#E7B05B"/></linearGradient>
+    <clipPath id="tc"><path d="M19 105 V58 C19 37.7 34.0 21.9 50 16.6 C66.0 21.9 81 37.7 81 58 V105 Z"/></clipPath>
+  </defs>
+  <path d="M8 116 V58 C8 30.0 28.0 12.0 50 4.0 C72.0 12.0 92 30.0 92 58 V116 Z" fill="#173059"/>
+  
+  <path d="M16.6 107.4 V58 C16.6 36.0 32.7 19.7 50 13.9 C67.3 19.7 83.4 36.0 83.4 58 V107.4 Z" fill="#173059"/>
+  <path d="M19 105 V58 C19 37.7 34.0 21.9 50 16.6 C66.0 21.9 81 37.7 81 58 V105 Z" fill="url(#tg)"/>
+  <g clip-path="url(#tc)">
+    <path d="M18 92 Q38 80 56 88 T84 84 V110 H18 Z" fill="#C85B29"/>
+    <g fill="#173059"><rect x="66" y="74" width="5.2" height="16"/><rect x="66.9" y="70" width="3.4" height="4.4"/><rect x="68.2" y="66.6" width=".8" height="3.6"/><rect x="62" y="86" width="16" height="4"/></g>
+    <path d="M18 99 Q44 90 84 97 V110 H18 Z" fill="#E7B05B"/>
+  </g>
+  <polygon points="50,30 54.5,48 50,52 45.5,48" fill="#173059"/><polygon points="50,74 45.5,56 50,52 54.5,56" fill="#173059"/><polygon points="28,52 46,47.5 50,52 46,56.5" fill="#173059"/><polygon points="72,52 54,56.5 50,52 54,47.5" fill="#173059"/>
+</svg>

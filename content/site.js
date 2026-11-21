@@ -8,7 +8,7 @@ var SITE = {
   agencyName: "Marrakech Odyssey Travel",
   // How the name is styled in the header/footer logo: [text, style]
   // style: "light" (thin, red) | "strong" (bold, dark) | "accent" (bold, red)
-  brandParts: [["Marrakech ", "light"], ["Odyssey", "strong"]],
+  brandParts: [["Marrakech Odyssey", "strong"], ["Travel", "accent"]],
 
   // [À REMPLACER] WhatsApp number in international format, digits only (no +, no spaces)
   whatsapp: "212693323368",

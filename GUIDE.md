@@ -217,14 +217,24 @@ Ces deux services ne déposent pas de cookies : aucun bandeau de consentement n'
 Tout en haut de `css/styles.css` :
 
 ```css
---color-primary: #A13A26;   /* rouge de Marrakech : bandeau, icônes, contact */
---rgb-primary: 161, 58, 38; /* la même couleur en chiffres (pour les transparences) */
---color-action:  #F0A63A;   /* ambre safran : boutons d'action */
---color-text:    #2B1915;   /* titres et paragraphes */
+--color-primary: #173059;   /* bleu nuit du logo : titres, icônes, contact */
+--rgb-primary: 23, 48, 89;  /* la même couleur en chiffres (pour les transparences) */
+--color-action:  #D9783A;   /* orange terre cuite du logo : boutons d'action */
+--color-text:    #1A2440;   /* titres et paragraphes */
 ...
 ```
 
-Changez un code couleur ici et il est mis à jour sur tout le site. Si vous changez `--color-primary`, mettez aussi à jour `--rgb-primary` avec la même couleur (convertisseur : [htmlcolorcodes.com](https://htmlcolorcodes.com)). Gardez un texte foncé sur fond clair pour la lisibilité.
+Les couleurs reprennent celles du logo (bleu nuit, orange terre cuite, sable). Changez un code couleur ici et il est mis à jour sur tout le site. Si vous changez `--color-primary`, mettez aussi à jour `--rgb-primary` avec la même couleur (convertisseur : [htmlcolorcodes.com](https://htmlcolorcodes.com)). Gardez un texte foncé sur fond clair pour la lisibilité.
+
+### Le logo
+
+Le logo est dans `brand/my-logo/` :
+- `original.webp` : votre fichier d'origine ;
+- `logo-full.png` (fond transparent, pour fonds clairs) et `logo-full-white.png` (nom en blanc, pour fonds sombres) : pour les réseaux sociaux, les cartes de visite, les documents ;
+- `emblem.png` : l'arche seule (en-tête du site, photo de profil) ;
+- `icon.svg`, `icon-tiny.svg`, `app-icon.svg` : version simplifiée pour les petites tailles (onglet du navigateur, icône d'application).
+
+Si vous changez le logo d'origine, relancez `python brand/my-logo/cutout.py`, recopiez `emblem.png` dans `images/logo-emblem.png`, puis `python brand/make_og.py`.
 
 ## 14. Réception des demandes de devis
 

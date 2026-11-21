@@ -58,7 +58,7 @@
   }
 
   /* ---------- light / dark theme ---------- */
-  var THEME_COLORS = { light: "#A13A26", dark: "#15100E" };
+  var THEME_COLORS = { light: "#173059", dark: "#0B1324" };
   function savedTheme() { try { var v = localStorage.getItem("theme"); return v === "dark" || v === "light" ? v : null; } catch (e) { return null; } }
   function systemTheme() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
   function currentTheme() { return html.getAttribute("data-theme") === "dark" ? "dark" : "light"; }

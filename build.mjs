@@ -210,7 +210,7 @@ for (const lang of LANGS) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${R.esc(L.pageTitle)} | ${R.esc(SITE.agencyName)}</title>
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#A13A26">
+  <meta name="theme-color" content="#173059">
   <link rel="canonical" href="${legalUrl(lang)}">
   ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${legalUrl(l)}">`).join("\n  ")}
   <link rel="icon" type="image/svg+xml" href="${prefix}images/favicon.svg">
@@ -224,7 +224,7 @@ for (const lang of LANGS) {
   ${sprite}
   <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-mark.svg" alt="" width="36" height="40"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="37" height="48"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
     <nav class="lang-menu" aria-label="${R.esc(R.t(lang, "lang.label"))}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list"><svg aria-hidden="true" width="20" height="20"><use href="#i-globe"/></svg><span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${R.esc(R.t(lang, "lang.label"))} (${R.esc(LANG_NAMES[lang])})</span><svg class="lang-chevron" aria-hidden="true" width="16" height="16"><use href="#i-chevron"/></svg></button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
   </div></header>
@@ -246,7 +246,7 @@ for (const lang of LANGS) {
       function apply(t, save) {
         html.setAttribute("data-theme", t);
         btn.setAttribute("aria-pressed", String(t === "dark"));
-        if (meta) meta.setAttribute("content", t === "dark" ? "#15100E" : "#A13A26");
+        if (meta) meta.setAttribute("content", t === "dark" ? "#0B1324" : "#173059");
         if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
       }
       apply(html.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
@@ -277,7 +277,7 @@ const PAGE_SCRIPT = `(function () {
   function apply(t, save) {
     html.setAttribute("data-theme", t);
     btn.setAttribute("aria-pressed", String(t === "dark"));
-    if (meta) meta.setAttribute("content", t === "dark" ? "#15100E" : "#A13A26");
+    if (meta) meta.setAttribute("content", t === "dark" ? "#0B1324" : "#173059");
     if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
   }
   apply(html.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
@@ -342,7 +342,7 @@ for (const lang of LANGS) {
   <title>${R.esc(title)}</title>
   <meta name="description" content="${R.esc(desc)}">
   ${SITE.demoMode || SITE.hideFromSearch ? '<meta name="robots" content="noindex, nofollow">' : ""}
-  <meta name="theme-color" content="#A13A26">
+  <meta name="theme-color" content="#173059">
   <link rel="canonical" href="${actUrl(lang, a)}">
   ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${actUrl(l, a)}">`).join("\n  ")}
   <link rel="alternate" hreflang="x-default" href="${actUrl(DEFAULT_LANG, a)}">
@@ -364,7 +364,7 @@ for (const lang of LANGS) {
   ${sprite}
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-mark.svg" alt="" width="36" height="40"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="37" height="48"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
@@ -471,7 +471,7 @@ const nf = (l) => `<p lang="${l}"${R.isRtl(l) ? ' dir="rtl"' : ""}><a href="${BA
 writeFileSync(`${OUT}/404.html`, secure(`<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex"><link rel="icon" type="image/svg+xml" href="${BASE}images/favicon.svg">
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FBF6F3;color:#2B1915;font-family:system-ui,sans-serif;text-align:center;padding:24px}
-img{width:72px;margin:0 auto 12px}h1{font-size:2.4rem;margin:.2em 0}p{margin:.4em 0;font-size:1.1rem}a{color:#A13A26;font-weight:600}</style></head>
+img{width:72px;margin:0 auto 12px}h1{font-size:2.4rem;margin:.2em 0}p{margin:.4em 0;font-size:1.1rem}a{color:#173059;font-weight:600}</style></head>
 <body><main><img src="${BASE}images/logo-mark.svg" alt=""><h1>404</h1>${LANGS.map(nf).join("")}</main></body></html>
 `));
 
