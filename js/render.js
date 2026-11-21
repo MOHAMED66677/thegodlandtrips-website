@@ -65,8 +65,8 @@
   function brandInner() {
     var parts = SITE.brandParts && SITE.brandParts.length ? SITE.brandParts : [[SITE.agencyName, "strong"]];
     return '<img class="brand-logo" src="' + asset("images/logo-emblem.png") + '" alt="" width="60" height="78">' +
-      '<span class="brand-word"><img class="bw bw-navy" src="' + asset("images/wordmark.png") + '" alt="" width="163" height="64">' +
-      '<img class="bw bw-white" src="' + asset("images/wordmark-white.png") + '" alt="" width="163" height="64"></span>' +
+      '<span class="brand-word"><img class="bw bw-navy" src="' + asset("images/wordmark.png") + '" alt="" width="155" height="64">' +
+      '<img class="bw bw-white" src="' + asset("images/wordmark-white.png") + '" alt="" width="155" height="64"></span>' +
       '<span class="visually-hidden">' + esc(parts.map(function (p) { return p[0]; }).join(" ")) + "</span>";
   }
 
