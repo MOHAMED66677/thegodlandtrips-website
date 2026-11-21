@@ -32,9 +32,8 @@
   --color-success: #1E7B4F;
   --color-error: #B3261E;
 
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-brand: "Cinzel", Georgia, "Times New Roman", serif;   /* name in the header/footer (like the logo) */
+  --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Marcellus", Georgia, "Times New Roman", serif;   /* classical serif, in the spirit of the logo lettering */
   --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
 
   --radius: 20px;
@@ -96,11 +95,13 @@ body {
 :root[lang="ar"] body { line-height: 1.8; }
 img { display: block; max-width: 100%; height: auto; }
 svg { display: block; flex: none; }
-h1, h2, h3 { font-family: var(--font-heading); line-height: 1.15; margin: 0 0 .5em; letter-spacing: -.02em; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.15; margin: 0 0 .5em; letter-spacing: 0; text-wrap: balance; }
 :root[lang="ar"] :is(h1, h2, h3) { letter-spacing: 0; line-height: 1.45; }
-h1 { font-size: clamp(2.3rem, 6vw, 4.4rem); font-weight: 700; }
-h2 { font-size: clamp(1.9rem, 4.2vw, 3rem); font-weight: 700; }
-h3 { font-size: 1.2rem; font-weight: 600; letter-spacing: -.01em; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.7rem); font-weight: 400; }
+h2 { font-size: clamp(1.9rem, 4vw, 2.9rem); font-weight: 400; }
+h3 { font-family: var(--font-body); font-size: 1.22rem; font-weight: 700; }
+:root[lang="ar"] h3 { font-family: var(--font-arabic); }
+:root[lang="ar"] :is(h1, h2) { font-weight: 700; }
 p { margin: 0 0 1em; }
 a { color: var(--color-primary); }
 :focus-visible { outline: 3px solid var(--color-action); outline-offset: 3px; border-radius: 6px; }
@@ -295,7 +296,7 @@ a { color: var(--color-primary); }
 @keyframes kenburns { from { transform: scale(1.12); } to { transform: scale(1); } }
 
 .hero-grid { display: grid; gap: 40px; align-items: center; width: 100%; }
-@media (min-width: 1000px) { .hero-grid { grid-template-columns: 1.1fr minmax(380px, 460px); gap: 64px; } }
+@media (min-width: 1000px) { .hero-grid { grid-template-columns: 1.1fr minmax(380px, 460px); gap: 64px; align-items: start; } .hero-copy { padding-top: clamp(16px, 4vh, 56px); } }
 .hero-copy { max-width: 640px; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
@@ -445,7 +446,7 @@ a { color: var(--color-primary); }
 .vehicle-media { position: relative; aspect-ratio: 16 / 10; }
 .vehicle-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .vehicle-body { padding: 18px 22px 20px; display: flex; flex-direction: column; flex: 1; }
-.vehicle-body h4 { font-family: var(--font-heading); font-size: 1.2rem; margin: 0 0 4px; }
+.vehicle-body h4 { font-family: var(--font-body); font-weight: 700; font-size: 1.2rem; margin: 0 0 4px; }
 .vehicle-body > p { color: var(--color-text-muted); margin: 0 0 12px; }
 .vehicle-specs { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .vehicle-specs li { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--color-band); font-size: .85rem; font-weight: 600; }
@@ -617,7 +618,7 @@ a { color: var(--color-primary); }
 .step-num svg { width: 30px; height: 30px; }
 .step-num b {
   position: absolute; top: -4px; inset-inline-end: -4px; width: 28px; height: 28px; border-radius: 50%;
-  display: grid; place-items: center; background: var(--color-action); color: var(--color-on-action); font: 700 .85rem/1 var(--font-heading);
+  display: grid; place-items: center; background: var(--color-action); color: var(--color-on-action); font: 700 .85rem/1 var(--font-body);
 }
 .steps p { color: var(--color-text-muted); margin: 0 auto; max-width: 28ch; }
 
