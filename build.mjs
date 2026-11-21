@@ -171,10 +171,14 @@ for (const lang of LANGS) {
   const contact = "WhatsApp " + SITE.whatsappDisplay + (SITE.email ? " · " + SITE.email : "");
   const starting = LEGAL_INFO.status !== "company";   // individual setting up the business
   const S = L.starting;
+  // one name or several: "A", "A and B", "A, B and C" in the page's language
+  const owners = [].concat(LEGAL_INFO.ownerName || []).map((x) => String(x).trim()).filter(Boolean);
+  const AND = { fr: " et ", ar: " و ", en: " and ", es: " y ", de: " und ", nl: " en " };
+  const ownerText = owners.length > 1 ? owners.slice(0, -1).join(", ") + (AND[lang] || " & ") + owners[owners.length - 1] : (owners[0] || "");
   const values = {
-    site: SITE.agencyName, owner: LEGAL_INFO.ownerName,
+    site: SITE.agencyName, owner: ownerText,
     // while starting, the owner is the data controller and the city stands for the address
-    company: starting ? LEGAL_INFO.ownerName : LEGAL_INFO.companyName, legalForm: LEGAL_INFO.legalForm,
+    company: starting ? ownerText : LEGAL_INFO.companyName, legalForm: LEGAL_INFO.legalForm,
     address: LEGAL_INFO.address || (starting ? LEGAL_INFO.city : ""), rc: LEGAL_INFO.rc, ice: LEGAL_INFO.ice, taxId: LEGAL_INFO.taxId,
     director: LEGAL_INFO.director, license: LEGAL_INFO.tourismLicense, insurance: LEGAL_INFO.insurance,
     cndp: LEGAL_INFO.cndp || (starting ? S.inProgress : ""), contact,
@@ -192,7 +196,7 @@ for (const lang of LANGS) {
     if (b.ul) return `<ul>${b.ul.map((x) => `<li>${fill(x)}</li>`).join("")}</ul>`;
     if (b.dl && starting) {
       // individual: owner, status, city, contact (company fields come later)
-      const rows = [[S.owner, "{owner}"], [S.status, S.statusValue], [S.city, LEGAL_INFO.city], [b.dl.find((r) => r[1] === "{contact}")[0], "{contact}"]];
+      const rows = [[owners.length > 1 ? (S.owners || S.owner) : S.owner, "{owner}"], [S.status, S.statusValue], [S.city, LEGAL_INFO.city], [b.dl.find((r) => r[1] === "{contact}")[0], "{contact}"]];
       return `<dl class="legal-dl">${rows.map(([dt, dd]) => `<div><dt>${R.esc(dt)}</dt><dd>${fill(dd)}</dd></div>`).join("")}</dl><p class="legal-note">${R.esc(S.note)}</p>`;
     }
     if (b.dl) return `<dl class="legal-dl">${b.dl.map(([dt, dd]) => `<div><dt>${R.esc(dt)}</dt><dd>${fill(dd)}</dd></div>`).join("")}</dl>`;

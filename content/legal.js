@@ -12,7 +12,7 @@ var LEGAL_INFO = {
   //             The page names the owner and hides the company fields.
   // "company":  once registered, switch to "company" and fill in every field.
   status: "starting",
-  ownerName: "",        // your full name (person responsible for the site)
+  ownerName: ["Mohamed Mazzouz", "Mohamed Yahia Joute"],   // people responsible for the site (one name, or a list)
   city: "Marrakech",
 
   companyName: "",      // e.g. "Marrakech Odyssey Travel SARL"
@@ -40,7 +40,7 @@ var LEGAL_TEXT = {
   fr: {
     pageTitle: "Mentions légales et confidentialité",
     intro: "Cette page présente l'éditeur du site {site}, la façon dont vos informations sont utilisées et les conditions de nos services.",
-    starting: { owner: "Responsable du site", status: "Statut", statusValue: "Activité en cours de création (immatriculation en cours)", city: "Ville", note: "Les numéros d'immatriculation, d'autorisation et d'assurance seront publiés ici dès leur obtention.", inProgress: "en cours" },
+    starting: { owner: "Responsable du site", owners: "Responsables du site", status: "Statut", statusValue: "Activité en cours de création (immatriculation en cours)", city: "Ville", note: "Les numéros d'immatriculation, d'autorisation et d'assurance seront publiés ici dès leur obtention.", inProgress: "en cours" },
     back: "Retour à l'accueil",
     toc: "Sur cette page",
     updated: "Dernière mise à jour",
@@ -103,7 +103,7 @@ var LEGAL_TEXT = {
   ar: {
     pageTitle: "الإشعار القانوني والخصوصية",
     intro: "تعرّف هذه الصفحة بناشر الموقع {site}، وبطريقة استخدام معلوماتك، وبشروط خدماتنا.",
-    starting: { owner: "المسؤول عن الموقع", status: "الوضعية", statusValue: "نشاط في طور الإنشاء (التسجيل جارٍ)", city: "المدينة", note: "ستُنشر هنا أرقام التسجيل والترخيص والتأمين فور الحصول عليها.", inProgress: "قيد الإنجاز" },
+    starting: { owner: "المسؤول عن الموقع", owners: "المسؤولان عن الموقع", status: "الوضعية", statusValue: "نشاط في طور الإنشاء (التسجيل جارٍ)", city: "المدينة", note: "ستُنشر هنا أرقام التسجيل والترخيص والتأمين فور الحصول عليها.", inProgress: "قيد الإنجاز" },
     back: "العودة إلى الرئيسية",
     toc: "في هذه الصفحة",
     updated: "آخر تحديث",
@@ -166,7 +166,7 @@ var LEGAL_TEXT = {
   en: {
     pageTitle: "Legal notice and privacy",
     intro: "This page presents who publishes the website {site}, how your information is used, and the terms of our services.",
-    starting: { owner: "Person responsible for the site", status: "Status", statusValue: "Business being set up (registration in progress)", city: "City", note: "Registration, licence and insurance numbers will be published here as soon as they are obtained.", inProgress: "in progress" },
+    starting: { owner: "Person responsible for the site", owners: "People responsible for the site", status: "Status", statusValue: "Business being set up (registration in progress)", city: "City", note: "Registration, licence and insurance numbers will be published here as soon as they are obtained.", inProgress: "in progress" },
     back: "Back to home",
     toc: "On this page",
     updated: "Last updated",
@@ -229,7 +229,7 @@ var LEGAL_TEXT = {
   es: {
     pageTitle: "Aviso legal y privacidad",
     intro: "Esta página presenta al editor del sitio {site}, cómo se utiliza su información y las condiciones de nuestros servicios.",
-    starting: { owner: "Responsable del sitio", status: "Situación", statusValue: "Actividad en creación (registro en curso)", city: "Ciudad", note: "Los números de registro, autorización y seguro se publicarán aquí en cuanto se obtengan.", inProgress: "en trámite" },
+    starting: { owner: "Responsable del sitio", owners: "Responsables del sitio", status: "Situación", statusValue: "Actividad en creación (registro en curso)", city: "Ciudad", note: "Los números de registro, autorización y seguro se publicarán aquí en cuanto se obtengan.", inProgress: "en trámite" },
     back: "Volver al inicio",
     toc: "En esta página",
     updated: "Última actualización",
@@ -295,7 +295,7 @@ var LEGAL_TEXT = {
     toc: "Auf dieser Seite",
     updated: "Zuletzt aktualisiert",
     todo: "Zu ergänzen",
-    starting: { owner: "Verantwortlich für die Website", status: "Status", statusValue: "Tätigkeit im Aufbau (Registrierung läuft)", city: "Stadt", note: "Registrierungs-, Genehmigungs- und Versicherungsnummern werden hier veröffentlicht, sobald sie vorliegen.", inProgress: "in Bearbeitung" },
+    starting: { owner: "Verantwortlich für die Website", owners: "Verantwortliche der Website", status: "Status", statusValue: "Tätigkeit im Aufbau (Registrierung läuft)", city: "Stadt", note: "Registrierungs-, Genehmigungs- und Versicherungsnummern werden hier veröffentlicht, sobald sie vorliegen.", inProgress: "in Bearbeitung" },
     labels: { owner: "Ihr vollständiger Name", company: "Firmenname", legalForm: "Rechtsform", address: "Firmensitz", rc: "RC-Nummer", ice: "ICE-Nummer", taxId: "Steuernummer (IF)", director: "Name des Verantwortlichen", license: "Genehmigungsnummer", insurance: "Versicherer und Policennummer", cndp: "CNDP-Meldenummer", retention: "Dauer", payment: "Zahlungsbedingungen", cancellation: "Stornobedingungen", waiting: "inklusive Wartezeit" },
     sections: [
       { id: "editor", title: "1. Betreiber der Website", blocks: [
@@ -358,7 +358,7 @@ var LEGAL_TEXT = {
     toc: "Op deze pagina",
     updated: "Laatst bijgewerkt",
     todo: "Nog in te vullen",
-    starting: { owner: "Verantwoordelijke voor de website", status: "Status", statusValue: "Activiteit in oprichting (registratie loopt)", city: "Stad", note: "Registratie-, vergunnings- en verzekeringsnummers worden hier gepubliceerd zodra ze beschikbaar zijn.", inProgress: "in behandeling" },
+    starting: { owner: "Verantwoordelijke voor de website", owners: "Verantwoordelijken voor de website", status: "Status", statusValue: "Activiteit in oprichting (registratie loopt)", city: "Stad", note: "Registratie-, vergunnings- en verzekeringsnummers worden hier gepubliceerd zodra ze beschikbaar zijn.", inProgress: "in behandeling" },
     labels: { owner: "uw volledige naam", company: "bedrijfsnaam", legalForm: "rechtsvorm", address: "maatschappelijke zetel", rc: "RC-nummer", ice: "ICE-nummer", taxId: "fiscaal nummer (IF)", director: "naam van de verantwoordelijke", license: "vergunningsnummer", insurance: "verzekeraar en polisnummer", cndp: "CNDP-aangiftenummer", retention: "duur", payment: "betalingsvoorwaarden", cancellation: "annuleringsvoorwaarden", waiting: "inbegrepen wachttijd" },
     sections: [
       { id: "editor", title: "1. Beheerder van de website", blocks: [
