@@ -153,14 +153,13 @@ a { color: var(--color-primary); }
 .header-inner { display: flex; align-items: center; gap: 12px; height: 100%; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; font: 700 1.36rem/1.1 var(--font-heading); margin-inline-end: auto; }
 .brand-logo { width: 60px; height: 78px; flex: none; object-fit: contain; }
-/* The name, set like the logo: "MARRAKECH ODYSSEY" in a classical serif, "TRAVEL" spaced out below */
-.brand-name { white-space: nowrap; font-family: var(--font-brand); text-transform: uppercase; line-height: 1; }
-.bp-light { font-weight: 600; color: var(--color-primary); }
-.bp-strong { font-weight: 700; color: var(--color-primary); font-size: 1.02em; letter-spacing: .01em; }
-.bp-accent { display: block; margin-top: 5px; font: 600 .56em/1 var(--font-body); letter-spacing: .5em; color: var(--color-action); }
-/* Over the hero photo and in the footer: white + saffron */
-.site-header.is-top:not(.menu-open) .bp-strong, .site-footer .bp-strong { color: #fff; }
-.site-header.is-top:not(.menu-open) :is(.bp-light, .bp-accent), .site-footer :is(.bp-light, .bp-accent) { color: var(--color-action); }
+/* The name: the lettering cut from the owner's logo (images/wordmark*.png).
+   Navy on light backgrounds, white over the hero photo, in the footer and in dark mode. */
+.brand-word { display: block; flex: none; line-height: 0; }
+.bw { height: 64px; width: auto; }
+.bw-white { display: none; }
+.site-header.is-top:not(.menu-open) .bw-navy, .site-footer .bw-navy, :root[data-theme="dark"] .bw-navy { display: none; }
+.site-header.is-top:not(.menu-open) .bw-white, .site-footer .bw-white, :root[data-theme="dark"] .bw-white { display: block; }
 
 .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 2px; }
 .main-nav a {
@@ -254,7 +253,7 @@ a { color: var(--color-primary); }
   .header-inner { gap: 6px; }
   .brand { font-size: .98rem; gap: 6px; }
   .brand-logo { width: 45px; height: 58px; }
-  .site-header .brand-name { font-size: .82rem; }
+  .site-header .bw { height: 56px; }
   /* room for the name: the language button keeps its globe + label, without the arrow */
   .site-header .lang-menu-btn { padding: 0 10px; }
   .site-header .lang-menu-btn .lang-chevron { display: none; }
@@ -708,7 +707,7 @@ a.contact-item:hover { background: rgba(255,255,255,.16); }
   .legal-header-inner { gap: 6px; }
   .legal-header .brand { gap: 6px; }
   .legal-header .brand-logo { width: 45px; height: 58px; }
-  .legal-header .brand-name { font-size: .74rem; }
+  .legal-header .bw { height: 54px; }
   .legal-header .lang-menu-btn { padding: 0 10px; }
   .legal-header .lang-menu-btn .lang-chevron { display: none; }
 }

@@ -232,6 +232,7 @@ Le logo est dans `brand/my-logo/` :
 - `original.webp` : votre fichier d'origine ;
 - `logo-full.png` (fond transparent, pour fonds clairs) et `logo-full-white.png` (nom en blanc, pour fonds sombres) : pour les réseaux sociaux, les cartes de visite, les documents ;
 - `emblem.png` : l'arche seule (en-tête du site, photo de profil) ;
+- `wordmark.png` et `wordmark-white.png` : le nom seul, dans la police de votre logo (en-tête et pied de page du site : `images/wordmark.png`, `images/wordmark-white.png`) ;
 - `icon.svg`, `icon-tiny.svg`, `app-icon.svg` : version simplifiée pour les petites tailles (onglet du navigateur, icône d'application).
 
 Si vous changez le logo d'origine, relancez `python brand/my-logo/cutout.py`, recopiez `emblem.png` dans `images/logo-emblem.png`, puis `python brand/make_og.py`.

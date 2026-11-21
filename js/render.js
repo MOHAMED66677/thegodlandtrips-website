@@ -65,7 +65,9 @@
   function brandInner() {
     var parts = SITE.brandParts && SITE.brandParts.length ? SITE.brandParts : [[SITE.agencyName, "strong"]];
     return '<img class="brand-logo" src="' + asset("images/logo-emblem.png") + '" alt="" width="60" height="78">' +
-      '<span class="brand-name">' + parts.map(function (p) { return '<span class="bp-' + p[1] + '">' + esc(p[0]) + "</span>"; }).join("") + "</span>";
+      '<span class="brand-word"><img class="bw bw-navy" src="' + asset("images/wordmark.png") + '" alt="" width="163" height="64">' +
+      '<img class="bw bw-white" src="' + asset("images/wordmark-white.png") + '" alt="" width="163" height="64"></span>' +
+      '<span class="visually-hidden">' + esc(parts.map(function (p) { return p[0]; }).join(" ")) + "</span>";
   }
 
   var CAT_ICON = { excursions: "map", land: "mountain", air: "wind", sea: "waves" };
