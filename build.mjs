@@ -2,12 +2,21 @@
 //   dist/index.html (French), dist/ar/, dist/en/, dist/es/
 // Each page already contains its text, title and description, so search
 // engines index every language. Run with:  node build.mjs
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { createHash } from "node:crypto";
 
 const require = createRequire(import.meta.url);
-const { SITE, ACTIVITIES, DESTINATIONS, GEOCODER_URL, ROUTER_URL } = require("./content/site.js");
+const { SITE, IMAGES, ACTIVITIES, VEHICLES, DESTINATIONS, GEOCODER_URL, ROUTER_URL } = require("./content/site.js");
+
+// Every Unsplash id must have its local WebP copies (made by tools/photos.py)
+const missingPhotos = [...Object.values(IMAGES), ...ACTIVITIES.map((a) => a.image), ...(VEHICLES || []).map((v) => v.image)]
+  .filter((id) => /^photo-/.test(id || "") && !existsSync(`images/photos/${id}-800.webp`));
+if (missingPhotos.length) {
+  console.error(`✗ Photos not downloaded yet: ${missingPhotos.join(", ")}
+  Run: python tools/photos.py`);
+  process.exit(1);
+}
 const { LANGS, DEFAULT_LANG, LANG_NAMES, LANG_SHORT } = require("./content/translations.js");
 const R = require("./js/render.js");
 
@@ -29,7 +38,7 @@ function secure(html) {
     ["script-src 'self'", ...hashes, ...statsScript].join(" "),
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
-    ["img-src 'self' data: https://images.unsplash.com", ...statsConnect].join(" "),
+    ["img-src 'self' data:", ...statsConnect].join(" "),
     ["connect-src 'self'", originOf(GEOCODER_URL), originOf(ROUTER_URL), SITE.formEndpoint && originOf(SITE.formEndpoint), ...statsConnect].filter(Boolean).join(" "),
     "frame-src https://maps.google.com https://www.google.com",
     "object-src 'none'",
@@ -134,7 +143,8 @@ for (const lang of LANGS) {
     .replace("<!--SEO-->", () => seo)
     .replace("<!--APP-->", () => R.renderPage(lang))
     .replace(/\s*<noscript>[\s\S]*?<\/noscript>/, "")
-    .replace(/(href|src)="(css|js|content|images)\//g, `$1="${prefix}$2/`);
+    .replace(/(href|src)="(css|js|content|images)\//g, `$1="${prefix}$2/`)
+    .replace(/srcset="([^"]*)"/g, (m, v) => `srcset="${v.replace(/(^|, )images\//g, `$1${prefix}images/`)}"`);
 
   const dir = `${OUT}/${pathFor(lang)}`;
   mkdirSync(dir, { recursive: true });
@@ -258,7 +268,8 @@ for (const lang of LANGS) {
 // ---------------- Activity pages: one per activity and language ----------------
 // /activity/<slug>.html (French) and /<lang>/activity/<slug>.html
 const actUrl = (l, a) => `${SITE.siteUrl}/${pathFor(l)}activity/${a.slug}.html`;
-const unsplash = (id, w) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=${w}`;
+// Unsplash ids point to the WebP copies made by tools/photos.py
+const photo = (up, id, w, ext = "webp") => `${up}images/photos/${id}-${w}.${ext}`;
 const CAT_ICON = { excursions: "map", land: "mountain", air: "wind", sea: "waves" };
 const ic = (n, cls = "", s = 20) => `<svg aria-hidden="true" width="${s}" height="${s}"${cls ? ` class="${cls}"` : ""}><use href="#i-${n}"/></svg>`;
 const PAGE_SCRIPT = `(function () {
@@ -290,8 +301,8 @@ for (const lang of LANGS) {
     const name = t(`act.${a.id}.name`);
     const dest = a.place && DESTINATIONS.find((d) => d.id === a.place);
     const isPhoto = a.image && /^photo-/.test(a.image);
-    const imgSrc = isPhoto ? unsplash(a.image, 1400) : (a.image ? up + a.image : "");
-    const imgSet = isPhoto ? [800, 1400, 2000].map((w) => `${unsplash(a.image, w)} ${w}w`).join(", ") : "";
+    const imgSrc = isPhoto ? photo(up, a.image, 1200) : (a.image ? up + a.image : "");
+    const imgSet = isPhoto ? [800, 1200, 1600].map((w) => `${photo(up, a.image, w)} ${w}w`).join(", ") : "";
     const P = SITE.promises || {};
     const included = ["inc.pickup", "inc.vehicle", ...(a.safety ? ["inc.safety", "inc.instructor"] : [])];
     const info = [
@@ -307,11 +318,11 @@ for (const lang of LANGS) {
     const waHref = R.waLink(`${t("msg.intro")} ${name}`);
     const title = `${name}${lang === "ar" ? "، مراكش" : ", Marrakech"} | ${SITE.agencyName}`;
     const desc = `${t(`act.${a.id}.desc`)} ${t("page.metaTail")}`;
-    const ogImg = isPhoto ? unsplash(a.image, 1200) : `${SITE.siteUrl}/images/og-${lang}.jpg`;
+    const ogImg = isPhoto ? photo(`${SITE.siteUrl}/`, a.image, 1200, "jpg") : `${SITE.siteUrl}/images/og-${lang}.jpg`;
     const ld = {
       "@context": "https://schema.org",
       "@graph": [
-        { "@type": "TouristTrip", name, description: t(`act.${a.id}.long`), image: isPhoto ? unsplash(a.image, 1200) : undefined,
+        { "@type": "TouristTrip", name, description: t(`act.${a.id}.long`), image: isPhoto ? photo(`${SITE.siteUrl}/`, a.image, 1200, "jpg") : undefined,
           url: actUrl(lang, a), inLanguage: lang, touristType: t(`cat.${a.category}`),
           provider: { "@type": "TravelAgency", name: SITE.agencyName, url: urlFor(lang) },
           ...(SITE.showPrices && a.price ? { offers: { "@type": "Offer", price: a.price, priceCurrency: SITE.currency } } : {}) },
@@ -342,7 +353,6 @@ for (const lang of LANGS) {
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
   <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
-  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   ${fontsLink}
@@ -394,7 +404,7 @@ for (const lang of LANGS) {
     <section class="section section-band act-others"><div class="container">
       <h2>${e("page.others")}</h2>
       <div class="activity-grid">${others.map((o) => `<article class="activity-card is-in">
-        <div class="activity-media">${/^photo-/.test(o.image || "") ? `<img src="${R.esc(unsplash(o.image, 800))}" alt="" loading="lazy" width="800" height="600">` : ""}<span class="chip chip-cat">${ic(CAT_ICON[o.category], "", 15)}${e(`cat.${o.category}`)}</span><span class="chip chip-dur">${ic("clock", "", 15)}${e(`dur.${o.duration}`)}</span></div>
+        <div class="activity-media">${/^photo-/.test(o.image || "") ? `<img src="${photo(up, o.image, 800)}" srcset="${[480, 800, 1200].map((w) => `${photo(up, o.image, w)} ${w}w`).join(", ")}" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt="" loading="lazy" decoding="async" width="800" height="600">` : ""}<span class="chip chip-cat">${ic(CAT_ICON[o.category], "", 15)}${e(`cat.${o.category}`)}</span><span class="chip chip-dur">${ic("clock", "", 15)}${e(`dur.${o.duration}`)}</span></div>
         <div class="activity-body"><h3><a class="act-link" href="${o.slug}.html">${e(`act.${o.id}.name`)}</a></h3><p>${e(`act.${o.id}.desc`)}</p>
         <div class="activity-foot"><a class="map-link" href="${o.slug}.html">${ic("arrow", "flip-rtl", 17)}${e("act.details")}</a></div></div></article>`).join("")}</div>
     </div></section>

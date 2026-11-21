@@ -40,7 +40,8 @@
     return '<svg aria-hidden="true" focusable="false" width="24" height="24"' + (cls ? ' class="' + cls + '"' : "") + '><use href="#i-' + name + '"/></svg>';
   }
 
-  /* Photo: Unsplash id ("photo-...") -> responsive CDN image, otherwise local file */
+  /* Photo: Unsplash id ("photo-...") -> responsive WebP copies stored in images/photos/
+     (made by tools/photos.py), otherwise local file */
   function img(src, opts) {
     opts = opts || {};
     if (!src) return "";
@@ -49,10 +50,10 @@
       (opts.eager ? ' fetchpriority="high"' : ' loading="lazy"') +
       (opts.cls ? ' class="' + opts.cls + '"' : "") + ' width="' + (opts.w || 800) + '" height="' + (opts.h || 600) + '"';
     if (/^photo-/.test(src)) {
-      var base = "https://images.unsplash.com/" + src + "?auto=format&amp;fit=crop&amp;q=70";
+      var base = asset("images/photos/" + src + "-");
       var widths = opts.widths || [480, 800, 1200];
-      return '<img src="' + base + "&amp;w=" + widths[1] + '" srcset="' +
-        widths.map(function (w) { return base + "&amp;w=" + w + " " + w + "w"; }).join(", ") +
+      return '<img src="' + base + widths[1] + '.webp" srcset="' +
+        widths.map(function (w) { return base + w + ".webp " + w + "w"; }).join(", ") +
         '" sizes="' + sizes + '"' + attrs + ">";
     }
     return '<img src="' + esc(asset(src)) + '"' + attrs + ">";
@@ -229,7 +230,7 @@
 
   function hero(lang) {
     return '<section class="hero" id="top">' +
-      '<div class="hero-media">' + img(IMAGES.hero, { eager: true, sizes: "100vw", widths: [800, 1400, 2000], w: 2000, h: 1333 }) + "</div>" +
+      '<div class="hero-media">' + img(IMAGES.hero, { eager: true, sizes: "100vw", widths: [800, 1200, 1600, 2000], w: 2000, h: 1333 }) + "</div>" +
       '<div class="container hero-grid">' +
         '<div class="hero-copy">' +
           '<span class="eyebrow">' + e(lang, "hero.eyebrow") + "</span>" +
@@ -381,7 +382,7 @@
   function why(lang) {
     var items = [["punctual", "clock"], ["drivers", "users"], ["support", "headset"]];
     return '<section class="section section-band" id="why" aria-labelledby="why-title"><div class="container why-layout">' +
-      '<div class="why-media reveal">' + img(IMAGES.why, { sizes: "(min-width: 960px) 45vw, 100vw", w: 1200, h: 1500 }) +
+      '<div class="why-media reveal">' + img(IMAGES.why, { sizes: "(min-width: 960px) 45vw, 100vw", widths: [480, 800, 1200, 1600], w: 1200, h: 1500 }) +
         '<span class="why-badge">' + icon("compass") + e(lang, "why.badge") + "</span></div>" +
       '<div class="why-content">' +
         sectionHead(lang, "why-title", "why.title", "why.lead", "nav.why") +
@@ -426,7 +427,7 @@
 
   function contact(lang) {
     return '<section class="section contact" id="contact" aria-labelledby="contact-title">' +
-      '<div class="contact-media">' + img(IMAGES.contact, { sizes: "100vw", widths: [800, 1400, 2000], w: 2000, h: 1333 }) + "</div>" +
+      '<div class="contact-media">' + img(IMAGES.contact, { sizes: "100vw", widths: [800, 1200, 1600, 2000], w: 2000, h: 1333 }) + "</div>" +
       '<div class="container contact-inner">' +
         '<div class="section-head reveal center">' +
           '<span class="kicker">' + e(lang, "contact.cta") + "</span>" +

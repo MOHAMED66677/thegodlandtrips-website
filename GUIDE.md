@@ -87,6 +87,14 @@ et pour chaque activité : `image: "images/quad.jpg"`.
 
 Conseil : préférez des photos **horizontales**, lumineuses, avec des personnes en situation.
 
+**Photos d'exemple hébergées sur le site.** Les photos Unsplash (identifiants `photo-…`) ne sont pas chargées depuis Unsplash : le site utilise des copies légères au format WebP, en plusieurs tailles, rangées dans `images/photos/`. Le téléphone du visiteur télécharge seulement la taille dont il a besoin. Si vous changez un identifiant `photo-…` dans `site.js`, lancez une fois :
+
+```
+python tools/photos.py
+```
+
+(il faut Pillow : `pip install pillow`). Le script télécharge les nouvelles photos et supprime celles qui ne servent plus. Sans cette étape, `node build.mjs` s'arrête et indique la photo manquante.
+
 ## 5. Google Maps
 
 Le site utilise Google Maps **sans clé API ni compte de facturation** :
