@@ -224,7 +224,7 @@ for (const lang of LANGS) {
   ${sprite}
   <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="37" height="48"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="49" height="64"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
     <nav class="lang-menu" aria-label="${R.esc(R.t(lang, "lang.label"))}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list"><svg aria-hidden="true" width="20" height="20"><use href="#i-globe"/></svg><span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${R.esc(R.t(lang, "lang.label"))} (${R.esc(LANG_NAMES[lang])})</span><svg class="lang-chevron" aria-hidden="true" width="16" height="16"><use href="#i-chevron"/></svg></button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
   </div></header>
@@ -364,7 +364,7 @@ for (const lang of LANGS) {
   ${sprite}
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="37" height="48"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
+    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="49" height="64"><span class="brand-name">${(SITE.brandParts || [[SITE.agencyName, "strong"]]).map((p) => `<span class="bp-${p[1]}">${R.esc(p[0])}</span>`).join("")}</span></a>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
