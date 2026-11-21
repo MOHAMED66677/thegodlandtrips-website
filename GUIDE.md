@@ -148,14 +148,14 @@ Chaque activité a sa propre page dans les six langues (78 pages), créée autom
 - Le bouton « Demander un devis » ouvre le formulaire avec l'activité déjà choisie.
 - Une nouvelle activité ajoutée à `ACTIVITIES` avec un `slug` et ses textes `act.<id>.name`, `.desc` et `.long` dans les six langues obtient sa page toute seule.
 
-## 8. Votre propre nom de domaine (ex. thegodlandtrips.com)
+## 8. Votre propre nom de domaine (ex. marrakechodyssey.com)
 
 1. **Achetez le domaine** chez un registraire (Namecheap, OVH, Hostinger, Genious pour un .ma…), environ 120 à 150 MAD/an pour un .com.
 2. Dans la gestion DNS du domaine, créez :
    - 4 enregistrements **A** pour `@` : `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - 1 enregistrement **CNAME** pour `www` : `mohamed66677.github.io`
-3. Sur GitHub : **Settings → Pages → Custom domain** : saisissez `thegodlandtrips.com`, enregistrez, puis cochez **Enforce HTTPS** dès que c'est possible (quelques minutes à quelques heures).
-4. Dans `content/site.js`, remplacez `siteUrl` par `https://thegodlandtrips.com`, puis publiez. Les aperçus de liens, le sitemap, Google et `security.txt` utilisent alors le nouveau domaine.
+3. Sur GitHub : **Settings → Pages → Custom domain** : saisissez `marrakechodyssey.com`, enregistrez, puis cochez **Enforce HTTPS** dès que c'est possible (quelques minutes à quelques heures).
+4. Dans `content/site.js`, remplacez `siteUrl` par `https://marrakechodyssey.com`, puis publiez. Les aperçus de liens, le sitemap, Google et `security.txt` utilisent alors le nouveau domaine.
 
 ## 9. Foire aux questions (FAQ)
 
@@ -172,7 +172,7 @@ La page `legal.html` existe dans les six langues (lien en bas de chaque page et 
 **Une fois l'entreprise immatriculée** : passez à `status: "company"` et remplissez tous les champs de `LEGAL_INFO` :
 
 ```js
-companyName: "TheGodLandTrips SARL",
+companyName: "Marrakech Odyssey Travel SARL",
 legalForm: "SARL",
 address: "N° …, Rue …, Marrakech",
 rc: "…", ice: "…", taxId: "…",
@@ -194,7 +194,7 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 
 - **Aperçu des liens** : quand quelqu'un partage le site, une carte avec le logo, une photo et le titre s'affiche, dans la langue de la page (`images/og-fr.jpg`, `og-ar.jpg`, `og-en.jpg`, `og-es.jpg`, `og-de.jpg`, `og-nl.jpg`). Pour les recréer après un changement de titre ou de photo : `python brand/make_og.py`.
 - **Données structurées Google** : chaque page contient automatiquement une fiche « agence de voyage » (nom, contact, services, activités, FAQ) lisible par Google.
-- ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://thegodlandtrips.netlify.app` ou votre nom de domaine, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
+- ⚠️ **Indispensable** : renseignez la vraie adresse du site dans `siteUrl` (`content/site.js`), par exemple `https://marrakechodyssey.com`, **puis relancez `node build.mjs`**. Sinon l'image d'aperçu ne s'affichera pas.
 - Pour vérifier une fois en ligne : [opengraph.xyz](https://www.opengraph.xyz) (aperçu des liens) et le [test des résultats enrichis Google](https://search.google.com/test/rich-results) (données structurées). WhatsApp garde l'aperçu en mémoire : un nouveau partage peut mettre quelques heures à se mettre à jour.
 
 ## 12. Statistiques de visite (gratuites, sans cookies)
@@ -202,7 +202,7 @@ Les textes eux-mêmes (sections, paragraphes) sont dans `LEGAL_TEXT`, dans le m�
 Aucune statistique n'est activée par défaut. Pour en avoir, choisissez **un** service :
 
 **GoatCounter** (recommandé : il compte aussi les clics WhatsApp et les demandes de devis)
-1. Créez un compte sur [goatcounter.com](https://www.goatcounter.com), avec un code, par exemple `thegodlandtrips`.
+1. Créez un compte sur [goatcounter.com](https://www.goatcounter.com), avec un code, par exemple `marrakechodyssey`.
 2. Mettez ce code dans `goatcounterCode` (`content/site.js`), puis relancez `node build.mjs`.
 3. Les visites et les actions apparaissent dans votre tableau de bord GoatCounter : `whatsapp-click`, `quote-sent-whatsapp-transfer`, `quote-sent-email-activity`, `quote-start-…`, `map-view-…`, `route-open-google`, `language-ar`…
 
@@ -285,22 +285,22 @@ Les 6 avis les plus récents s'affichent sur l'accueil (à faire glisser sur té
 Envoyez-le par WhatsApp le soir même ou le lendemain (c'est là que les clients répondent le plus). Remplacez `[prénom]` et `[lien]` par le prénom du client et votre lien `googleReviewUrl`.
 
 **Français**
-> Bonjour [prénom], merci d'avoir voyagé avec TheGodLandTrips ! J'espère que tout s'est bien passé. Si vous avez une minute, votre avis nous aiderait beaucoup : [lien]. Bon séjour au Maroc !
+> Bonjour [prénom], merci d'avoir voyagé avec Marrakech Odyssey Travel ! J'espère que tout s'est bien passé. Si vous avez une minute, votre avis nous aiderait beaucoup : [lien]. Bon séjour au Maroc !
 
 **العربية**
-> مرحبًا [prénom]، شكرًا لاختيارك TheGodLandTrips! أتمنى أن تكون رحلتك قد مرّت على ما يرام. إذا كان لديك دقيقة، فرأيك يساعدنا كثيرًا: [lien]. إقامة سعيدة في المغرب!
+> مرحبًا [prénom]، شكرًا لاختيارك Marrakech Odyssey Travel! أتمنى أن تكون رحلتك قد مرّت على ما يرام. إذا كان لديك دقيقة، فرأيك يساعدنا كثيرًا: [lien]. إقامة سعيدة في المغرب!
 
 **English**
-> Hi [prénom], thank you for travelling with TheGodLandTrips! I hope everything went well. If you have a minute, a short review would help us a lot: [lien]. Enjoy the rest of your stay in Morocco!
+> Hi [prénom], thank you for travelling with Marrakech Odyssey Travel! I hope everything went well. If you have a minute, a short review would help us a lot: [lien]. Enjoy the rest of your stay in Morocco!
 
 **Español**
-> Hola [prénom], ¡gracias por viajar con TheGodLandTrips! Espero que todo haya ido bien. Si tiene un minuto, su opinión nos ayudaría mucho: [lien]. ¡Que disfrute de Marruecos!
+> Hola [prénom], ¡gracias por viajar con Marrakech Odyssey Travel! Espero que todo haya ido bien. Si tiene un minuto, su opinión nos ayudaría mucho: [lien]. ¡Que disfrute de Marruecos!
 
 **Deutsch**
-> Hallo [prénom], vielen Dank, dass Sie mit TheGodLandTrips unterwegs waren! Ich hoffe, alles hat gut geklappt. Wenn Sie eine Minute Zeit haben, würde uns eine kurze Bewertung sehr helfen: [lien]. Genießen Sie Ihren Aufenthalt in Marokko!
+> Hallo [prénom], vielen Dank, dass Sie mit Marrakech Odyssey Travel unterwegs waren! Ich hoffe, alles hat gut geklappt. Wenn Sie eine Minute Zeit haben, würde uns eine kurze Bewertung sehr helfen: [lien]. Genießen Sie Ihren Aufenthalt in Marokko!
 
 **Nederlands**
-> Hallo [prénom], bedankt dat u met TheGodLandTrips heeft gereisd! Ik hoop dat alles goed is verlopen. Als u even tijd heeft, zou een korte review ons erg helpen: [lien]. Geniet nog van Marokko!
+> Hallo [prénom], bedankt dat u met Marrakech Odyssey Travel heeft gereisd! Ik hoop dat alles goed is verlopen. Als u even tijd heeft, zou een korte review ons erg helpen: [lien]. Geniet nog van Marokko!
 
 Quand un client répond par un compliment sur WhatsApp, demandez-lui : « Puis-je publier votre message sur notre site, avec votre prénom ? ». S'il accepte, ajoutez-le avec `source: "WhatsApp"`.
 

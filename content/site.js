@@ -5,10 +5,10 @@
    ========================================================= */
 var SITE = {
   // Agency name (shown in the header, footer and page titles)
-  agencyName: "TheGodLandTrips",
+  agencyName: "Marrakech Odyssey Travel",
   // How the name is styled in the header/footer logo: [text, style]
   // style: "light" (thin, red) | "strong" (bold, dark) | "accent" (bold, red)
-  brandParts: [["The", "light"], ["GodLand", "strong"], ["Trips", "accent"]],
+  brandParts: [["Marrakech ", "light"], ["Odyssey", "strong"]],
 
   // [À REMPLACER] WhatsApp number in international format, digits only (no +, no spaces)
   whatsapp: "212693323368",
@@ -40,7 +40,7 @@ var SITE = {
   // Free visitor statistics without cookies (leave both "" to disable).
   // Use ONE of them:
   //  - GoatCounter (shows WhatsApp clicks, quote requests...): create a site
-  //    at goatcounter.com and put its code here, e.g. "thegodlandtrips"
+  //    at goatcounter.com and put its code here, e.g. "marrakechodyssey"
   goatcounterCode: "",
   //  - Cloudflare Web Analytics (visits only): paste the site token
   cloudflareAnalyticsToken: "",

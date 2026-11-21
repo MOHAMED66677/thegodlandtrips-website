@@ -15,7 +15,7 @@ var LEGAL_INFO = {
   ownerName: "",        // your full name (person responsible for the site)
   city: "Marrakech",
 
-  companyName: "",      // e.g. "TheGodLandTrips SARL"
+  companyName: "",      // e.g. "Marrakech Odyssey Travel SARL"
   legalForm: "",        // e.g. "SARL", "SARL AU", "Auto-entrepreneur"
   address: "",          // registered office (full postal address)
   rc: "",               // Registre de Commerce number (+ city)

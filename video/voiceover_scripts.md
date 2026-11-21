@@ -1,4 +1,4 @@
-# Voiceover scripts: TheGodLandTrips reel (6 languages)
+# Voiceover scripts: Marrakech Odyssey Travel reel (6 languages)
 
 Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, starting at the time shown. The lines are short on purpose so they fit at a natural pace. Pause between scenes rather than speeding up.
 
@@ -20,7 +20,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇫🇷 Français (`reel_fr.mp4`)
 1. **0.0 s** · Vous arrivez à Marrakech ? Oubliez le stress.
 2. **3.0 s** · Pas de marchandage. Pas d'attente à l'aéroport.
-3. **6.4 s** · Découvrez TheGodLandTrips.
+3. **6.4 s** · Découvrez Marrakech Odyssey Travel.
 4. **9.0 s** · Transferts aéroport, chauffeur privé et excursions, au même endroit.
 5. **13.6 s** · Treize activités : désert, cascades, quad et montgolfière.
 6. **18.6 s** · Votre devis en moins d'une minute, sur WhatsApp.
@@ -30,7 +30,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇲🇦 العربية (`reel_ar.mp4`)
 1. **0.0 s** · وصلت إلى مراكش؟ انسَ هموم التنقل.
 2. **3.0 s** · بدون مساومة. بدون انتظار في المطار.
-3. **6.4 s** · تعرّف على TheGodLandTrips.
+3. **6.4 s** · تعرّف على Marrakech Odyssey Travel.
 4. **9.0 s** · النقل من المطار، سائق خاص، ورحلات يومية، في مكان واحد.
 5. **13.6 s** · ثلاثة عشر نشاطًا: الصحراء، الشلالات، الكواد والمنطاد.
 6. **18.6 s** · عرض سعرك في أقل من دقيقة، عبر واتساب.
@@ -40,7 +40,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇬🇧 English (`reel_en.mp4`)
 1. **0.0 s** · Landing in Marrakech? Skip the stress.
 2. **3.0 s** · No haggling. No waiting at arrivals.
-3. **6.4 s** · Meet TheGodLandTrips.
+3. **6.4 s** · Meet Marrakech Odyssey Travel.
 4. **9.0 s** · Airport transfers, a private driver and day trips, all in one place.
 5. **13.6 s** · Thirteen activities: desert, waterfalls, quad bikes and balloons.
 6. **18.6 s** · Get a quote in under a minute, on WhatsApp.
@@ -50,7 +50,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇪🇸 Español (`reel_es.mp4`)
 1. **0.0 s** · ¿Llega a Marrakech? Olvídese del estrés.
 2. **3.0 s** · Sin regateos. Sin esperas en el aeropuerto.
-3. **6.4 s** · Descubra TheGodLandTrips.
+3. **6.4 s** · Descubra Marrakech Odyssey Travel.
 4. **9.0 s** · Traslados al aeropuerto, chófer privado y excursiones, todo en uno.
 5. **13.6 s** · Trece actividades: desierto, cascadas, quad y globo.
 6. **18.6 s** · Su presupuesto en menos de un minuto, por WhatsApp.
@@ -60,7 +60,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇩🇪 Deutsch (`reel_de.mp4`)
 1. **0.0 s** · Sie landen in Marrakech? Vergessen Sie den Stress.
 2. **3.0 s** · Kein Feilschen. Kein Warten am Flughafen.
-3. **6.4 s** · Das ist TheGodLandTrips.
+3. **6.4 s** · Das ist Marrakech Odyssey Travel.
 4. **9.0 s** · Flughafentransfers, Privatfahrer und Tagesausflüge, alles an einem Ort.
 5. **13.6 s** · Dreizehn Aktivitäten: Wüste, Wasserfälle, Quad und Ballon.
 6. **18.6 s** · Ihr Angebot in unter einer Minute, per WhatsApp.
@@ -70,7 +70,7 @@ Each video lasts **29.8 seconds** and has 8 scenes. Record one line per scene, s
 ## 🇳🇱 Nederlands (`reel_nl.mp4`)
 1. **0.0 s** · Landt u in Marrakech? Vergeet de stress.
 2. **3.0 s** · Geen afdingen. Geen wachten op de luchthaven.
-3. **6.4 s** · Maak kennis met TheGodLandTrips.
+3. **6.4 s** · Maak kennis met Marrakech Odyssey Travel.
 4. **9.0 s** · Luchthaventransfers, privéchauffeur en dagtochten, alles op één plek.
 5. **13.6 s** · Dertien activiteiten: woestijn, watervallen, quad en luchtballon.
 6. **18.6 s** · Uw offerte in minder dan een minuut, via WhatsApp.

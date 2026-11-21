@@ -1,4 +1,4 @@
-# TheGodLandTrips website
+# Marrakech Odyssey Travel website
 
 Airport transfers, private drivers and tours around Marrakech. One-page site in six languages (French, Arabic, English, Spanish, German, Dutch), with a WhatsApp quote form, Google Maps destinations and free address suggestions.
 

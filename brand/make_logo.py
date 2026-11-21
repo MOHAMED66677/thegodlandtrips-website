@@ -1,4 +1,4 @@
-# Builds the TheGodLandTrips logo files (SVG, text converted to vector outlines).
+# Builds the Marrakech Odyssey Travel logo files (SVG, text converted to vector outlines).
 # usage: python make_logo.py <SpaceGrotesk[wght].ttf>
 import os, sys
 from fontTools.ttLib import TTFont
@@ -41,12 +41,13 @@ def mark(arch=RED, window=CREAM, sun=AMBER, dune=RED, uid="m"):
     <path d="M30 104 C39 96 46 90 48 77.5 L51 77.5 C53 89 58 96 70 104 Z" fill="{window}"/>
   </g>'''
 
+# Name on the logo: "Marrakech" (regular, red) + "Odyssey" (bold, dark); "Travel" is in the tagline
+W1, W2 = "Marrakech ", "Odyssey"
 def wordmark(x, baseline, size, c_the, c_god, c_trips, tagline=None, tag_color=MUTED, tag_size=None):
-    d1, w1 = text_path("The", 500, size, x, baseline)
-    d2, w2 = text_path("GodLand", 700, size, x + w1, baseline)
-    d3, w3 = text_path("Trips", 700, size, x + w1 + w2, baseline)
-    total = w1 + w2 + w3
-    out = f'<path d="{d1}" fill="{c_the}"/><path d="{d2}" fill="{c_god}"/><path d="{d3}" fill="{c_trips}"/>'
+    d1, w1 = text_path(W1, 500, size, x, baseline)
+    d2, w2 = text_path(W2, 700, size, x + w1, baseline)
+    total = w1 + w2
+    out = f'<path d="{d1}" fill="{c_the}"/><path d="{d2}" fill="{c_god}"/>'
     if tagline:
         ts = tag_size or size * 0.27
         dt, wt = text_path(tagline, 500, ts, 0, 0, tracking=0.16)
@@ -64,7 +65,7 @@ def write(name, content):
     open(os.path.join(HERE, name), "w", encoding="utf-8").write(content)
     print("wrote", name)
 
-TAG = "MARRAKECH · TRANSFERS & TOURS"
+TAG = "TRAVEL · TRANSFERS & TOURS"
 
 # 1) Horizontal logo (light backgrounds)
 words, ww = wordmark(128, 70, 64, RED, INK, RED, TAG)
@@ -75,8 +76,8 @@ words, ww = wordmark(128, 70, 64, AMBER, "#FFFFFF", AMBER, TAG, tag_color="rgba(
 write("logo-horizontal-white.svg", svg(128 + ww + 8, 118, f'<g transform="translate(0,3)">{mark(arch=AMBER, window=CREAM, dune=RED, uid="hw")}</g>' + words))
 
 # 3) Stacked logo
-d1, w1 = text_path("The", 500, 56, 0, 0); d2, w2 = text_path("GodLand", 700, 56, 0, 0); d3, w3 = text_path("Trips", 700, 56, 0, 0)
-tw = w1 + w2 + w3; W = max(tw, 300) + 40; x = (W - tw) / 2
+d1, w1 = text_path(W1, 500, 56, 0, 0); d2, w2 = text_path(W2, 700, 56, 0, 0)
+tw = w1 + w2; W = max(tw, 300) + 40; x = (W - tw) / 2
 ws, _ = wordmark(x, 196, 56, RED, INK, RED)
 dt, wt = text_path(TAG, 500, 15, 0, 0, tracking=0.16)
 dt, _ = text_path(TAG, 500, 15, (W - wt) / 2, 228, tracking=0.16)

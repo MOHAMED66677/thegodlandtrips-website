@@ -1,15 +1,15 @@
-# TheGodLandTrips promo reel: script (≈30 s, 1080×1920)
+# Marrakech Odyssey Travel promo reel: script (≈30 s, 1080×1920)
 
 | # | Scene | On screen | Voiceover |
 |---|---|---|---|
-| 1 | Hook | TheGodLandTrips logo + **Marrakech. Zero transport stress.** Koutoubia photo, phone flies in (3D) | Landing in Marrakech? Skip the stress. |
+| 1 | Hook | Marrakech Odyssey Travel logo + **Marrakech. Zero transport stress.** Koutoubia photo, phone flies in (3D) | Landing in Marrakech? Skip the stress. |
 | 2 | Problem | **No haggling. No waiting.** struck through, spinning clock | No haggling with taxis. No waiting at arrivals. |
 | 3 | Turn | **One site. Every ride.** 3D laptop + phone | Meet the new website for your trip. |
 | 4 | Services | **Transfers. Private driver. Day trips.** 3 cards flip in | Airport transfers, a private driver, and day trips, all in one place. |
 | 5 | Activities | **13 activities** counter + 3D coverflow of the 13 cards | Thirteen activities. Desert, waterfalls, quad bikes and hot-air balloons. |
 | 6 | Quote | **Quote in under 1 minute**, form pops out of the phone, WhatsApp message | Get a quote in under a minute, straight on WhatsApp. No account needed. |
 | 7 | Languages | **Speaks their language**, 4 phones fan out: FR · عربي · EN · ES | In French, Arabic, English and Spanish. |
-| 8 | CTA | TheGodLandTrips logo, **Your Marrakech, sorted.**, *Request your quote* button, WhatsApp number | Your Marrakech, sorted. The God Land Trips. Request your quote today. |
+| 8 | CTA | Marrakech Odyssey Travel logo, **Your Marrakech, sorted.**, *Request your quote* button, WhatsApp number | Your Marrakech, sorted. Marrakech Odyssey Travel. Request your quote today. |
 
 ## Re-render after a change
 
