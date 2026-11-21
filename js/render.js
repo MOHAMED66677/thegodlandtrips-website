@@ -10,6 +10,7 @@
   var tr = root.I18N ? root : require("../content/translations.js");
   var SITE = env.SITE, IMAGES = env.IMAGES, ACTIVITIES = env.ACTIVITIES, CATEGORIES = env.CATEGORIES, DESTINATIONS = env.DESTINATIONS || [], VEHICLES = env.VEHICLES || [];
   var PROMISES = SITE.promises || {};
+  var GUIDE_CARDS = root.GUIDE_CARDS || null;   // { ui: {lang: {...}}, list: {lang: [{slug, t, d, image, minutes}]} }
   // Real client reviews only (content/site.js); newest first
   var REVIEWS = (env.REVIEWS || []).filter(function (r) { return r && r.name && r.text && r.rating >= 1 && r.rating <= 5; })
     .slice().sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
@@ -524,12 +525,29 @@
     "</section>";
   }
 
+  /* "Before you go": the travel guides (articles) */
+  function guidesTeaser(lang) {
+    if (!GUIDE_CARDS || !GUIDE_CARDS.list[lang] || !GUIDE_CARDS.list[lang].length) return "";
+    var ui = GUIDE_CARDS.ui[lang];
+    return '<section class="section guides-home" id="guides" aria-labelledby="guides-title"><div class="container">' +
+      '<div class="section-head reveal"><h2 id="guides-title">' + esc(ui.home) + "</h2><p>" + esc(ui.homeLead) + "</p></div>" +
+      '<div class="guide-grid">' + GUIDE_CARDS.list[lang].slice(0, 3).map(function (g, i) {
+        return '<article class="guide-card reveal" style="--d:' + i * 80 + 'ms">' +
+          '<a class="guide-media" href="guides/' + esc(g.slug) + '.html" tabindex="-1" aria-hidden="true">' + img(g.image, { sizes: "(min-width: 960px) 33vw, 100vw" }) + "</a>" +
+          '<div class="guide-body"><h3><a href="guides/' + esc(g.slug) + '.html">' + esc(g.t) + "</a></h3><p>" + esc(g.d) + "</p>" +
+          '<a class="map-link" href="guides/' + esc(g.slug) + '.html">' + icon("arrow", "flip-rtl") + esc(ui.read) + "</a></div></article>";
+      }).join("") + "</div>" +
+      '<p class="guides-all reveal"><a class="btn btn-quiet" href="guides/">' + esc(ui.all) + icon("arrow", "flip-rtl") + "</a></p>" +
+    "</div></section>";
+  }
+
   function footer(lang) {
     return '<footer class="site-footer"><div class="container">' +
       '<div class="footer-grid">' +
         '<div class="footer-brand"><a class="brand" href="#top">' + brandInner() + "</a>" +
           "<p>" + e(lang, "footer.tagline") + "</p></div>" +
-        '<div><h3 class="footer-title">' + e(lang, "footer.explore") + '</h3><ul class="footer-links">' + navLinks(lang) + '<li><a href="#faq">' + e(lang, "nav.faq") + "</a></li></ul></div>" +
+        '<div><h3 class="footer-title">' + e(lang, "footer.explore") + '</h3><ul class="footer-links">' + navLinks(lang) + '<li><a href="#faq">' + e(lang, "nav.faq") + "</a></li>" +
+          (GUIDE_CARDS && GUIDE_CARDS.ui[lang] ? '<li><a href="guides/">' + esc(GUIDE_CARDS.ui[lang].title) + "</a></li>" : "") + "</ul></div>" +
         '<div><h3 class="footer-title">' + e(lang, "contact.title") + '</h3><ul class="footer-links">' +
           '<li><a href="' + esc(waLink()) + '" target="_blank" rel="noopener" dir="ltr">' + esc(SITE.whatsappDisplay) + "</a></li>" +
           (SITE.email ? '<li><a href="mailto:' + esc(SITE.email) + '" dir="ltr">' + esc(SITE.email) + "</a></li>" : "") +
@@ -549,7 +567,7 @@
 
   function renderPage(lang) {
     return header(lang) +
-      '<main id="main">' + hero(lang) + services(lang) + activities(lang) + mapSection(lang) + why(lang) + reviews(lang) + how(lang) + faq(lang) + contact(lang) + "</main>" +
+      '<main id="main">' + hero(lang) + services(lang) + activities(lang) + mapSection(lang) + why(lang) + reviews(lang) + how(lang) + guidesTeaser(lang) + faq(lang) + contact(lang) + "</main>" +
       footer(lang);
   }
 
@@ -557,6 +575,7 @@
     renderPage: renderPage, t: t, esc: esc, waLink: waLink,
     reviewCard: reviewCard, reviewsFor: reviewsFor,
     setAssetBase: function (b) { ASSET_BASE = b || ""; },
+    setGuideCards: function (c) { GUIDE_CARDS = c; },
     formatTrip: formatTrip, faqCount: faqCount,
     mapsEmbed: mapsEmbed, mapsSearch: mapsSearch, mapsRoute: mapsRoute, destName: destName,
     isRtl: function (l) { return RTL_LANGS.indexOf(l) !== -1; }

@@ -317,6 +317,20 @@ Envoyez-le par WhatsApp le soir même ou le lendemain (c'est là que les clients
 
 Quand un client répond par un compliment sur WhatsApp, demandez-lui : « Puis-je publier votre message sur notre site, avec votre prénom ? ». S'il accepte, ajoutez-le avec `source: "WhatsApp"`.
 
+## 17. Guides de voyage (articles) et référencement par l'IA
+
+**Les guides** sont dans `content/guides.js` : 5 articles en 6 langues (aéroport → médina, Agafay ou Merzouga, excursions d'une journée, que porter pour le quad, arriver de nuit). `node build.mjs` crée automatiquement :
+- une page par guide et par langue : `/guides/marrakech-airport-to-medina.html`, `/en/guides/…` (30 pages) ;
+- une page « Guides de voyage » par langue : `/guides/` ;
+- la section « Avant de partir » sur l'accueil (les 3 premiers guides) et un lien dans le pied de page.
+
+Pour **ajouter un guide**, copiez un bloc `{ id: …, slug: …, … }` dans `GUIDES`, changez `id`, `slug`, `image`, `related` (les activités liées) et écrivez les textes des 6 langues : `t` (titre), `d` (résumé), `facts` (3 points clés) et `s` (les parties : titre puis paragraphes). Restez factuel : évitez les prix qui changent souvent.
+
+**Pour l'IA (ChatGPT, Gemini, Perplexity, Claude…)** :
+- `llms.txt` (à la racine du site) est généré automatiquement : un résumé clair de l'agence (services, zones, horaires, distances, pages et guides).
+- Les **zones desservies** et l'**ouverture 24 h/24** sont dans `content/site.js` (`serviceAreas`, `open24h`). Gardez-les **identiques à votre fiche Google Business Profile** : Google fait davantage confiance à un site et une fiche qui disent la même chose.
+- Après une mise en ligne, lancez `node tools/indexnow.mjs` pour prévenir Bing (et donc ChatGPT) des nouvelles pages.
+
 ## Avant la mise en ligne
 
 - [ ] Toutes les valeurs `[À REMPLACER]` sont renseignées dans `content/site.js`

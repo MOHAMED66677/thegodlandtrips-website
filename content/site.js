@@ -24,6 +24,10 @@ var SITE = {
   // Optional: link to the agency's Google Business Profile (Google reviews,
   // opening hours, directions). Copy it from Google Maps > Share. Leave "" to hide.
   googleBusinessUrl: "",
+  // Areas served and opening hours: keep them IDENTICAL to the Google Business Profile
+  // (Google trusts a site and a profile that say the same thing).
+  serviceAreas: ["Marrakech", "Agafay", "Ourika", "Ouzoud", "Essaouira", "Imlil", "Ouarzazate"],
+  open24h: true,
   // Optional: the link that opens the "write a review" window on Google.
   // Google Business Profile > "Ask for reviews" > copy the link (g.page/r/.../review).
   // Shows a "Leave a review" button in the reviews section. Leave "" to hide.
