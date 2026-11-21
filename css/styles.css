@@ -254,7 +254,10 @@ a { color: var(--color-primary); }
   .header-inner { gap: 6px; }
   .brand { font-size: .98rem; gap: 6px; }
   .brand-logo { width: 45px; height: 58px; }
-  .site-header .brand-name { font-size: .7rem; }
+  .site-header .brand-name { font-size: .82rem; }
+  /* room for the name: the language button keeps its globe + label, without the arrow */
+  .site-header .lang-menu-btn { padding: 0 10px; }
+  .site-header .lang-menu-btn .lang-chevron { display: none; }
   .lang-switch:not(.lang-switch-footer) button { min-width: 33px; padding: 0 5px; }
 }
 @media (max-width: 359px) { .brand-name { display: none; } }
@@ -700,7 +703,15 @@ a.contact-item:hover { background: rgba(255,255,255,.16); }
 .lang-links a[lang="ar"] { font-family: var(--font-arabic); font-size: .9rem; }
 .lang-links a:hover { color: var(--color-text); }
 .lang-links a[aria-current="page"] { background: var(--color-primary); color: var(--color-on-primary); }
-@media (max-width: 440px) { .lang-links a { min-width: 33px; padding: 0 5px; } .legal-header .brand-name { display: none; } }
+@media (max-width: 440px) {
+  .lang-links a { min-width: 33px; padding: 0 5px; }
+  .legal-header-inner { gap: 6px; }
+  .legal-header .brand { gap: 6px; }
+  .legal-header .brand-logo { width: 45px; height: 58px; }
+  .legal-header .brand-name { font-size: .74rem; }
+  .legal-header .lang-menu-btn { padding: 0 10px; }
+  .legal-header .lang-menu-btn .lang-chevron { display: none; }
+}
 .legal-main { max-width: 860px; padding-block: 32px 80px; }
 .legal-back { margin-bottom: 16px; }
 .legal-main h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 12px; }
