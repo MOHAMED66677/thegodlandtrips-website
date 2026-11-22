@@ -49,7 +49,7 @@
   function img(src, opts) {
     opts = opts || {};
     if (!src) return "";
-    var sizes = opts.sizes || "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+    var sizes = opts.sizes || "(min-width: 1200px) 380px, (min-width: 961px) 31vw, (min-width: 641px) 46vw, 86vw";
     var attrs = ' alt="' + esc(opts.alt || "") + '" decoding="async"' +
       (opts.eager ? ' fetchpriority="high"' : ' loading="lazy"') +
       (opts.cls ? ' class="' + opts.cls + '"' : "") + ' width="' + (opts.w || 800) + '" height="' + (opts.h || 600) + '"';
@@ -66,8 +66,8 @@
   function brandInner() {
     var parts = SITE.brandParts && SITE.brandParts.length ? SITE.brandParts : [[SITE.agencyName, "strong"]];
     return '<img class="brand-logo" src="' + asset("images/logo-emblem.png") + '" alt="" width="60" height="78">' +
-      '<span class="brand-word"><img class="bw bw-navy" src="' + asset("images/wordmark.png") + '" alt="" width="155" height="64">' +
-      '<img class="bw bw-white" src="' + asset("images/wordmark-white.png") + '" alt="" width="155" height="64"></span>' +
+      '<span class="brand-word"><img class="bw bw-navy" src="' + asset("images/wordmark.png") + '" alt="" width="155" height="64" loading="lazy">' +
+      '<img class="bw bw-white" src="' + asset("images/wordmark-white.png") + '" alt="" width="155" height="64" loading="lazy"></span>' +
       '<span class="visually-hidden">' + esc(parts.map(function (p) { return p[0]; }).join(" ")) + "</span>";
   }
 
@@ -375,7 +375,7 @@
       '<div class="section-head reveal vehicles-head"><h3 class="h2-like">' + e(lang, "vehicles.title") + "</h3><p>" + e(lang, "vehicles.lead") + "</p></div>" +
       '<div class="vehicle-grid">' + VEHICLES.map(function (v, i) {
         return '<article class="vehicle-card reveal" style="--d:' + i * 90 + 'ms">' +
-          (v.image ? '<div class="vehicle-media">' + img(v.image, { sizes: "(min-width: 900px) 33vw, 100vw" }) + "</div>"
+          (v.image ? '<div class="vehicle-media">' + img(v.image, { sizes: "(min-width: 1200px) 380px, (min-width: 900px) 31vw, 92vw" }) + "</div>"
                    : '<div class="vehicle-art" aria-hidden="true">' + icon(v.icon, "vehicle-icon") + "</div>") +
           '<div class="vehicle-body"><h4>' + e(lang, "veh." + v.id + ".name") + "</h4><p>" + e(lang, "veh." + v.id + ".desc") + "</p>" +
             '<ul class="vehicle-specs">' +
@@ -457,7 +457,7 @@
   function why(lang) {
     var items = [["punctual", "clock"], ["drivers", "users"], ["support", "headset"]];
     return '<section class="section section-band" id="why" aria-labelledby="why-title"><div class="container why-layout">' +
-      '<div class="why-media reveal">' + img(IMAGES.why, { sizes: "(min-width: 960px) 45vw, 100vw", widths: [480, 800, 1200, 1600], w: 1200, h: 1500 }) +
+      '<div class="why-media reveal">' + img(IMAGES.why, { sizes: "(min-width: 1200px) 540px, (min-width: 960px) 45vw, 92vw", widths: [480, 800, 1200, 1600], w: 1200, h: 1500 }) +
         '<span class="why-badge">' + icon("compass") + e(lang, "why.badge") + "</span></div>" +
       '<div class="why-content">' +
         sectionHead(lang, "why-title", "why.title", "why.lead", "nav.why") +
@@ -533,7 +533,7 @@
       '<div class="section-head reveal"><h2 id="guides-title">' + esc(ui.home) + "</h2><p>" + esc(ui.homeLead) + "</p></div>" +
       '<div class="guide-grid">' + GUIDE_CARDS.list[lang].slice(0, 3).map(function (g, i) {
         return '<article class="guide-card reveal" style="--d:' + i * 80 + 'ms">' +
-          '<a class="guide-media" href="guides/' + esc(g.slug) + '.html" tabindex="-1" aria-hidden="true">' + img(g.image, { sizes: "(min-width: 960px) 33vw, 100vw" }) + "</a>" +
+          '<a class="guide-media" href="guides/' + esc(g.slug) + '.html" tabindex="-1" aria-hidden="true">' + img(g.image, { sizes: "(min-width: 1200px) 380px, (min-width: 960px) 31vw, 92vw" }) + "</a>" +
           '<div class="guide-body"><h3><a href="guides/' + esc(g.slug) + '.html">' + esc(g.t) + "</a></h3><p>" + esc(g.d) + "</p>" +
           '<a class="map-link" href="guides/' + esc(g.slug) + '.html">' + icon("arrow", "flip-rtl") + esc(ui.read) + "</a></div></article>";
       }).join("") + "</div>" +

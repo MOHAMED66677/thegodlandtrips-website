@@ -43,8 +43,8 @@ function secure(html) {
   const csp = [
     "default-src 'self'",
     ["script-src 'self'", ...hashes, ...statsScript].join(" "),
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
+    "style-src 'self' 'unsafe-inline'",
+    "font-src 'self'",
     ["img-src 'self' data:", ...statsConnect].join(" "),
     ["connect-src 'self'", originOf(GEOCODER_URL), originOf(ROUTER_URL), SITE.formEndpoint && originOf(SITE.formEndpoint), ...statsConnect].filter(Boolean).join(" "),
     "frame-src https://maps.google.com https://www.google.com",
@@ -69,7 +69,13 @@ const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES", de: "de_
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
-for (const dir of ["css", "js", "content", "images"]) cpSync(dir, `${OUT}/${dir}`, { recursive: true });
+// Start downloading the headline and text fonts at once (otherwise the browser only finds them
+// after reading the stylesheet, and the big headline is drawn twice).
+const PRELOAD_FONTS = { ar: ["cairo-arabic-0"], other: ["marcellus-latin-4", "source-sans-3-latin-6"] };
+const fontPreload = (lang, base) => (PRELOAD_FONTS[lang] || PRELOAD_FONTS.other)
+  .map((f) => `<link rel="preload" href="${base}fonts/${f}.woff2" as="font" type="font/woff2" crossorigin>`).join("\n  ");
+
+for (const dir of ["css", "js", "content", "images", "fonts"]) cpSync(dir, `${OUT}/${dir}`, { recursive: true });
 writeFileSync(`${OUT}/content/guide-cards.js`, `var GUIDE_CARDS = ${JSON.stringify(GUIDE_CARDS)};
 `);
 rmSync(`${OUT}/content/guides.js`);   // full articles are only needed to build the pages
@@ -158,6 +164,7 @@ for (const lang of LANGS) {
     .replace("<!--APP-->", () => R.renderPage(lang))
     .replace(/\s*<noscript>[\s\S]*?<\/noscript>/, "")
     .replace(/(href|src)="(css|js|content|images)\//g, `$1="${prefix}$2/`)
+    .replace(/(\s*)<link rel="stylesheet" href="/, (m, sp) => `${sp}${fontPreload(lang, prefix)}${sp}<link rel="stylesheet" href="`)
     .replace(/srcset="([^"]*)"/g, (m, v) => `srcset="${v.replace(/(^|, )images\//g, `$1${prefix}images/`)}"`);
 
   const dir = `${OUT}/${pathFor(lang)}`;
@@ -169,7 +176,6 @@ for (const lang of LANGS) {
 // ---------------- Legal page: one per language (legal.html) ----------------
 const { LEGAL_INFO, LEGAL_TEXT } = require("./content/legal.js");
 const sprite = (template.match(/<svg width="0" height="0"[\s\S]*?<\/svg>/) || [""])[0];
-const fontsLink = (template.match(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*>/) || [""])[0];
 const themeScript = (template.match(/<script>\s*\/\* apply the saved theme[\s\S]*?<\/script>/) || [""])[0];
 const cssHref = template.match(/href="(css\/styles\.css[^"]*)"/)[1];
 
@@ -232,17 +238,15 @@ for (const lang of LANGS) {
   <link rel="canonical" href="${legalUrl(lang)}">
   ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${legalUrl(l)}">`).join("\n  ")}
   <link rel="icon" type="image/svg+xml" href="${prefix}images/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  ${fontsLink}
   ${themeScript}
+  ${fontPreload(lang, prefix)}
   <link rel="stylesheet" href="${prefix}${cssHref}">
 </head>
 <body class="legal-body">
   ${sprite}
   <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${prefix}images/wordmark.png" alt="" width="155" height="64"><img class="bw bw-white" src="${prefix}images/wordmark-white.png" alt="" width="155" height="64"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${prefix}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${prefix}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
     <nav class="lang-menu" aria-label="${R.esc(R.t(lang, "lang.label"))}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list"><svg aria-hidden="true" width="20" height="20"><use href="#i-globe"/></svg><span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${R.esc(R.t(lang, "lang.label"))} (${R.esc(LANG_NAMES[lang])})</span><svg class="lang-chevron" aria-hidden="true" width="16" height="16"><use href="#i-chevron"/></svg></button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
   </div></header>
@@ -372,17 +376,15 @@ for (const lang of LANGS) {
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
   <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  ${fontsLink}
   ${themeScript}
+  ${fontPreload(lang, up)}
   <link rel="stylesheet" href="${up}${cssHref}">
 </head>
 <body class="act-body">
   ${sprite}
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
@@ -425,7 +427,7 @@ for (const lang of LANGS) {
     <section class="section section-band act-others"><div class="container">
       <h2>${e("page.others")}</h2>
       <div class="activity-grid">${others.map((o) => `<article class="activity-card is-in">
-        <div class="activity-media">${/^photo-/.test(o.image || "") ? `<img src="${photo(up, o.image, 800)}" srcset="${[480, 800, 1200].map((w) => `${photo(up, o.image, w)} ${w}w`).join(", ")}" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt="" loading="lazy" decoding="async" width="800" height="600">` : ""}<span class="chip chip-cat">${ic(CAT_ICON[o.category], "", 15)}${e(`cat.${o.category}`)}</span><span class="chip chip-dur">${ic("clock", "", 15)}${e(`dur.${o.duration}`)}</span></div>
+        <div class="activity-media">${/^photo-/.test(o.image || "") ? `<img src="${photo(up, o.image, 800)}" srcset="${[480, 800, 1200].map((w) => `${photo(up, o.image, w)} ${w}w`).join(", ")}" sizes="(min-width: 1200px) 380px, (min-width: 961px) 31vw, (min-width: 641px) 46vw, 86vw" alt="" loading="lazy" decoding="async" width="800" height="600">` : ""}<span class="chip chip-cat">${ic(CAT_ICON[o.category], "", 15)}${e(`cat.${o.category}`)}</span><span class="chip chip-dur">${ic("clock", "", 15)}${e(`dur.${o.duration}`)}</span></div>
         <div class="activity-body"><h3><a class="act-link" href="${o.slug}.html">${e(`act.${o.id}.name`)}</a></h3><p>${e(`act.${o.id}.desc`)}</p>
         <div class="activity-foot"><a class="map-link" href="${o.slug}.html">${ic("arrow", "flip-rtl", 17)}${e("act.details")}</a></div></div></article>`).join("")}</div>
     </div></section>
@@ -480,17 +482,15 @@ for (const lang of LANGS) {
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
   <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  ${fontsLink}
   ${themeScript}
+  ${fontPreload(lang, up)}
   <link rel="stylesheet" href="${up}${cssHref}">
 </head>
 <body class="act-body">
   ${sprite}
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
-    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${LANGS.map((l) => `<li><a href="${alt(l)}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}><span class="lang-code" aria-hidden="true">${R.esc(LANG_SHORT[l])}</span>${R.esc(LANG_NAMES[l])}</a></li>`).join("")}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
@@ -515,7 +515,7 @@ ${body}
         </div></aside>`;
   };
   const card = (href, image, title, text, link) => `<article class="guide-card">
-        <a class="guide-media" href="${href}" tabindex="-1" aria-hidden="true">${imgTag(image, 800, "(min-width: 960px) 33vw, 100vw")}</a>
+        <a class="guide-media" href="${href}" tabindex="-1" aria-hidden="true">${imgTag(image, 800, "(min-width: 1200px) 380px, (min-width: 960px) 31vw, 92vw")}</a>
         <div class="guide-body"><h3><a href="${href}">${R.esc(title)}</a></h3><p>${R.esc(text)}</p>
         <a class="map-link" href="${href}">${ic("arrow", "flip-rtl", 17)}${R.esc(link)}</a></div></article>`;
 
