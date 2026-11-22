@@ -905,6 +905,14 @@ a.contact-item:hover { background: rgba(255,255,255,.16); }
 .legal-header-inner { display: flex; align-items: center; gap: 12px; min-height: var(--header-h-legal); }
 .legal-header .brand-logo { width: 60px; height: 78px; }
 .legal-header .bw { height: 60px; }
+/* Shrinking header (like the home page): big logo on arrival, compact bar once the visitor scrolls */
+.legal-header { transition: box-shadow .3s; }
+.legal-header-inner { transition: min-height .35s var(--ease); }
+.legal-header .brand-logo { transition: width .35s var(--ease), height .35s var(--ease); }
+.legal-header.is-scrolled { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+.legal-header.is-scrolled .legal-header-inner { min-height: var(--header-h-compact); }
+.legal-header.is-scrolled .brand-logo { width: 43px; height: 56px; }
+.legal-header.is-scrolled .bw { height: 44px; }
 .lang-links a {
   display: grid; place-items: center; min-width: 42px; min-height: 38px; padding: 0 8px; border-radius: 999px;
   font: 600 .82rem/1 var(--font-body); color: var(--color-text-muted); text-decoration: none;
@@ -918,6 +926,8 @@ a.contact-item:hover { background: rgba(255,255,255,.16); }
   .legal-header .brand { gap: 6px; }
   .legal-header .brand-logo { width: 45px; height: 58px; }
   .legal-header .bw { height: 54px; }
+  .legal-header.is-scrolled .brand-logo { width: 35px; height: 46px; }
+  .legal-header.is-scrolled .bw { height: 40px; }
   .legal-header .lang-menu-btn { padding: 0 10px; }
   .legal-header .lang-menu-btn .lang-chevron { display: none; }
 }

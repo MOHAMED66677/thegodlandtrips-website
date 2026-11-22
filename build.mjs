@@ -289,6 +289,9 @@ for (const lang of LANGS) {
       lb.addEventListener("click", function () { menu(lb.getAttribute("aria-expanded") !== "true"); });
       document.addEventListener("click", function (e) { if (!e.target.closest(".lang-menu")) menu(false); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !ll.hidden) { menu(false); lb.focus(); } });
+      var hd = document.querySelector(".legal-header");
+      function shrink() { var y = window.scrollY; if (y > 40) hd.classList.add("is-scrolled"); else if (y < 8) hd.classList.remove("is-scrolled"); }
+      shrink(); window.addEventListener("scroll", shrink, { passive: true });
     })();
   </script>
 </body>
@@ -320,6 +323,9 @@ const PAGE_SCRIPT = `(function () {
   lb.addEventListener("click", function () { menu(lb.getAttribute("aria-expanded") !== "true"); });
   document.addEventListener("click", function (e) { if (!e.target.closest(".lang-menu")) menu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !ll.hidden) { menu(false); lb.focus(); } });
+  var hd = document.querySelector(".legal-header");
+  function shrink() { var y = window.scrollY; if (y > 40) hd.classList.add("is-scrolled"); else if (y < 8) hd.classList.remove("is-scrolled"); }
+  shrink(); window.addEventListener("scroll", shrink, { passive: true });
 })();`;
 let actCount = 0;
 for (const lang of LANGS) {
