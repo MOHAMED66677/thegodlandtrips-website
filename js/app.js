@@ -386,8 +386,12 @@
   }
 
   var ticking = false;
+  var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   function onScroll() {
     ticking = false;
+    // depth: the hero photo scrolls slower than the page (skipped when motion is reduced)
+    var hero = !calm && $(".hero");
+    if (hero && window.scrollY <= hero.offsetHeight) hero.style.setProperty("--hero-y", Math.round(window.scrollY));
     var header = $(".site-header");
     if (header) header.classList.toggle("is-top", window.scrollY < 24);
     var bar = $(".mobile-bar");
@@ -406,6 +410,25 @@
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
   window.addEventListener("resize", onScroll);
+
+  /* ---------- activity cards tilt toward the mouse (computers only, not when motion is reduced) ---------- */
+  if (!calm && window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var tilted = null;
+    var untilt = function () { if (tilted) { tilted.classList.remove("is-tilting"); tilted = null; } };
+    document.addEventListener("pointermove", function (ev) {
+      var card = ev.target.closest && ev.target.closest(".activity-card");
+      if (card !== tilted) untilt();
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      var x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+      card.style.setProperty("--ry", ((x - .5) * 10).toFixed(2) + "deg");
+      card.style.setProperty("--rx", ((.5 - y) * 8).toFixed(2) + "deg");
+      card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+      card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      card.classList.add("is-tilting"); tilted = card;
+    }, { passive: true });
+    document.addEventListener("pointerleave", untilt);
+  }
 
   /* ---------- activity filter ---------- */
   function applyFilter(f, announce) {
