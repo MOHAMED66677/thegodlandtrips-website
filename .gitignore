@@ -18,3 +18,7 @@ node_modules/
 
 # Rendered language videos (regenerate with video/render.py --lang xx)
 video/output/
+
+# Your original photos stay on your computer (the site uses the light copies in images/photos/)
+mes-photos/*
+!mes-photos/LISEZ-MOI.md
