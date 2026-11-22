@@ -32,6 +32,8 @@ var SITE = {
   // Google Business Profile > "Ask for reviews" > copy the link (g.page/r/.../review).
   // Shows a "Leave a review" button in the reviews section. Leave "" to hide.
   googleReviewUrl: "",
+  // Instagram account (handle without @). Shown in the contact section and the footer. Leave "" to hide.
+  instagram: "medina_expeditions",
 
   // Optional: endpoint of a form service (Web3Forms, Formspree...) so the
   // "Send by email" button posts the request without opening a mail app.

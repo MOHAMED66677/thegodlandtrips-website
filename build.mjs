@@ -122,7 +122,7 @@ for (const lang of LANGS) {
         ...(SITE.open24h ? { openingHoursSpecification: [{ "@type": "OpeningHoursSpecification",
           dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" }] } : {}),
         knowsLanguage: LANGS,
-        sameAs: SITE.googleBusinessUrl ? [SITE.googleBusinessUrl] : undefined,
+        sameAs: [SITE.googleBusinessUrl, SITE.instagram && `https://www.instagram.com/${SITE.instagram}/`].filter(Boolean),
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: tt("services.title"),

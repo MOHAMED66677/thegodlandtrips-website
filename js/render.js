@@ -518,6 +518,8 @@
             "<span><small>" + e(lang, "contact.email") + '</small><strong dir="ltr">' + esc(SITE.email) + "</strong></span></a>" : "") +
           (SITE.address ? '<a class="contact-item" href="' + esc(SITE.googleBusinessUrl || mapsSearch(SITE.address)) + '" target="_blank" rel="noopener">' + icon("pin") +
             "<span><small>" + e(lang, "contact.address") + "</small><strong>" + esc(SITE.address) + "</strong></span></a>" : "") +
+          (SITE.instagram ? '<a class="contact-item" href="' + esc(igLink()) + '" target="_blank" rel="noopener">' + icon("instagram") +
+            '<span><small>Instagram</small><strong dir="ltr">@' + esc(SITE.instagram) + "</strong></span></a>" : "") +
           (SITE.googleBusinessUrl ? '<a class="contact-item" href="' + esc(SITE.googleBusinessUrl) + '" target="_blank" rel="noopener">' + icon("star") +
             "<span><small>" + e(lang, "contact.reviews") + "</small><strong>" + e(lang, "contact.reviewsCta") + "</strong></span></a>" : "") +
         "</div>" +
@@ -541,6 +543,8 @@
     "</div></section>";
   }
 
+  function igLink() { return "https://www.instagram.com/" + SITE.instagram + "/"; }
+
   function footer(lang) {
     return '<footer class="site-footer"><div class="container">' +
       '<div class="footer-grid">' +
@@ -551,6 +555,7 @@
         '<div><h3 class="footer-title">' + e(lang, "contact.title") + '</h3><ul class="footer-links">' +
           '<li><a href="' + esc(waLink()) + '" target="_blank" rel="noopener" dir="ltr">' + esc(SITE.whatsappDisplay) + "</a></li>" +
           (SITE.email ? '<li><a href="mailto:' + esc(SITE.email) + '" dir="ltr">' + esc(SITE.email) + "</a></li>" : "") +
+          (SITE.instagram ? '<li><a href="' + esc(igLink()) + '" target="_blank" rel="noopener" dir="ltr">@' + esc(SITE.instagram) + " (Instagram)</a></li>" : "") +
           (SITE.address ? "<li>" + esc(SITE.address) + "</li>" : "") + "</ul></div>" +
         '<div><h3 class="footer-title">' + e(lang, "footer.lang") + "</h3>" + langSwitch(lang, "lang-switch-footer") + "</div>" +
       "</div>" +
