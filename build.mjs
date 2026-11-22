@@ -289,7 +289,7 @@ const actUrl = (l, a) => `${SITE.siteUrl}/${pathFor(l)}activity/${a.slug}.html`;
 // Unsplash ids point to the WebP copies made by tools/photos.py
 const photo = (up, id, w, ext = "webp") => `${up}images/photos/${id}-${w}.${ext}`;
 const CAT_ICON = { excursions: "map", land: "mountain", air: "wind", sea: "waves" };
-const ic = (n, cls = "", s = 20) => `<svg aria-hidden="true" width="${s}" height="${s}"${cls ? ` class="${cls}"` : ""}><use href="#i-${n}"/></svg>`;
+const ic = (n, cls = "", s = 20) => `<svg aria-hidden="true" width="${s}" height="${s}" class="ic ic-${n}${cls ? ` ${cls}` : ""}"><use href="#i-${n}"/></svg>`;
 const PAGE_SCRIPT = `(function () {
   var html = document.documentElement, btn = document.querySelector(".theme-toggle"), meta = document.querySelector('meta[name="theme-color"]');
   function apply(t, save) {

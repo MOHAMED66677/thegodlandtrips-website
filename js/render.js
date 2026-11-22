@@ -41,7 +41,7 @@
 
   function icon(name, cls) {
     // width/height = safe default size even if the stylesheet is missing or outdated
-    return '<svg aria-hidden="true" focusable="false" width="24" height="24"' + (cls ? ' class="' + cls + '"' : "") + '><use href="#i-' + name + '"/></svg>';
+    return '<svg aria-hidden="true" focusable="false" width="24" height="24" class="ic ic-' + name + (cls ? " " + cls : "") + '"><use href="#i-' + name + '"/></svg>';
   }
 
   /* Photo: Unsplash id ("photo-...") -> responsive WebP copies stored in images/photos/
