@@ -75,6 +75,16 @@ const PRELOAD_FONTS = { ar: ["cairo-arabic-0"], other: ["marcellus-latin-4", "so
 const fontPreload = (lang, base) => (PRELOAD_FONTS[lang] || PRELOAD_FONTS.other)
   .map((f) => `<link rel="preload" href="${base}fonts/${f}.woff2" as="font" type="font/woff2" crossorigin>`).join("\n  ");
 
+// Site icons made from the emblem (brand/my-logo/make_favicons.py). Google needs a square icon
+// of at least 48x48 px, otherwise it shows a grey globe next to the site in search results.
+const iconLinks = (base) => [
+  `<link rel="icon" href="${base}favicon.ico" sizes="48x48">`,
+  `<link rel="icon" type="image/png" sizes="96x96" href="${base}images/icon-96.png">`,
+  `<link rel="icon" type="image/png" sizes="144x144" href="${base}images/icon-144.png">`,
+  `<link rel="apple-touch-icon" href="${base}images/apple-touch-icon.png">`,
+  `<link rel="manifest" href="${base}site.webmanifest">`,
+].join("\n  ");
+
 for (const dir of ["css", "js", "content", "images", "fonts"]) cpSync(dir, `${OUT}/${dir}`, { recursive: true });
 writeFileSync(`${OUT}/content/guide-cards.js`, `var GUIDE_CARDS = ${JSON.stringify(GUIDE_CARDS)};
 `);
@@ -161,6 +171,7 @@ for (const lang of LANGS) {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${t("meta.title")}</title>`)
     .replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${t("meta.description")}">`)
     .replace("<!--SEO-->", () => seo)
+    .replace("<!--ICONS-->", () => iconLinks(prefix))
     .replace("<!--APP-->", () => R.renderPage(lang))
     .replace(/\s*<noscript>[\s\S]*?<\/noscript>/, "")
     .replace(/(href|src)="(css|js|content|images)\//g, `$1="${prefix}$2/`)
@@ -237,7 +248,7 @@ for (const lang of LANGS) {
   <meta name="theme-color" content="#173059">
   <link rel="canonical" href="${legalUrl(lang)}">
   ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${legalUrl(l)}">`).join("\n  ")}
-  <link rel="icon" type="image/svg+xml" href="${prefix}images/favicon.svg">
+  ${iconLinks(prefix)}
   ${themeScript}
   ${fontPreload(lang, prefix)}
   <link rel="stylesheet" href="${prefix}${cssHref}">
@@ -375,7 +386,7 @@ for (const lang of LANGS) {
   <meta property="og:image" content="${R.esc(ogImg)}">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
-  <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
+  ${iconLinks(up)}
   ${themeScript}
   ${fontPreload(lang, up)}
   <link rel="stylesheet" href="${up}${cssHref}">
@@ -481,7 +492,7 @@ for (const lang of LANGS) {
   <meta property="og:image" content="${R.esc(ogImg)}">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
-  <link rel="icon" type="image/svg+xml" href="${up}images/favicon.svg">
+  ${iconLinks(up)}
   ${themeScript}
   ${fontPreload(lang, up)}
   <link rel="stylesheet" href="${up}${cssHref}">
@@ -642,6 +653,12 @@ ${LANGS.map((x) => `    <xhtml:link rel="alternate" hreflang="${x}" href="${actU
 // IndexNow key file (see tools/indexnow.mjs)
 if (SITE.indexNowKey && !SITE.hideFromSearch) writeFileSync(`${OUT}/${SITE.indexNowKey}.txt`, SITE.indexNowKey);
 
+cpSync("favicon.ico", `${OUT}/favicon.ico`);
+writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
+  name: SITE.agencyName, short_name: "Marrakech Odyssey", start_url: "/", display: "browser",
+  background_color: "#FAF8F2", theme_color: "#173059",
+  icons: [192, 512].map((n) => ({ src: `/images/icon-${n}.png`, sizes: `${n}x${n}`, type: "image/png" })),
+}, null, 2));
 writeFileSync(`${OUT}/robots.txt`, SITE.demoMode || SITE.hideFromSearch
   ? `# Hidden from search engines until the official launch (hideFromSearch)\nUser-agent: *\nDisallow: /\n`
   : `User-agent: *\nAllow: /\nSitemap: ${SITE.siteUrl}/sitemap.xml\n`);
@@ -666,7 +683,7 @@ writeFileSync(`${OUT}/_headers`, `/*
 const BASE = new URL(SITE.siteUrl + "/").pathname;   // "/" or "/repo-name/" on GitHub Pages
 const nf = (l) => `<p lang="${l}"${R.isRtl(l) ? ' dir="rtl"' : ""}><a href="${BASE}${pathFor(l)}">${R.esc(R.t(l, "nav.home") || "")}</a></p>`;
 writeFileSync(`${OUT}/404.html`, secure(`<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex"><link rel="icon" type="image/svg+xml" href="${BASE}images/favicon.svg">
+<title>404 | ${R.esc(SITE.agencyName)}</title><meta name="robots" content="noindex">${iconLinks(BASE).replace(/\n\s*/g, "")}
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FBF6F3;color:#2B1915;font-family:system-ui,sans-serif;text-align:center;padding:24px}
 img{width:72px;margin:0 auto 12px}h1{font-size:2.4rem;margin:.2em 0}p{margin:.4em 0;font-size:1.1rem}a{color:#173059;font-weight:600}</style></head>
 <body><main><img src="${BASE}images/logo-mark.svg" alt=""><h1>404</h1>${LANGS.map(nf).join("")}</main></body></html>
