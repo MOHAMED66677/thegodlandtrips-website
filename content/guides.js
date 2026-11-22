@@ -15,7 +15,8 @@ var GUIDE_UI = {
   en: { title: "Travel guides", lead: "Practical tips to prepare your stay in Marrakech.", home: "Before you go", homeLead: "Answers to the questions everyone asks before arriving.", read: "Read the guide", all: "All travel guides", facts: "Key facts", related: "Related activities", minutes: "{n} min read", updated: "Updated", cta: "Need a transfer or a trip?", ctaText: "Send us your dates and the number of people: we reply quickly on WhatsApp." },
   es: { title: "Guías de viaje", lead: "Nuestros consejos prácticos para preparar su estancia en Marrakech.", home: "Antes de viajar", homeLead: "Respuestas a las preguntas que todos se hacen antes de llegar.", read: "Leer la guía", all: "Todas las guías de viaje", facts: "Lo esencial", related: "Actividades relacionadas", minutes: "{n} min de lectura", updated: "Actualizado", cta: "¿Necesita un traslado o una excursión?", ctaText: "Envíenos sus fechas y el número de personas: le respondemos rápido por WhatsApp." },
   de: { title: "Reisetipps", lead: "Praktische Tipps für die Vorbereitung Ihres Aufenthalts in Marrakech.", home: "Vor der Reise", homeLead: "Antworten auf die Fragen, die sich alle vor der Ankunft stellen.", read: "Zum Reisetipp", all: "Alle Reisetipps", facts: "Das Wichtigste", related: "Passende Aktivitäten", minutes: "{n} Min. Lesezeit", updated: "Aktualisiert", cta: "Transfer oder Ausflug gewünscht?", ctaText: "Schicken Sie uns Ihre Daten und die Personenzahl: Wir antworten schnell per WhatsApp." },
-  nl: { title: "Reisgidsen", lead: "Praktische tips om uw verblijf in Marrakech voor te bereiden.", home: "Voordat u vertrekt", homeLead: "Antwoorden op de vragen die iedereen stelt vóór aankomst.", read: "Lees de gids", all: "Alle reisgidsen", facts: "In het kort", related: "Bijbehorende activiteiten", minutes: "{n} min lezen", updated: "Bijgewerkt", cta: "Een transfer of uitstap nodig?", ctaText: "Stuur ons uw data en het aantal personen: we antwoorden snel via WhatsApp." }
+  nl: { title: "Reisgidsen", lead: "Praktische tips om uw verblijf in Marrakech voor te bereiden.", home: "Voordat u vertrekt", homeLead: "Antwoorden op de vragen die iedereen stelt vóór aankomst.", read: "Lees de gids", all: "Alle reisgidsen", facts: "In het kort", related: "Bijbehorende activiteiten", minutes: "{n} min lezen", updated: "Bijgewerkt", cta: "Een transfer of uitstap nodig?", ctaText: "Stuur ons uw data en het aantal personen: we antwoorden snel via WhatsApp." },
+  it: { title: "Guide di viaggio", lead: "I nostri consigli pratici per preparare il Suo soggiorno a Marrakech.", home: "Prima di partire", homeLead: "Le risposte alle domande che tutti si pongono prima di arrivare.", read: "Leggi la guida", all: "Tutte le guide di viaggio", facts: "In breve", related: "Attività correlate", minutes: "{n} min di lettura", updated: "Aggiornato", cta: "Le serve un transfer o un'escursione?", ctaText: "Ci invii le date e il numero di persone: rispondiamo rapidamente su WhatsApp." },
 };
 
 var GUIDES = [
@@ -87,6 +88,17 @@ var GUIDES = [
         ["Het bijzondere geval van de medina", "De meeste riads liggen in steegjes die te smal zijn voor auto's. De chauffeur zet u af op het dichtstbijzijnde punt (een stadspoort of een pleintje), waar het personeel van de riad u vaak komt ophalen. Laat uw riad uw aankomsttijd weten en houd hun telefoonnummer bij de hand."],
         ["Onze tips", "Geef uw vluchtnummer door bij de boeking, neem een paar dirham mee voor fooien en kies bij een late aankomst een geboekte transfer: dan hoeft u 's nachts niet zelf de weg door de medina te zoeken."]
       ]
+    },
+    it: {
+      t: "Dall'aeroporto di Marrakech alla medina: come arrivare",
+      d: "Distanza, tempi di percorrenza e soluzioni per raggiungere il Suo riad dall'aeroporto Marrakech-Menara, di giorno come di notte.",
+      facts: ["L'aeroporto Marrakech-Menara (RAK) dista circa 6 km dalla piazza Jemaa el-Fna", "Calcoli dai 15 ai 25 minuti in auto a seconda del traffico", "Le auto non possono entrare nei vicoli della medina: l'ultimo tratto si fa a piedi"],
+      s: [
+        ["Un aeroporto vicinissimo alla città", "L'aeroporto Marrakech-Menara si trova a sud-ovest della città, a pochi chilometri dal centro. Un vantaggio: qualunque sia il Suo hotel o riad, di solito ci arriva in meno di mezz'ora."],
+        ["Come raggiungere l'alloggio", "Fuori dal terminal trova i taxi, e una linea di autobus collega l'aeroporto al centro. Se prende un taxi, concordi il prezzo prima di salire. Un transfer privato prenotato in anticipo è la soluzione più semplice: l'autista La attende nella sala arrivi con un cartello con il Suo nome, segue il volo in caso di ritardo e il prezzo è fissato prima."],
+        ["Il caso particolare della medina", "La maggior parte dei riad si trova in vicoli troppo stretti per le auto. L'autista La lascia nel punto più vicino (una porta della medina o una piazzetta), dove spesso il personale del riad viene ad accoglierLa. Comunichi al riad l'orario di arrivo e tenga a portata di mano il loro numero di telefono."],
+        ["I nostri consigli", "Indichi il numero di volo al momento della prenotazione, porti qualche dirham per le mance e, se atterra tardi, scelga un transfer prenotato: non dovrà orientarsi da solo nella medina di notte."]
+      ]
     }
   },
   /* ------------------------------------------------------------------ */
@@ -156,6 +168,17 @@ var GUIDES = [
         ["Merzouga, de Sahara van de grote duinen", "Merzouga, aan de rand van de Erg Chebbi, heeft de oranje zandduinen die men zich bij de Sahara voorstelt. Maar u moet de Atlas over en de weg is lang: de meeste reizigers gaan drie dagen, met tussenstops onderweg."],
         ["Hoe kiest u?", "Duurt uw verblijf korter dan een week of reist u met jonge kinderen, dan is Agafay de beste keuze: u geniet van de woestijn zonder twee dagen in de auto te zitten. Droomt u van echte duinen en heeft u de tijd, dan is Merzouga de reis waard."],
         ["Onze tip", "Vertrek voor Agafay laat in de middag voor de zonsondergang en neem een jas mee: de avonden zijn fris, ook in de zomer."]
+      ]
+    },
+    it: {
+      t: "Agafay o Merzouga: quale deserto scegliere partendo da Marrakech?",
+      d: "Un deserto di pietra a un'ora da Marrakech o le grandi dune del Sahara a una giornata di strada: le differenze per aiutarLa a scegliere.",
+      facts: ["Agafay: deserto di pietra a circa 40 km da Marrakech, meno di un'ora di auto", "Merzouga: vere dune di sabbia del Sahara, a circa 550 km, 9-10 ore di strada", "Agafay richiede mezza giornata; Merzouga di solito 3 giorni"],
+      s: [
+        ["Agafay, il deserto a due passi", "Il deserto di Agafay è un altopiano di colline pietrose e terra ocra, con le cime dell'Atlante all'orizzonte. Non ci sono grandi dune, ma il paesaggio è spettacolare, soprattutto al tramonto. Si può andare in quad, in buggy o a dorso di cammello, e molti campi servono la cena sotto le stelle."],
+        ["Merzouga, il Sahara delle grandi dune", "Merzouga, ai margini dell'Erg Chebbi, offre le dune di sabbia arancione che tutti immaginano pensando al Sahara. Ma bisogna attraversare l'Atlante e la strada è lunga: la maggior parte dei viaggiatori ci va per tre giorni, con tappe lungo il percorso."],
+        ["Come scegliere", "Se il Suo soggiorno dura meno di una settimana o viaggia con bambini piccoli, Agafay è la scelta migliore: si gode il deserto senza passare due giorni in auto. Se sogna le vere dune e ha tempo, Merzouga vale il viaggio."],
+        ["Il nostro consiglio", "Per Agafay, parta nel tardo pomeriggio per vedere il tramonto e porti una giacca: le serate sono fresche, anche d'estate."]
       ]
     }
   },
@@ -227,6 +250,17 @@ var GUIDES = [
         ["Essaouira, frisse oceaanlucht", "Deze voormalige versterkte haven aan de Atlantische Oceaan heeft een medina op de UNESCO-werelderfgoedlijst, een levendige vissershaven en stadsmuren aan zee. Het is er rustiger dan in Marrakech en het waait vaak: neem een trui mee."],
         ["Hoe kiest u?", "Voor natuur en een makkelijke wandeling: Ourika. Voor een groots natuurschouwspel: Ouzoud. Voor afwisseling en de zee: Essaouira. Vertrek in elk geval vroeg in de ochtend om van de dag te genieten."]
       ]
+    },
+    it: {
+      t: "Gita di un giorno da Marrakech: Ouzoud, Ourika o Essaouira?",
+      d: "Cascate, una valle dell'Atlante o una città sull'oceano: tempi di percorrenza, atmosfera e consigli per scegliere la Sua gita.",
+      facts: ["Valle dell'Ourika: circa 65 km, poco più di un'ora di auto", "Cascate di Ouzoud: circa 150 km, da 2 ore e mezza a 3 ore di auto", "Essaouira: circa 190 km, quasi 3 ore di auto"],
+      s: [
+        ["La valle dell'Ourika, l'Atlante a portata di mano", "La gita più breve: una valle verde ai piedi dell'Atlante, villaggi berberi e, in fondo alla strada, piccole cascate da raggiungere a piedi. Perfetta per una giornata tranquilla o se ha poco tempo."],
+        ["Le cascate di Ouzoud, le più alte del Marocco", "Le cascate di Ouzoud fanno un salto di circa 110 metri in un ambiente verde e rigoglioso. Un sentiero scende fino alla pozza, si può fare un breve giro in barca e spesso si incontrano le bertucce. Il viaggio occupa buona parte della giornata, ma lo spettacolo ne vale la pena."],
+        ["Essaouira, una boccata d'aria oceanica", "Antico porto fortificato sull'Atlantico, Essaouira ha una medina patrimonio dell'UNESCO, un vivace porto di pescatori e bastioni affacciati sul mare. È più tranquilla di Marrakech e spesso ventosa: porti un maglione."],
+        ["Come scegliere", "Per la natura e una passeggiata facile: Ourika. Per uno spettacolo naturale: Ouzoud. Per cambiare aria e vedere il mare: Essaouira. Qualunque sia la scelta, parta presto la mattina per sfruttare al meglio la giornata."]
+      ]
     }
   },
   /* ------------------------------------------------------------------ */
@@ -297,6 +331,17 @@ var GUIDES = [
         ["Afhankelijk van het seizoen", "In de zomer is het overdag erg warm: hoed, zonnebrand en veel water. Van oktober tot maart kunnen ochtenden en avonden koud zijn, zeker in de woestijn: neem een warme jas of fleece mee."],
         ["In de dorpen", "Gaat de tocht door Berberdorpen, dan wordt kleding die schouders en knieën bedekt gewaardeerd. Vraag altijd toestemming voordat u mensen fotografeert."]
       ]
+    },
+    it: {
+      t: "Come vestirsi per un giro in quad, in buggy o a dorso di cammello",
+      d: "Abiti, scarpe e piccoli accessori indispensabili per godersi quad, buggy ed escursioni nel deserto intorno a Marrakech.",
+      facts: ["Pantaloni lunghi e scarpe chiuse: indispensabili per quad e buggy", "Occhiali da sole e una sciarpa contro la polvere", "Una giacca per la sera: dopo il tramonto il deserto si rinfresca"],
+      s: [
+        ["Per quad e buggy", "Indossi pantaloni lunghi e scarpe chiuse (da ginnastica o da trekking): le gambe sono vicine al motore e ai sassi. Il casco è fornito. Aggiunga occhiali da sole e una sciarpa (o un turbante, spesso offerto sul posto) per proteggersi dalla polvere."],
+        ["Per un giro in cammello", "Sul cammello sono più comodi i pantaloni che i pantaloncini. Eviti borse ingombranti: basta un piccolo zaino per acqua, crema solare e telefono."],
+        ["A seconda della stagione", "In estate il caldo di giorno è intenso: cappello, crema solare e molta acqua. Da ottobre a marzo, mattine e serate possono essere fredde, soprattutto nel deserto: porti una giacca calda o un pile."],
+        ["Nei villaggi", "Se la gita attraversa villaggi berberi, sono apprezzati abiti che coprono spalle e ginocchia. Chieda sempre il permesso prima di fotografare le persone."]
+      ]
     }
   },
   /* ------------------------------------------------------------------ */
@@ -366,6 +411,17 @@ var GUIDES = [
         ["Op de luchthaven", "U kunt dirham opnemen bij de geldautomaten en in de aankomsthal een Marokkaanse simkaart kopen, handig om uw riad te bellen of een kaartenapp te gebruiken."],
         ["Naar uw verblijf", "Buiten wachten taxi's, maar 's nachts is een vooraf geboekte transfer het meest ontspannen: de chauffeur wacht met een naambord, ook als uw vlucht vertraagd is, en zet u zo dicht mogelijk bij uw verblijf af."],
         ["'s Nachts in de medina", "De steegjes zijn rustig en vaak slecht verlicht. Volg het personeel van uw riad in plaats van onbekenden die aanbieden u te gidsen, en houd het telefoonnummer van uw riad bij de hand."]
+      ]
+    },
+    it: {
+      t: "Arrivare a Marrakech di notte: cosa sapere",
+      d: "Volo in tarda serata? Consigli semplici per raggiungere con calma il Suo hotel o riad: transfer, contanti, SIM e la medina di notte.",
+      facts: ["In aeroporto ci sono sportelli bancomat", "Si può acquistare una SIM marocchina appena atterrati", "Di notte, un transfer prenotato Le evita di orientarsi da solo nella medina"],
+      s: [
+        ["Prima di partire", "Annoti l'indirizzo esatto e il numero di telefono dell'alloggio e comunichi l'orario di arrivo. Se dorme in un riad nella medina, chieda se qualcuno può venire a prenderLa nel punto di arrivo più vicino."],
+        ["In aeroporto", "Può prelevare dirham agli sportelli bancomat e acquistare una SIM marocchina nella sala arrivi, utile per chiamare il riad o usare un'app di mappe."],
+        ["Raggiungere l'alloggio", "I taxi aspettano fuori, ma di notte la soluzione più tranquilla è un transfer prenotato in anticipo: l'autista La attende con un cartello con il Suo nome, anche se il volo è in ritardo, e La lascia il più vicino possibile all'alloggio."],
+        ["Nella medina di notte", "I vicoli sono silenziosi e spesso poco illuminati. Segua il personale del riad piuttosto che sconosciuti che si offrono di accompagnarLa, e tenga a portata di mano il numero del riad."]
       ]
     }
   }

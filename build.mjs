@@ -65,7 +65,7 @@ const template = readFileSync("index.html", "utf8")
   .replace(/(href|src)="((?:css|js|content)\/[^"?]+\.(?:css|js))"/g, (m, attr, file) => `${attr}="${file}?v=${version(file)}"`);
 const pathFor = (l) => (l === DEFAULT_LANG ? "" : `${l}/`);
 const urlFor = (l) => `${SITE.siteUrl}/${pathFor(l)}`;
-const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES", de: "de_DE", nl: "nl_NL" };
+const OG_LOCALE = { fr: "fr_FR", ar: "ar_MA", en: "en_GB", es: "es_ES", de: "de_DE", nl: "nl_NL", it: "it_IT" };
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
@@ -193,7 +193,7 @@ for (const lang of LANGS) {
   const S = L.starting;
   // one name or several: "A", "A and B", "A, B and C" in the page's language
   const owners = [].concat(LEGAL_INFO.ownerName || []).map((x) => String(x).trim()).filter(Boolean);
-  const AND = { fr: " et ", ar: " و ", en: " and ", es: " y ", de: " und ", nl: " en " };
+  const AND = { fr: " et ", ar: " و ", en: " and ", es: " y ", de: " und ", nl: " en ", it: " e " };
   const ownerText = owners.length > 1 ? owners.slice(0, -1).join(", ") + (AND[lang] || " & ") + owners[owners.length - 1] : (owners[0] || "");
   const values = {
     site: SITE.agencyName, owner: ownerText,

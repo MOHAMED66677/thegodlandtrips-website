@@ -28,10 +28,10 @@ var LEGAL_INFO = {
   updated: "2026-11-20",
 
   // Policies written in each language (leave "" to show "[To complete]")
-  retention:    { fr: "12 mois", ar: "12 شهرًا", en: "12 months", es: "12 meses", de: "12 Monate", nl: "12 maanden" },  // how long requests are kept
-  payment:      { fr: "en espèces au chauffeur le jour du service, en dirhams ou en euros", ar: "نقدًا للسائق يوم الخدمة، بالدرهم أو باليورو", en: "in cash to the driver on the day of the service, in dirhams or euros", es: "en efectivo al chófer el día del servicio, en dírhams o euros", de: "bar beim Fahrer am Tag der Leistung, in Dirham oder Euro", nl: "contant aan de chauffeur op de dag van de dienst, in dirham of euro" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
-  cancellation: { fr: "Toute réservation peut être annulée ou modifiée gratuitement jusqu'à {cancel} heures avant la prise en charge, par simple message WhatsApp", ar: "يمكن إلغاء أي حجز أو تعديله مجانًا حتى {cancel} ساعة قبل موعد الانطلاق، برسالة بسيطة عبر واتساب", en: "Any booking can be cancelled or changed free of charge up to {cancel} hours before pickup, with a simple WhatsApp message", es: "Toda reserva puede cancelarse o modificarse gratis hasta {cancel} horas antes de la recogida, con un simple mensaje de WhatsApp", de: "Jede Buchung kann bis {cancel} Stunden vor der Abholung kostenlos storniert oder geändert werden, per einfacher WhatsApp-Nachricht", nl: "Elke boeking kan tot {cancel} uur voor het ophalen gratis worden geannuleerd of gewijzigd, met een eenvoudig WhatsApp-bericht" },  // e.g. "gratuite jusqu'à 24 h avant le service"
-  waiting:      { fr: "{wait} minutes après l'atterrissage", ar: "{wait} دقيقة بعد الهبوط", en: "{wait} minutes after landing", es: "{wait} minutos tras el aterrizaje", de: "{wait} Minuten nach der Landung", nl: "{wait} minuten na de landing" }   // e.g. "60 minutes après l'atterrissage"
+  retention:    { fr: "12 mois", ar: "12 شهرًا", en: "12 months", es: "12 meses", de: "12 Monate", nl: "12 maanden", it: "12 mesi" },  // how long requests are kept
+  payment:      { fr: "en espèces au chauffeur le jour du service, en dirhams ou en euros", ar: "نقدًا للسائق يوم الخدمة، بالدرهم أو باليورو", en: "in cash to the driver on the day of the service, in dirhams or euros", es: "en efectivo al chófer el día del servicio, en dírhams o euros", de: "bar beim Fahrer am Tag der Leistung, in Dirham oder Euro", nl: "contant aan de chauffeur op de dag van de dienst, in dirham of euro", it: "in contanti all'autista il giorno del servizio, in dirham o in euro" },  // e.g. "acompte de 30 % à la réservation, solde au chauffeur"
+  cancellation: { fr: "Toute réservation peut être annulée ou modifiée gratuitement jusqu'à {cancel} heures avant la prise en charge, par simple message WhatsApp", ar: "يمكن إلغاء أي حجز أو تعديله مجانًا حتى {cancel} ساعة قبل موعد الانطلاق، برسالة بسيطة عبر واتساب", en: "Any booking can be cancelled or changed free of charge up to {cancel} hours before pickup, with a simple WhatsApp message", es: "Toda reserva puede cancelarse o modificarse gratis hasta {cancel} horas antes de la recogida, con un simple mensaje de WhatsApp", de: "Jede Buchung kann bis {cancel} Stunden vor der Abholung kostenlos storniert oder geändert werden, per einfacher WhatsApp-Nachricht", nl: "Elke boeking kan tot {cancel} uur voor het ophalen gratis worden geannuleerd of gewijzigd, met een eenvoudig WhatsApp-bericht", it: "Ogni prenotazione può essere annullata o modificata gratuitamente fino a {cancel} ore prima del prelievo, con un semplice messaggio WhatsApp" },  // e.g. "gratuite jusqu'à 24 h avant le service"
+  waiting:      { fr: "{wait} minutes après l'atterrissage", ar: "{wait} دقيقة بعد الهبوط", en: "{wait} minutes after landing", es: "{wait} minutos tras el aterrizaje", de: "{wait} Minuten nach der Landung", nl: "{wait} minuten na de landing", it: "{wait} minuti dopo l'atterraggio" }   // e.g. "60 minutes après l'atterrissage"
 };
 
 /* Texts. {tokens} are replaced by LEGAL_INFO / SITE values. */
@@ -57,7 +57,7 @@ var LEGAL_TEXT = {
         { ul: [
           "Photos d'illustration : Unsplash (licence Unsplash), en attendant nos propres photos.",
           "Cartes : Google Maps. Recherche d'adresses : Photon (komoot), données © contributeurs OpenStreetMap. Estimation des trajets : OSRM.",
-          "Polices de caractères : Inter, Space Grotesk et Cairo (licence SIL Open Font License)."
+          "Polices de caractères : Marcellus, Source Sans 3 et Cairo (licence SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. Protection des données personnelles", blocks: [
@@ -120,7 +120,7 @@ var LEGAL_TEXT = {
         { ul: [
           "الصور التوضيحية: Unsplash (ترخيص Unsplash)، في انتظار صورنا الخاصة.",
           "الخرائط: خرائط Google. البحث عن العناوين: Photon (komoot)، البيانات © المساهمون في OpenStreetMap. تقدير المسارات: OSRM.",
-          "الخطوط: Inter وSpace Grotesk وCairo (ترخيص SIL Open Font License)."
+          "الخطوط: Marcellus وSource Sans 3 وCairo (ترخيص SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. حماية المعطيات الشخصية", blocks: [
@@ -183,7 +183,7 @@ var LEGAL_TEXT = {
         { ul: [
           "Illustration photos: Unsplash (Unsplash licence), until our own photos are added.",
           "Maps: Google Maps. Address search: Photon (komoot), data © OpenStreetMap contributors. Route estimates: OSRM.",
-          "Fonts: Inter, Space Grotesk and Cairo (SIL Open Font License)."
+          "Fonts: Marcellus, Source Sans 3 and Cairo (SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. Personal data protection", blocks: [
@@ -246,7 +246,7 @@ var LEGAL_TEXT = {
         { ul: [
           "Fotos ilustrativas: Unsplash (licencia Unsplash), a la espera de nuestras propias fotos.",
           "Mapas: Google Maps. Búsqueda de direcciones: Photon (komoot), datos © colaboradores de OpenStreetMap. Estimación de trayectos: OSRM.",
-          "Tipografías: Inter, Space Grotesk y Cairo (licencia SIL Open Font License)."
+          "Tipografías: Marcellus, Source Sans 3 y Cairo (licencia SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. Protección de datos personales", blocks: [
@@ -308,7 +308,7 @@ var LEGAL_TEXT = {
         { ul: [
           "Illustrationsfotos: Unsplash (Unsplash-Lizenz), bis eigene Fotos vorliegen.",
           "Karten: Google Maps. Adresssuche: Photon (komoot), Daten © OpenStreetMap-Mitwirkende. Fahrzeitschätzung: OSRM.",
-          "Schriftarten: Inter, Space Grotesk und Cairo (SIL Open Font License)."
+          "Schriftarten: Marcellus, Source Sans 3 und Cairo (SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. Datenschutz", blocks: [
@@ -371,7 +371,7 @@ var LEGAL_TEXT = {
         { ul: [
           "Illustratiefoto's: Unsplash (Unsplash-licentie), tot onze eigen foto's beschikbaar zijn.",
           "Kaarten: Google Maps. Adres zoeken: Photon (komoot), gegevens © OpenStreetMap-bijdragers. Schatting van de reistijd: OSRM.",
-          "Lettertypen: Inter, Space Grotesk en Cairo (SIL Open Font License)."
+          "Lettertypen: Marcellus, Source Sans 3 en Cairo (SIL Open Font License)."
         ]}
       ]},
       { id: "privacy", title: "4. Bescherming van persoonsgegevens", blocks: [
@@ -410,6 +410,69 @@ var LEGAL_TEXT = {
         ,
         { h3: "Toepasselijk recht" },
         "Deze voorwaarden vallen onder het Marokkaanse recht. Bij een geschil wordt eerst een minnelijke oplossing gezocht; lukt dat niet, dan zijn de bevoegde rechtbanken van Marrakech bevoegd."
+      ]}
+    ]
+  },
+
+  /* ============================ ITALIANO ============================ */
+  it: {
+    pageTitle: "Note legali e privacy",
+    intro: "Questa pagina indica chi pubblica il sito {site}, come vengono utilizzate le Sue informazioni e le condizioni dei nostri servizi.",
+    starting: { owner: "Responsabile del sito", owners: "Responsabili del sito", status: "Stato", statusValue: "Attività in fase di avvio (registrazione in corso)", city: "Città", note: "I numeri di registrazione, di licenza e di assicurazione saranno pubblicati qui non appena ottenuti.", inProgress: "in corso" },
+    back: "Torna alla home",
+    toc: "In questa pagina",
+    updated: "Ultimo aggiornamento",
+    todo: "Da completare",
+    labels: { owner: "nome e cognome", company: "ragione sociale", legalForm: "forma giuridica", address: "sede legale", rc: "numero RC", ice: "numero ICE", taxId: "codice fiscale (IF)", director: "nome del gestore", license: "numero di licenza", insurance: "assicuratore e numero di polizza", cndp: "numero di dichiarazione CNDP", retention: "durata", payment: "modalità di pagamento", cancellation: "condizioni di cancellazione", waiting: "tempo di attesa incluso" },
+    sections: [
+      { id: "editor", title: "1. Editore del sito", blocks: [
+        { dl: [["Ragione sociale", "{company}"], ["Forma giuridica", "{legalForm}"], ["Sede legale", "{address}"], ["Contatto", "{contact}"], ["Registro di commercio (RC)", "{rc}"], ["ICE", "{ice}"], ["Codice fiscale (IF)", "{taxId}"], ["Direttore della pubblicazione", "{director}"], ["Licenza di trasporto turistico / agenzia di viaggi", "{license}"], ["Assicurazione di responsabilità civile professionale", "{insurance}"]] }
+      ]},
+      { id: "hosting", title: "2. Hosting", blocks: [
+        "Il sito è ospitato da GitHub, Inc. (servizio GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, Stati Uniti."
+      ]},
+      { id: "credits", title: "3. Crediti", blocks: [
+        { ul: [
+          "Foto illustrative: Unsplash (licenza Unsplash), in attesa delle nostre foto.",
+          "Mappe: Google Maps. Ricerca indirizzi: Photon (komoot), dati © contributori OpenStreetMap. Stima dei percorsi: OSRM.",
+          "Caratteri: Marcellus, Source Sans 3 e Cairo (SIL Open Font License), ospitati sul sito stesso."
+        ]}
+      ]},
+      { id: "privacy", title: "4. Protezione dei dati personali", blocks: [
+        "Rispettiamo la legge marocchina n. 09-08 sulla protezione delle persone fisiche con riguardo al trattamento dei dati personali. Per i visitatori residenti nell'Unione europea applichiamo anche i principi del GDPR.",
+        { h3: "Titolare del trattamento" },
+        "{company}, {address}. Contatto: {contact}. Dichiarazione CNDP: {cndp}.",
+        { h3: "Dati raccolti" },
+        { ul: [
+          "Tramite il modulo di preventivo: il Suo nome, il Suo numero WhatsApp o email, il servizio desiderato, i luoghi di partenza e di arrivo, la data e il numero di passeggeri.",
+          "Queste informazioni non vengono conservate sul sito: è Lei a inviarcele, via WhatsApp (servizio di Meta) o via email, quando conferma il messaggio preparato dal modulo."
+        ]},
+        { h3: "Perché li utilizziamo" },
+        "Solo per rispondere alla Sua richiesta, preparare il preventivo e organizzare il transfer o l'attività. Non vengono mai venduti né usati a fini pubblicitari.",
+        { h3: "Per quanto tempo li conserviamo" },
+        "I nostri scambi con Lei sono conservati per il tempo necessario a gestire la richiesta e seguire la prenotazione, per un massimo di {retention}.",
+        { h3: "Servizi di terzi utilizzati dal sito" },
+        { ul: [
+          "Ricerca indirizzi: il testo digitato nei campi \"Da\" e \"A\" viene inviato a Photon (komoot, Germania) per suggerire indirizzi, e le posizioni scelte vengono inviate a OSRM per stimare il tempo di guida.",
+          "Google Maps: la mappa integrata e i link \"Apri in Google Maps\" sono forniti da Google, che può utilizzare i propri cookie secondo la sua informativa sulla privacy.",
+          "Statistiche: se attivate, utilizziamo un servizio di statistiche di visita anonimo e senza cookie (GoatCounter o Cloudflare Web Analytics).",
+          "Preferenze: le scelte di lingua e di tema (chiaro o scuro) sono salvate solo nel Suo browser, senza alcun tracciamento."
+        ]},
+        { h3: "I Suoi diritti" },
+        "Può chiedere in qualsiasi momento di accedere ai Suoi dati, rettificarli o cancellarli, oppure opporsi al loro utilizzo, contattandoci: {contact}. Può anche rivolgersi alla CNDP (www.cndp.ma) o, se risiede nell'Unione europea, all'autorità per la protezione dei dati del Suo paese (in Italia, il Garante per la protezione dei dati personali)."
+      ]},
+      { id: "terms", title: "5. Prenotazione, pagamento e cancellazione", blocks: [
+        "Ogni richiesta inviata dal sito è una richiesta di preventivo, senza impegno. La prenotazione diventa definitiva dopo l'invio del nostro preventivo e la Sua conferma scritta (WhatsApp o email).",
+        { h3: "Prezzo e pagamento" },
+        "Il prezzo applicato è quello indicato nel preventivo accettato. Modalità di pagamento: {payment}.",
+        { h3: "Cancellazione e modifiche" },
+        "{cancellation}.",
+        { h3: "Ritardi e tempo di attesa" },
+        "Per i transfer aeroportuali monitoriamo il Suo volo e adeguiamo l'orario di prelievo all'orario effettivo di atterraggio. Tempo di attesa incluso: {waiting}.",
+        { h3: "Attività" },
+        "I partecipanti devono rispettare le istruzioni di sicurezza degli istruttori. Alcune attività (quad, buggy, mongolfiera, parapendio, moto d'acqua…) prevedono condizioni di età, di salute o meteorologiche, indicate nel preventivo. In caso di maltempo, un'attività può essere rinviata o annullata per la Sua sicurezza.",
+        { h3: "Legge applicabile" },
+        "Le presenti condizioni sono regolate dalla legge marocchina. In caso di controversia si cercherà innanzitutto una soluzione amichevole; in mancanza, potranno essere aditi i tribunali competenti di Marrakech."
       ]}
     ]
   }

@@ -1,6 +1,7 @@
 # Creates the link-preview images (WhatsApp, Facebook, X...) in each language:
 #   images/og-fr.jpg, og-ar.jpg, og-en.jpg, og-es.jpg   (1200 x 630)
 # usage: python make_og.py
+import sys
 import asyncio, os
 from playwright.async_api import async_playwright
 
@@ -52,7 +53,7 @@ async def main():
         b = await p.chromium.launch()
         pg = await b.new_page(viewport={"width": 1200, "height": 630})
         await pg.goto("file:///" + tmp.replace("\\", "/"), wait_until="networkidle")
-        for lang in ["fr", "ar", "en", "es", "de", "nl"]:
+        for lang in (sys.argv[1:] or ["fr", "ar", "en", "es", "de", "nl", "it"]):
             await pg.evaluate(f"setLang('{lang}')")
             await pg.evaluate("document.fonts.ready")
             await pg.wait_for_timeout(200)

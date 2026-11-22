@@ -234,7 +234,7 @@
   function remoteSearch(q) {
     if (acAbort) acAbort.abort();
     acAbort = "AbortController" in window ? new AbortController() : null;
-    var lang = ["fr", "en", "de"].indexOf(currentLang) !== -1 ? currentLang : "default";
+    var lang = ["fr", "en", "de", "it"].indexOf(currentLang) !== -1 ? currentLang : "default";
     var url = (window.GEOCODER_URL || "https://photon.komoot.io/api/") + "?q=" + encodeURIComponent(q) +
       "&limit=6&lang=" + lang + "&lat=31.63&lon=-8.0&bbox=-17.2,20.8,-0.9,36.0";
     return fetch(url, acAbort ? { signal: acAbort.signal } : {}).then(function (r) { return r.json(); }).then(function (j) {

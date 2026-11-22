@@ -34,7 +34,7 @@ Ouvrez `content/translations.js`. Chaque texte a une clé, par exemple :
 "hero.title": "Votre séjour au Maroc, sans souci de transport",
 ```
 
-Changez le texte entre guillemets **dans chacune des six langues** (sections `fr`, `ar`, `en`, `es`, `de`, `nl`). Ne modifiez pas la clé à gauche.
+Changez le texte entre guillemets **dans chacune des sept langues** (sections `fr`, `ar`, `en`, `es`, `de`, `nl`, `it`). Ne modifiez pas la clé à gauche.
 
 - `{agency}` est remplacé automatiquement par le nom de l'agence.
 - `{count}` est remplacé par le nombre d'activités.
@@ -54,7 +54,7 @@ Changez le texte entre guillemets **dans chacune des six langues** (sections `fr
 - `safety` : `true` affiche « Équipement de sécurité fourni »
 - `price` : un nombre (ex. `450`) ou `null`
 
-**b. Dans `content/translations.js`**, ajoutez le nom et la description dans les six langues :
+**b. Dans `content/translations.js`**, ajoutez le nom et la description dans les sept langues :
 
 ```js
 "act.surf.name": "Surf",
@@ -63,7 +63,7 @@ Changez le texte entre guillemets **dans chacune des six langues** (sections `fr
 
 Pour **retirer** une activité, supprimez sa ligne dans `site.js` (les textes peuvent rester).
 
-Pour une **nouvelle durée**, ajoutez une clé `"dur.xxx"` dans les six langues.
+Pour une **nouvelle durée**, ajoutez une clé `"dur.xxx"` dans les sept langues.
 
 ## 4. Photos
 
@@ -142,11 +142,11 @@ Changez un chiffre ici : le bandeau, la FAQ et la page légale se mettent à jou
 
 ## 7. Pages des activités
 
-Chaque activité a sa propre page dans les six langues (78 pages), créée automatiquement par `node build.mjs` : `/activity/quad-marrakech.html` (français), `/en/activity/quad-marrakech.html`, etc. Elle reprend la photo, le nom, la description courte (`act.<id>.desc`) et la description longue (`act.<id>.long`, dans `translations.js`), la durée, ce qui est inclus, la carte (si l'activité a un `place`), le prix si `showPrices` est activé, et les liens vers 3 autres activités.
+Chaque activité a sa propre page dans les sept langues (91 pages), créée automatiquement par `node build.mjs` : `/activity/quad-marrakech.html` (français), `/en/activity/quad-marrakech.html`, etc. Elle reprend la photo, le nom, la description courte (`act.<id>.desc`) et la description longue (`act.<id>.long`, dans `translations.js`), la durée, ce qui est inclus, la carte (si l'activité a un `place`), le prix si `showPrices` est activé, et les liens vers 3 autres activités.
 
 - L'adresse de la page vient du champ `slug` de l'activité dans `content/site.js`. **Ne la changez plus une fois le site connu de Google** (les anciens liens ne marcheraient plus).
 - Le bouton « Demander un devis » ouvre le formulaire avec l'activité déjà choisie.
-- Une nouvelle activité ajoutée à `ACTIVITIES` avec un `slug` et ses textes `act.<id>.name`, `.desc` et `.long` dans les six langues obtient sa page toute seule.
+- Une nouvelle activité ajoutée à `ACTIVITIES` avec un `slug` et ses textes `act.<id>.name`, `.desc` et `.long` dans les sept langues obtient sa page toute seule.
 
 ## 8. Votre propre nom de domaine (ex. marrakechodyssey.com)
 
@@ -159,13 +159,13 @@ Chaque activité a sa propre page dans les six langues (78 pages), créée autom
 
 ## 9. Foire aux questions (FAQ)
 
-Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les six langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
+Les 8 questions/réponses sont dans `content/translations.js` (`faq.q1` / `faq.a1` … `faq.q8` / `faq.a8`), dans les sept langues. Pour ajouter une question, ajoutez `faq.q9` et `faq.a9` dans chaque langue : elle apparaît automatiquement.
 
 ⚠️ **À valider par l'agence** : les réponses sur le paiement (`faq.a5`), l'annulation (`faq.a6`) et les sièges enfant (`faq.a4`) renvoient pour l'instant « au devis ». Remplacez-les par vos vraies conditions (ex. « paiement en espèces ou par carte au chauffeur », « annulation gratuite jusqu'à 24 h avant ») dès qu'elles sont fixées.
 
 ## 10. Page légale (mentions légales, confidentialité, conditions)
 
-La page `legal.html` existe dans les six langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
+La page `legal.html` existe dans les sept langues (lien en bas de chaque page et sous le formulaire). Tant qu'une information manque, elle s'affiche dans un **encadré « À compléter »**.
 
 **Activité en cours de création** (pas encore d'entreprise) : laissez `status: "starting"` et indiquez seulement votre nom dans `ownerName`. La page affiche alors « Responsable du site », « Activité en cours de création » et la ville, et masque les numéros d'entreprise. Pensez à obtenir l'autorisation de transport touristique et une assurance adaptée **avant** d'accepter des clients payants (renseignements : CRI Marrakech-Safi ou un comptable).
 
@@ -315,11 +315,14 @@ Envoyez-le par WhatsApp le soir même ou le lendemain (c'est là que les clients
 **Nederlands**
 > Hallo [prénom], bedankt dat u met Marrakech Odyssey Travel heeft gereisd! Ik hoop dat alles goed is verlopen. Als u even tijd heeft, zou een korte review ons erg helpen: [lien]. Geniet nog van Marokko!
 
+**Italiano**
+> Buongiorno [prénom], grazie per aver viaggiato con Marrakech Odyssey Travel! Spero che sia andato tutto bene. Se ha un minuto, una breve recensione ci aiuterebbe molto: [lien].
+
 Quand un client répond par un compliment sur WhatsApp, demandez-lui : « Puis-je publier votre message sur notre site, avec votre prénom ? ». S'il accepte, ajoutez-le avec `source: "WhatsApp"`.
 
 ## 17. Guides de voyage (articles) et référencement par l'IA
 
-**Les guides** sont dans `content/guides.js` : 5 articles en 6 langues (aéroport → médina, Agafay ou Merzouga, excursions d'une journée, que porter pour le quad, arriver de nuit). `node build.mjs` crée automatiquement :
+**Les guides** sont dans `content/guides.js` : 5 articles en 7 langues (aéroport → médina, Agafay ou Merzouga, excursions d'une journée, que porter pour le quad, arriver de nuit). `node build.mjs` crée automatiquement :
 - une page par guide et par langue : `/guides/marrakech-airport-to-medina.html`, `/en/guides/…` (30 pages) ;
 - une page « Guides de voyage » par langue : `/guides/` ;
 - la section « Avant de partir » sur l'accueil (les 3 premiers guides) et un lien dans le pied de page.
@@ -341,6 +344,6 @@ Pour **ajouter un guide**, copiez un bloc `{ id: …, slug: …, … }` dans `GU
 - [ ] `siteUrl` contient la vraie adresse du site (sinon pas d'aperçu des liens)
 - [ ] Le partage d'un lien sur WhatsApp affiche bien l'aperçu
 - [ ] La liste des activités et les durées ont été validées par l'agence
-- [ ] Les six langues ont été relues par un locuteur natif
+- [ ] Les sept langues ont été relues par un locuteur natif
 - [ ] Une demande test a été envoyée par WhatsApp **et** par e-mail
 - [ ] Le site a été testé sur un téléphone
