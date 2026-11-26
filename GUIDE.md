@@ -347,3 +347,12 @@ Pour **ajouter un guide**, copiez un bloc `{ id: …, slug: …, … }` dans `GU
 - [ ] Les sept langues ont été relues par un locuteur natif
 - [ ] Une demande test a été envoyée par WhatsApp **et** par e-mail
 - [ ] Le site a été testé sur un téléphone
+
+## Assistant « Une question ? »
+
+Le bouton « Une question ? » (en bas à droite de toutes les pages) ouvre un petit assistant : le visiteur touche des questions proposées et reçoit une réponse immédiate. Il n'y a pas d'intelligence artificielle et rien n'est envoyé ni enregistré.
+
+- Les réponses viennent du site lui-même : la FAQ (`faq.q1`, `faq.a1`… dans `content/translations.js`), les points clés des guides (`content/guides.js`) et la liste des activités (`content/site.js`). Si vous modifiez une réponse de la FAQ, l'assistant la reprend automatiquement.
+- Les textes propres à l'assistant (bonjour, boutons, journée historique, musées) sont dans `content/assistant.js`, dans les sept langues.
+- À la fin, le bouton « Écrire sur WhatsApp » ouvre WhatsApp avec un message déjà écrit qui reprend les sujets consultés.
+- `node build.mjs` crée un petit fichier par langue (`dist/assistant/fr.json`…), téléchargé seulement quand le visiteur ouvre l'assistant.

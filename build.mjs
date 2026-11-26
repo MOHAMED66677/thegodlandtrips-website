@@ -89,6 +89,7 @@ for (const dir of ["css", "js", "content", "images", "fonts"]) cpSync(dir, `${OU
 writeFileSync(`${OUT}/content/guide-cards.js`, `var GUIDE_CARDS = ${JSON.stringify(GUIDE_CARDS)};
 `);
 rmSync(`${OUT}/content/guides.js`);   // full articles are only needed to build the pages
+rmSync(`${OUT}/content/assistant.js`); // built into dist/assistant/<lang>.json
 
 for (const lang of LANGS) {
   const t = (k) => R.esc(R.t(lang, k));
@@ -294,6 +295,7 @@ for (const lang of LANGS) {
       shrink(); window.addEventListener("scroll", shrink, { passive: true });
     })();
   </script>
+  <script src="${prefix}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
 </body>
 </html>
 `;
@@ -457,6 +459,7 @@ for (const lang of LANGS) {
     <p><a href="${home}legal.html">${e("footer.legal")}</a> · <a href="${home}">${e("page.home")}</a></p>
   </div></footer>
   <script>${PAGE_SCRIPT}</script>
+  <script src="${up}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
 </body>
 </html>
 `;
@@ -522,6 +525,7 @@ ${body}
     <p><a href="${home}">${e("page.home")}</a> · <a href="./">${R.esc(U.title)}</a> · <a href="${home}legal.html">${e("footer.legal")}</a></p>
   </div></footer>
   <script>${PAGE_SCRIPT}</script>
+  <script src="${up}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
 </body>
 </html>
 `;
@@ -668,6 +672,49 @@ writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
   background_color: "#FAF8F2", theme_color: "#173059",
   icons: [192, 512].map((n) => ({ src: `/images/icon-${n}.png`, sizes: `${n}x${n}`, type: "image/png" })),
 }, null, 2));
+// ---------------- Trip assistant: suggested questions, instant answers (no AI, nothing sent) ----------------
+// One small file per language, downloaded only when a visitor opens the chat: dist/assistant/<lang>.json
+{
+  const { ASSISTANT_TEXT } = require("./content/assistant.js");
+  const cats = [...new Set(ACTIVITIES.map((a) => a.category))];
+  mkdirSync(`${OUT}/assistant`, { recursive: true });
+  for (const lang of LANGS) {
+    const T = ASSISTANT_TEXT[lang] || ASSISTANT_TEXT.fr;
+    const t = (k) => R.t(lang, k);
+    const root = `/${pathFor(lang)}`;
+    const act = (id) => { const a = ACTIVITIES.find((x) => x.id === id); return a && { t: t(`act.${a.id}.name`), u: `${root}activity/${a.slug}.html` }; };
+    const acts = (ids) => ids.map(act).filter(Boolean);
+    const guide = (id) => { const g = GUIDES.find((x) => x.id === id); return g && { facts: (g[lang] || g.fr).facts, link: { t: T.read, u: `${root}guides/${g.slug}.html`, k: "guide" } }; };
+    const faqs = [];
+    for (let i = 1; t(`faq.q${i}`) !== `faq.q${i}`; i++) faqs.push(i);
+    const quote = { t: T.quote, u: `${root}#quote`, k: "quote" };
+    const nodes = {
+      start: { say: [T.greet], chips: ["arrive", "visit", "planner", "practical", "human"] },
+      arrive: { say: guide("airport").facts, links: [guide("airport").link, quote], chips: ["night", "faq1", "faq4"] },
+      night: { say: guide("night").facts, links: [guide("night").link, quote], chips: ["arrive", "faq1", "faq7"] },
+      visit: { say: [T.visitQ], chips: ["heritage", "museums", "desert", "daytrips"] },
+      heritage: { say: [T.heritageA], list: acts(["bahia", "saadian", "badi", "benyoussef", "koubba", "photomuseum"]), links: [quote], chips: ["museums", "daytrips"] },
+      museums: { say: [T.museumsA], list: acts(ACTIVITIES.filter((a) => a.category === "museums").map((a) => a.id).concat("majorelle")), links: [quote], chips: ["heritage", "planner"] },
+      desert: { say: guide("desert").facts, list: acts(["agafay", "quad", "buggy"]), links: [guide("desert").link], chips: ["wear", "daytrips"] },
+      daytrips: { say: guide("daytrips").facts, list: acts(["ouzoud", "ourika", "essaouira"]), links: [guide("daytrips").link], chips: ["desert", "faq2"] },
+      wear: { say: guide("wear").facts, list: acts(["quad", "buggy", "agafay"]), links: [guide("wear").link], chips: ["desert", "faq8"] },
+      planner: { say: [T.plannerQ], chips: cats.map((c) => `cat_${c}`) },
+      practical: { say: [T.practicalQ], chips: faqs.map((i) => `faq${i}`) },
+      human: { say: [T.humanA], links: [{ t: T.wa, k: "wa" }, quote], chips: [] },
+    };
+    for (const c of cats) nodes[`cat_${c}`] = { say: [T.catIntro.replace("{cat}", t(`cat.${c}`))], list: acts(ACTIVITIES.filter((a) => a.category === c).map((a) => a.id)), links: [quote], chips: ["planner"] };
+    for (const i of faqs) nodes[`faq${i}`] = { say: [t(`faq.a${i}`)], chips: ["practical"] };
+    const labels = { arrive: T.arrive, visit: T.visit, planner: T.planner, practical: T.practical, human: T.human, heritage: T.heritage, museums: T.museums,
+      desert: T.desert, daytrips: T.daytrips, night: T.night, wear: T.wear };
+    for (const c of cats) labels[`cat_${c}`] = t(`cat.${c}`);
+    for (const i of faqs) labels[`faq${i}`] = t(`faq.q${i}`);
+    for (const [id, n] of Object.entries(nodes)) for (const ch of n.chips) if (!nodes[ch]) throw new Error(`assistant: node ${id} points to missing ${ch}`);
+    const ui = { launcher: T.launcher, title: T.title, subtitle: T.subtitle, more: T.more, close: T.close, restart: T.restart, privacy: T.privacy, wa: T.wa, human: T.human };
+    writeFileSync(`${OUT}/assistant/${lang}.json`, JSON.stringify({ ui, labels, nodes, wa: SITE.whatsapp, waMsg: T.waMsg, waTopics: T.waTopics }));
+  }
+  console.log(`✓ ${OUT}/assistant/*.json`);
+}
+
 writeFileSync(`${OUT}/robots.txt`, SITE.demoMode || SITE.hideFromSearch
   ? `# Hidden from search engines until the official launch (hideFromSearch)\nUser-agent: *\nDisallow: /\n`
   : `User-agent: *\nAllow: /\nSitemap: ${SITE.siteUrl}/sitemap.xml\n`);
