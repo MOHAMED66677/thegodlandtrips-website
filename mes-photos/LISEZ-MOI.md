@@ -37,6 +37,11 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `saadian` | Saadian Tombs |
 | `benyoussef` | Ben Youssef Madrasa |
 | `badi` | El Badi Palace |
+| `koubba` | Almoravid Koubba |
+| `ysl` | Yves Saint Laurent Museum |
+| `darbacha` | Dar el Bacha – Museum of Confluences |
+| `photomuseum` | Maison de la Photographie |
+| `darsisaid` | Dar Si Said – Carpet Museum |
 | `quad` | Quad |
 | `buggy` | Buggy |
 | `motocross` | Motocross |

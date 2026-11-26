@@ -125,7 +125,12 @@ var ACTIVITIES = [
   { id: "majorelle",   slug: "majorelle-garden-marrakech", category: "heritage", duration: "h1to2", safety: false, price: null, image: "photo-1729456229097-e60798212180" },
   { id: "saadian",     slug: "saadian-tombs-marrakech", category: "heritage", duration: "m30to60",  safety: false, price: null, place: "medina", image: "photo-1605542417316-d7c5614d9d20" },
   { id: "benyoussef",  slug: "ben-youssef-madrasa-marrakech", category: "heritage", duration: "m30to60", safety: false, price: null, place: "medina", image: "photo-1531230689007-0b32d7a7c33e" },
+  { id: "koubba",      slug: "almoravid-koubba-marrakech", category: "heritage", duration: "m30to60", safety: false, price: null, place: "medina", image: "photo-own-koubba" },
   { id: "badi",        slug: "el-badi-palace-marrakech", category: "heritage", duration: "h1to2",  safety: false, price: null, place: "medina", image: "photo-1592343361402-d4509fb85b36" },
+  { id: "ysl",         slug: "yves-saint-laurent-museum-marrakech", category: "museums", duration: "h1to2", safety: false, price: null, image: "photo-1760386366084-1f2a4537280c" },
+  { id: "darbacha",    slug: "dar-el-bacha-museum-marrakech", category: "museums", duration: "h1to2", safety: false, price: null, place: "medina", image: "photo-1761940546735-d72f718957a8" },
+  { id: "photomuseum", slug: "maison-de-la-photographie-marrakech", category: "museums", duration: "h1to2", safety: false, price: null, place: "medina", image: "photo-1520168946106-3c394e6c8323" },
+  { id: "darsisaid",   slug: "dar-si-said-museum-marrakech", category: "museums", duration: "h1to2", safety: false, price: null, place: "medina", image: "photo-1730647730681-4945bdc7a292" },
   { id: "quad",        slug: "quad-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1624664929003-3da28050c0bf" },
   { id: "buggy",       slug: "buggy-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1519021228607-ef6e4c22d821" },
   { id: "motocross",   slug: "motocross-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1765568562583-4252b2d854b0" },
@@ -136,7 +141,7 @@ var ACTIVITIES = [
   { id: "aquajet",     slug: "aquajet-marrakech", category: "sea",        duration: "onRequest", safety: true,  price: null, image: "photo-1505408990643-cb9bbf4bfe2c" }
 ];
 
-var CATEGORIES = ["excursions", "heritage", "land", "air", "sea"];
+var CATEGORIES = ["excursions", "heritage", "museums", "land", "air", "sea"];
 
 /* ---------------------------------------------------------
    VEHICLES ("Our vehicles" section + choice in the quote form)

@@ -1063,6 +1063,22 @@ mark.todo {
 }
 .site-footer { background-image: var(--zellige-strip); background-position: top center; padding-top: 70px; }
 
+/* Zellige on the heritage and museum activities: tiles under the hero photo, a tiled frame
+   around the story, a tiled band on the info card, and a thin band on their cards */
+:root { --zellige-rich: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23173059'/%3E%3Cg fill='%23C99A52'%3E%3Cpolygon points='0.00,-9.50 1.76,-4.25 6.72,-6.72 4.25,-1.76 9.50,0.00 4.25,1.76 6.72,6.72 1.76,4.25 0.00,9.50 -1.76,4.25 -6.72,6.72 -4.25,1.76 -9.50,0.00 -4.25,-1.76 -6.72,-6.72 -1.76,-4.25'/%3E%3Cpolygon points='40.00,-9.50 41.76,-4.25 46.72,-6.72 44.25,-1.76 49.50,0.00 44.25,1.76 46.72,6.72 41.76,4.25 40.00,9.50 38.24,4.25 33.28,6.72 35.75,1.76 30.50,0.00 35.75,-1.76 33.28,-6.72 38.24,-4.25'/%3E%3Cpolygon points='0.00,30.50 1.76,35.75 6.72,33.28 4.25,38.24 9.50,40.00 4.25,41.76 6.72,46.72 1.76,44.25 0.00,49.50 -1.76,44.25 -6.72,46.72 -4.25,41.76 -9.50,40.00 -4.25,38.24 -6.72,33.28 -1.76,35.75'/%3E%3Cpolygon points='40.00,30.50 41.76,35.75 46.72,33.28 44.25,38.24 49.50,40.00 44.25,41.76 46.72,46.72 41.76,44.25 40.00,49.50 38.24,44.25 33.28,46.72 35.75,41.76 30.50,40.00 35.75,38.24 33.28,33.28 38.24,35.75'/%3E%3C/g%3E%3Cg fill='%232F7F86'%3E%3Crect x='11.5' y='11.5' width='17' height='17'/%3E%3Crect x='11.5' y='11.5' width='17' height='17' transform='rotate(45 20 20)'/%3E%3C/g%3E%3Cpolygon fill='%23FAF8F2' points='20.00,12.40 21.42,16.58 25.37,14.63 23.42,18.58 27.60,20.00 23.42,21.42 25.37,25.37 21.42,23.42 20.00,27.60 18.58,23.42 14.63,25.37 16.58,21.42 12.40,20.00 16.58,18.58 14.63,14.63 18.58,16.58'/%3E%3Ccircle cx='20' cy='20' r='2.1' fill='%23D9783A'/%3E%3Cg fill='%23D9783A'%3E%3Cpolygon points='20,-3.4 23.4,0 20,3.4 16.6,0'/%3E%3Cpolygon points='20,36.6 23.4,40 20,43.4 16.6,40'/%3E%3Cpolygon points='0,16.6 3.4,20 0,23.4 -3.4,20'/%3E%3Cpolygon points='40,16.6 43.4,20 40,23.4 36.6,20'/%3E%3C/g%3E%3C/svg%3E"); }
+.act-zellige .act-hero { padding-bottom: calc(clamp(40px, 6vw, 72px) + 30px); }
+.act-zellige .act-hero::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 30px; background: var(--zellige-rich) 0 0 / 30px 30px repeat-x; box-shadow: 0 -3px 0 var(--color-gold, #C99A52); }
+.act-zellige .act-long {
+  position: relative; padding: clamp(20px, 3vw, 30px) clamp(20px, 3.4vw, 34px);
+  border: 14px solid transparent; border-radius: 18px;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--zellige-rich) 0 0 / 28px 28px border-box;
+  box-shadow: var(--shadow-sm);
+}
+.act-zellige .act-card { overflow: hidden; padding-top: 0; }
+.act-zellige .act-card::before { content: ""; display: block; height: 22px; margin: 0 -24px 14px; background: var(--zellige-rich) 0 0 / 22px 22px repeat-x; border-bottom: 3px solid #C99A52; }
+.activity-card:is([data-cat="heritage"], [data-cat="museums"]) .activity-media::before { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 14px; z-index: 1; background: var(--zellige-rich) 0 0 / 14px 14px repeat-x; box-shadow: 0 -2px 0 #C99A52; }
+.activity-card:is([data-cat="heritage"], [data-cat="museums"]) .chip-dur { bottom: 26px; }
+
 /* ========================= TRAVEL GUIDES ========================= */
 .guide-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
 .guide-card {
