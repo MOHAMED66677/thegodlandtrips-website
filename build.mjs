@@ -373,6 +373,7 @@ for (const lang of LANGS) {
       ],
     };
     const langLinks = LANGS.map((l) => `<li><a href="${up}${pathFor(l)}activity/${a.slug}.html" lang="${l}"${l === lang ? ' aria-current="page"' : ""}><span class="lang-code" aria-hidden="true">${R.esc(LANG_SHORT[l])}</span>${R.esc(LANG_NAMES[l])}</a></li>`).join("");
+    const zel = ["heritage", "museums"].includes(a.category);
     const page = `<!doctype html>
 <html lang="${lang}" dir="${rtl ? "rtl" : "ltr"}">
 <head>
@@ -397,7 +398,7 @@ for (const lang of LANGS) {
   ${fontPreload(lang, up)}
   <link rel="stylesheet" href="${up}${cssHref}">
 </head>
-<body class="act-body${["heritage", "museums"].includes(a.category) ? " act-zellige" : ""}">
+<body class="act-body${zel ? " act-zellige" : ""}">
   ${sprite}
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
@@ -409,6 +410,7 @@ for (const lang of LANGS) {
     <section class="act-hero">
       ${imgSrc ? `<img class="act-hero-img" src="${R.esc(imgSrc)}"${imgSet ? ` srcset="${R.esc(imgSet)}" sizes="100vw"` : ""} alt="" width="2000" height="1333" fetchpriority="high">` : ""}
       <div class="container act-hero-inner">
+        ${zel && R.t(lang, `era.${a.id}.a`) !== `era.${a.id}.a` ? `<p class="era-seal"><span class="era-label">${e("page.era")}</span><strong>${e(`era.${a.id}.a`)}</strong><span>${e(`era.${a.id}.b`)}</span></p>` : ""}
         <nav class="crumbs" aria-label="Breadcrumb"><a href="${home}">${e("page.home")}</a><span aria-hidden="true">›</span><a href="${home}#activities">${e("nav.activities")}</a><span aria-hidden="true">›</span><span aria-current="page">${R.esc(name)}</span></nav>
         <h1>${R.esc(name)}</h1>
         <p class="lead">${e(`act.${a.id}.desc`)}</p>
@@ -419,10 +421,11 @@ for (const lang of LANGS) {
         </ul>
         <a class="btn btn-action btn-lg" href="${quoteHref}">${e("acts.cta")}</a>
       </div>
+      ${zel ? `<div class="frieze" aria-hidden="true"><span class="frieze-shine"></span></div>` : ""}
     </section>
     <div class="container act-layout">
       <article class="act-main">
-        <p class="act-long">${e(`act.${a.id}.long`)}</p>
+        <p class="act-long">${e(`act.${a.id}.long`)}</p>${zel ? `<div class="rosette" aria-hidden="true"></div>` : ""}
         <h2>${e("page.included")}</h2>
         <ul class="inc-list">${included.map((k) => `<li>${ic("check", "", 18)}<span>${e(k)}</span></li>`).join("")}</ul>
         ${dest ? `<h2>${e("page.map")}</h2>

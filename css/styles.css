@@ -1089,18 +1089,55 @@ mark.todo {
 /* Zellige on the heritage and museum activities: tiles under the hero photo, a tiled frame
    around the story, a tiled band on the info card, and a thin band on their cards */
 :root { --zellige-rich: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23173059'/%3E%3Cg fill='%23C99A52'%3E%3Cpolygon points='0.00,-9.50 1.76,-4.25 6.72,-6.72 4.25,-1.76 9.50,0.00 4.25,1.76 6.72,6.72 1.76,4.25 0.00,9.50 -1.76,4.25 -6.72,6.72 -4.25,1.76 -9.50,0.00 -4.25,-1.76 -6.72,-6.72 -1.76,-4.25'/%3E%3Cpolygon points='40.00,-9.50 41.76,-4.25 46.72,-6.72 44.25,-1.76 49.50,0.00 44.25,1.76 46.72,6.72 41.76,4.25 40.00,9.50 38.24,4.25 33.28,6.72 35.75,1.76 30.50,0.00 35.75,-1.76 33.28,-6.72 38.24,-4.25'/%3E%3Cpolygon points='0.00,30.50 1.76,35.75 6.72,33.28 4.25,38.24 9.50,40.00 4.25,41.76 6.72,46.72 1.76,44.25 0.00,49.50 -1.76,44.25 -6.72,46.72 -4.25,41.76 -9.50,40.00 -4.25,38.24 -6.72,33.28 -1.76,35.75'/%3E%3Cpolygon points='40.00,30.50 41.76,35.75 46.72,33.28 44.25,38.24 49.50,40.00 44.25,41.76 46.72,46.72 41.76,44.25 40.00,49.50 38.24,44.25 33.28,46.72 35.75,41.76 30.50,40.00 35.75,38.24 33.28,33.28 38.24,35.75'/%3E%3C/g%3E%3Cg fill='%232F7F86'%3E%3Crect x='11.5' y='11.5' width='17' height='17'/%3E%3Crect x='11.5' y='11.5' width='17' height='17' transform='rotate(45 20 20)'/%3E%3C/g%3E%3Cpolygon fill='%23FAF8F2' points='20.00,12.40 21.42,16.58 25.37,14.63 23.42,18.58 27.60,20.00 23.42,21.42 25.37,25.37 21.42,23.42 20.00,27.60 18.58,23.42 14.63,25.37 16.58,21.42 12.40,20.00 16.58,18.58 14.63,14.63 18.58,16.58'/%3E%3Ccircle cx='20' cy='20' r='2.1' fill='%23D9783A'/%3E%3Cg fill='%23D9783A'%3E%3Cpolygon points='20,-3.4 23.4,0 20,3.4 16.6,0'/%3E%3Cpolygon points='20,36.6 23.4,40 20,43.4 16.6,40'/%3E%3Cpolygon points='0,16.6 3.4,20 0,23.4 -3.4,20'/%3E%3Cpolygon points='40,16.6 43.4,20 40,23.4 36.6,20'/%3E%3C/g%3E%3C/svg%3E"); }
-.act-zellige .act-hero { padding-bottom: calc(clamp(40px, 6vw, 72px) + 30px); }
-.act-zellige .act-hero::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 30px; background: var(--zellige-rich) 0 0 / 30px 30px repeat-x; box-shadow: 0 -3px 0 var(--color-gold, #C99A52); }
-.act-zellige .act-long {
-  position: relative; padding: clamp(20px, 3vw, 30px) clamp(20px, 3.4vw, 34px);
-  border: 14px solid transparent; border-radius: 18px;
-  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--zellige-rich) 0 0 / 28px 28px border-box;
-  box-shadow: var(--shadow-sm);
-}
 .act-zellige .act-card { overflow: hidden; padding-top: 0; }
 .act-zellige .act-card::before { content: ""; display: block; height: 22px; margin: 0 -24px 14px; background: var(--zellige-rich) 0 0 / 22px 22px repeat-x; border-bottom: 3px solid #C99A52; }
 .activity-card:is([data-cat="heritage"], [data-cat="museums"]) .activity-media::before { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 14px; z-index: 1; background: var(--zellige-rich) 0 0 / 14px 14px repeat-x; box-shadow: 0 -2px 0 #C99A52; }
 .activity-card:is([data-cat="heritage"], [data-cat="museums"]) .chip-dur { bottom: 26px; }
+
+/* ---- Heritage & museum pages: mosaic, zellige and carved plaster, to feel the history ---- */
+:root { --mosaic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' fill='%23173059'/%3E%3Cg fill='%23C99A52'%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='0.00,-11.00 2.07,-4.99 7.78,-7.78 4.99,-2.07 11.00,0.00 4.99,2.07 7.78,7.78 2.07,4.99 0.00,11.00 -2.07,4.99 -7.78,7.78 -4.99,2.07 -11.00,0.00 -4.99,-2.07 -7.78,-7.78 -2.07,-4.99'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='48.00,-11.00 50.07,-4.99 55.78,-7.78 52.99,-2.07 59.00,0.00 52.99,2.07 55.78,7.78 50.07,4.99 48.00,11.00 45.93,4.99 40.22,7.78 43.01,2.07 37.00,0.00 43.01,-2.07 40.22,-7.78 45.93,-4.99'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='0.00,37.00 2.07,43.01 7.78,40.22 4.99,45.93 11.00,48.00 4.99,50.07 7.78,55.78 2.07,52.99 0.00,59.00 -2.07,52.99 -7.78,55.78 -4.99,50.07 -11.00,48.00 -4.99,45.93 -7.78,40.22 -2.07,43.01'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='48.00,37.00 50.07,43.01 55.78,40.22 52.99,45.93 59.00,48.00 52.99,50.07 55.78,55.78 50.07,52.99 48.00,59.00 45.93,52.99 40.22,55.78 43.01,50.07 37.00,48.00 43.01,45.93 40.22,40.22 45.93,43.01'/%3E%3C/g%3E%3Cg fill='%232F7F86'%3E%3Crect stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' x='14' y='14' width='20' height='20'/%3E%3Crect stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' x='14' y='14' width='20' height='20' transform='rotate(45 24 24)'/%3E%3C/g%3E%3Cpolygon fill='%23FAF8F2' stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='24.00,15.00 25.68,19.93 30.36,17.64 28.07,22.32 33.00,24.00 28.07,25.68 30.36,30.36 25.68,28.07 24.00,33.00 22.32,28.07 17.64,30.36 19.93,25.68 15.00,24.00 19.93,22.32 17.64,17.64 22.32,19.93'/%3E%3Ccircle cx='24' cy='24' r='2.6' fill='%23D9783A' stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round'/%3E%3Cg fill='%23D9783A'%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='24,-4.2 28.2,0 24,4.2 19.8,0'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='24,43.8 28.2,48 24,52.2 19.8,48'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='0,19.8 4.2,24 0,28.2 -4.2,24'/%3E%3Cpolygon stroke='%23E9DDC4' stroke-width='1.3' stroke-linejoin='round' points='48,19.8 52.2,24 48,28.2 43.8,24'/%3E%3C/g%3E%3Cellipse cx='21' cy='20' rx='3.2' ry='1.6' fill='%23fff' opacity='.35' transform='rotate(-30 21 20)'/%3E%3C/svg%3E"); --girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23B98A5E' stroke-width='1'%3E%3Cline x1='66.0' y1='40.0' x2='21.6' y2='58.4'/%3E%3Cline x1='58.4' y1='58.4' x2='14.0' y2='40.0'/%3E%3Cline x1='40.0' y1='66.0' x2='21.6' y2='21.6'/%3E%3Cline x1='21.6' y1='58.4' x2='40.0' y2='14.0'/%3E%3Cline x1='14.0' y1='40.0' x2='58.4' y2='21.6'/%3E%3Cline x1='21.6' y1='21.6' x2='66.0' y2='40.0'/%3E%3Cline x1='40.0' y1='14.0' x2='58.4' y2='58.4'/%3E%3Cline x1='58.4' y1='21.6' x2='40.0' y2='66.0'/%3E%3Cline x1='66.0' y1='40.0' x2='97.0' y2='40.0'/%3E%3Cline x1='58.4' y1='58.4' x2='80.3' y2='80.3'/%3E%3Cline x1='40.0' y1='66.0' x2='40.0' y2='97.0'/%3E%3Cline x1='21.6' y1='58.4' x2='-0.3' y2='80.3'/%3E%3Cline x1='14.0' y1='40.0' x2='-17.0' y2='40.0'/%3E%3Cline x1='21.6' y1='21.6' x2='-0.3' y2='-0.3'/%3E%3Cline x1='40.0' y1='14.0' x2='40.0' y2='-17.0'/%3E%3Cline x1='58.4' y1='21.6' x2='80.3' y2='-0.3'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3C/g%3E%3C/svg%3E"); --medal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpolygon fill='%23C99A52' stroke='%238C6A36' stroke-width='1' points='20.00,1.00 24.97,7.99 33.44,6.56 32.01,15.03 39.00,20.00 32.01,24.97 33.44,33.44 24.97,32.01 20.00,39.00 15.03,32.01 6.56,33.44 7.99,24.97 1.00,20.00 7.99,15.03 6.56,6.56 15.03,7.99'/%3E%3Cpolygon fill='%23173059' points='20.00,9.00 22.30,14.46 27.78,12.22 25.54,17.70 31.00,20.00 25.54,22.30 27.78,27.78 22.30,25.54 20.00,31.00 17.70,25.54 12.22,27.78 14.46,22.30 9.00,20.00 14.46,17.70 12.22,12.22 17.70,14.46'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23D9783A'/%3E%3C/svg%3E"); --khatam: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='12.00,1.00 14.76,5.35 19.78,4.22 18.65,9.24 23.00,12.00 18.65,14.76 19.78,19.78 14.76,18.65 12.00,23.00 9.24,18.65 4.22,19.78 5.35,14.76 1.00,12.00 5.35,9.24 4.22,4.22 9.24,5.35'/%3E%3C/svg%3E"); }
+/* page background: a faint carved-plaster lattice */
+.act-zellige main { background: var(--girih) center top / 80px 80px, var(--color-bg); }
+:root[data-theme="dark"] .act-zellige main { background-blend-mode: soft-light; }
+/* hero: hand-cut mosaic frieze with a glaze reflection passing over it */
+.act-zellige .act-hero { padding-bottom: calc(clamp(40px, 6vw, 72px) + 46px); }
+.frieze { position: absolute; inset-inline: 0; bottom: 0; height: 40px; overflow: hidden;
+  background: var(--mosaic) 0 0 / 40px 40px repeat-x; border-top: 3px solid #C99A52; box-shadow: 0 -6px 18px rgba(0,0,0,.25); }
+.frieze::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 3px; background: #C99A52; }
+.frieze-shine { position: absolute; inset: 0; width: 40%; background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,.0) 30%, rgba(255,255,255,.38) 50%, rgba(255,255,255,0) 70%, transparent 100%);
+  transform: translateX(-120%); animation: glaze 7s ease-in-out 1.2s infinite; }
+@keyframes glaze { 0% { transform: translateX(-120%); } 45%, 100% { transform: translateX(330%); } }
+/* era seal: a terracotta medallion edged with a gold star line */
+.era-seal { float: inline-end; display: grid; place-items: center; align-content: center; gap: 2px; width: 132px; height: 132px; margin: 0 0 12px 24px;
+  border-radius: 50%; text-align: center; color: #FFF6E6; line-height: 1.15;
+  background: radial-gradient(circle at 35% 30%, #E08A4E, #B85A26 70%); box-shadow: 0 0 0 4px #C99A52, 0 0 0 7px rgba(255,255,255,.22), 0 10px 26px rgba(0,0,0,.35);
+  transform: rotate(-6deg); }
+[dir="rtl"] .era-seal { margin: 0 24px 12px 0; transform: rotate(6deg); }
+.era-seal .era-label { font: 700 .66rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: #F6D9A8; }
+.era-seal strong { font: 400 1.18rem/1.1 var(--font-heading); padding: 0 12px; }
+.era-seal span:last-child { font-size: .76rem; padding: 0 14px; opacity: .92; }
+@media (max-width: 640px) { .era-seal { width: 104px; height: 104px; margin-inline-start: 12px; } .era-seal strong { font-size: .98rem; } .era-seal span:last-child { font-size: .66rem; } }
+/* the story, framed in mosaic like a tiled panel, with gold star medallions at the corners */
+.act-zellige .act-long {
+  position: relative; padding: clamp(22px, 3vw, 34px) clamp(22px, 3.6vw, 38px);
+  border: 18px solid transparent; border-radius: 14px;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--mosaic) 0 0 / 36px 36px border-box;
+  box-shadow: 0 0 0 2px #C99A52, var(--shadow);
+}
+.act-zellige .act-long::before, .act-zellige .act-long::after { content: ""; position: absolute; width: 44px; height: 44px; background: var(--medal) center / contain no-repeat; filter: drop-shadow(0 3px 4px rgba(0,0,0,.3)); }
+.act-zellige .act-long::before { top: -31px; inset-inline-start: -31px; }
+.act-zellige .act-long::after { bottom: -31px; inset-inline-end: -31px; }
+/* first letter like an illuminated manuscript (not in Arabic: letters must stay joined) */
+[dir="ltr"] .act-zellige .act-long::first-letter { float: left; font: 3.6em/.82 var(--font-heading); color: #B85A26; margin: 6px 10px 0 0; padding: 4px 6px 2px; border-bottom: 3px solid #C99A52; }
+/* headings get an eight-pointed star; a rosette divides the story from the rest */
+.act-zellige .act-main h2 { display: flex; align-items: center; gap: 12px; }
+.act-zellige .act-main h2::before { content: ""; flex: none; width: 22px; height: 22px; background: #C99A52; -webkit-mask: var(--khatam) center / contain no-repeat; mask: var(--khatam) center / contain no-repeat; }
+.rosette { position: relative; height: 44px; margin: 30px 0 4px; }
+.rosette::before { content: ""; position: absolute; inset-inline: 0; top: 50%; height: 2px; background: linear-gradient(90deg, transparent, #C99A52 20%, #C99A52 80%, transparent); }
+.rosette::after { content: ""; position: absolute; left: 50%; top: 0; width: 44px; height: 44px; margin-left: -22px; background: var(--medal) center / contain no-repeat; }
+/* the info card: a mosaic band on top */
+.act-zellige .act-card::before { background: var(--mosaic) 0 0 / 26px 26px repeat-x; height: 26px; }
+@media (prefers-reduced-motion: reduce) { .frieze-shine { display: none; } }
 
 /* ========================= TRAVEL GUIDES ========================= */
 .guide-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
