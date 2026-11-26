@@ -71,7 +71,7 @@
       '<span class="visually-hidden">' + esc(parts.map(function (p) { return p[0]; }).join(" ")) + "</span>";
   }
 
-  var CAT_ICON = { excursions: "map", land: "mountain", air: "wind", sea: "waves" };
+  var CAT_ICON = { excursions: "map", heritage: "landmark", land: "mountain", air: "wind", sea: "waves" };
   var SVC_ICON = { transfer: "plane", disposal: "car", activity: "map" };
 
   function waLink(text) {

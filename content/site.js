@@ -121,6 +121,11 @@ var ACTIVITIES = [
   { id: "essaouira",   slug: "essaouira-day-trip", category: "excursions", duration: "fullDay",   safety: false, price: null, place: "essaouira", image: "photo-1624802746702-60ca95bdb605" },
   { id: "ourika",      slug: "ourika-valley", category: "excursions", duration: "fullDay",   safety: false, price: null, place: "ourika", image: "photo-1638278958562-be34bf8946c3" },
   { id: "agafay",      slug: "agafay-desert", category: "excursions", duration: "evening",   safety: false, price: null, place: "agafay", image: "photo-1673283579119-d108cbd0ed7f" },
+  { id: "bahia",       slug: "bahia-palace-marrakech", category: "heritage", duration: "h1to2",     safety: false, price: null, place: "medina", image: "photo-1580814488128-5880a40726be" },
+  { id: "majorelle",   slug: "majorelle-garden-marrakech", category: "heritage", duration: "h1to2", safety: false, price: null, image: "photo-1729456229097-e60798212180" },
+  { id: "saadian",     slug: "saadian-tombs-marrakech", category: "heritage", duration: "m30to60",  safety: false, price: null, place: "medina", image: "photo-1605542417316-d7c5614d9d20" },
+  { id: "benyoussef",  slug: "ben-youssef-madrasa-marrakech", category: "heritage", duration: "m30to60", safety: false, price: null, place: "medina", image: "photo-1531230689007-0b32d7a7c33e" },
+  { id: "badi",        slug: "el-badi-palace-marrakech", category: "heritage", duration: "h1to2",  safety: false, price: null, place: "medina", image: "photo-1592343361402-d4509fb85b36" },
   { id: "quad",        slug: "quad-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1624664929003-3da28050c0bf" },
   { id: "buggy",       slug: "buggy-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1519021228607-ef6e4c22d821" },
   { id: "motocross",   slug: "motocross-marrakech", category: "land",       duration: "h1to2",     safety: true,  price: null, image: "photo-1765568562583-4252b2d854b0" },
@@ -131,7 +136,7 @@ var ACTIVITIES = [
   { id: "aquajet",     slug: "aquajet-marrakech", category: "sea",        duration: "onRequest", safety: true,  price: null, image: "photo-1505408990643-cb9bbf4bfe2c" }
 ];
 
-var CATEGORIES = ["excursions", "land", "air", "sea"];
+var CATEGORIES = ["excursions", "heritage", "land", "air", "sea"];
 
 /* ---------------------------------------------------------
    VEHICLES ("Our vehicles" section + choice in the quote form)

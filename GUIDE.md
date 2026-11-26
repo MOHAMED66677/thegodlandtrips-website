@@ -142,7 +142,7 @@ Changez un chiffre ici : le bandeau, la FAQ et la page légale se mettent à jou
 
 ## 7. Pages des activités
 
-Chaque activité a sa propre page dans les sept langues (91 pages), créée automatiquement par `node build.mjs` : `/activity/quad-marrakech.html` (français), `/en/activity/quad-marrakech.html`, etc. Elle reprend la photo, le nom, la description courte (`act.<id>.desc`) et la description longue (`act.<id>.long`, dans `translations.js`), la durée, ce qui est inclus, la carte (si l'activité a un `place`), le prix si `showPrices` est activé, et les liens vers 3 autres activités.
+Chaque activité a sa propre page dans les sept langues (126 pages pour 18 activités), créée automatiquement par `node build.mjs` : `/activity/quad-marrakech.html` (français), `/en/activity/quad-marrakech.html`, etc. Elle reprend la photo, le nom, la description courte (`act.<id>.desc`) et la description longue (`act.<id>.long`, dans `translations.js`), la durée, ce qui est inclus, la carte (si l'activité a un `place`), le prix si `showPrices` est activé, et les liens vers 3 autres activités.
 
 - L'adresse de la page vient du champ `slug` de l'activité dans `content/site.js`. **Ne la changez plus une fois le site connu de Google** (les anciens liens ne marcheraient plus).
 - Le bouton « Demander un devis » ouvre le formulaire avec l'activité déjà choisie.
