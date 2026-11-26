@@ -421,8 +421,8 @@
       if (!card) return;
       var r = card.getBoundingClientRect();
       var x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
-      card.style.setProperty("--ry", ((x - .5) * 10).toFixed(2) + "deg");
-      card.style.setProperty("--rx", ((.5 - y) * 8).toFixed(2) + "deg");
+      card.style.setProperty("--ry", ((x - .5) * 5).toFixed(2) + "deg");
+      card.style.setProperty("--rx", ((.5 - y) * 4).toFixed(2) + "deg");
       card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
       card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
       card.classList.add("is-tilting"); tilted = card;
