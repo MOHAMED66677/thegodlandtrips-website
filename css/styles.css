@@ -375,30 +375,30 @@ a { color: var(--color-primary); }
 .menu-toggle svg { width: 24px; height: 24px; }
 
 /* Light / dark switch: a rounded track with a sliding knob.
-   Light: sun knob on the left. Dark: moon knob on the right, with a soft turquoise glow. */
+   Brand colours: gold sun knob on the navy track by day; pale moon knob with a zellige-teal glow at night. */
 .theme-toggle {
   --tw: 58px; --th: 30px; --k: 24px; --kpad: 3px;
   position: relative; flex: none; width: var(--tw); height: var(--th); padding: 0; border: 0; border-radius: 999px;
-  background: #363C5A; cursor: pointer; color: #fff;
+  background: #173059; cursor: pointer; color: #fff;
   box-shadow: inset 0 2px 5px rgba(0,0,0,.35), 0 4px 12px rgba(23,48,89,.22);
   transition: background-color .4s, box-shadow .4s;
 }
 .theme-toggle svg {
   position: absolute; top: calc((var(--th) - var(--k)) / 2); inset-inline-start: var(--kpad);
   display: block; box-sizing: border-box; width: var(--k); height: var(--k); padding: 4px; border-radius: 50%;
-  color: #fff; background: linear-gradient(145deg, #A9DBFF, #5E9DE3);
+  color: #fff; background: linear-gradient(145deg, #EBC985, #C99A52);
   box-shadow: 0 2px 6px rgba(0,0,0,.28), inset 0 1px 1px rgba(255,255,255,.45);
   transition: transform .45s cubic-bezier(.65,.05,.25,1.25), opacity .3s, box-shadow .4s, background .4s;
 }
 .theme-toggle .i-moon { opacity: 0; }
-.theme-toggle:hover svg { box-shadow: 0 2px 8px rgba(0,0,0,.32), 0 0 0 4px rgba(169,219,255,.25); }
+.theme-toggle:hover svg { box-shadow: 0 2px 8px rgba(0,0,0,.32), 0 0 0 4px rgba(201,154,82,.3); }
 .site-header.is-top:not(.menu-open) .theme-toggle { background: rgba(23,48,89,.55); box-shadow: inset 0 2px 5px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.22); }
 /* dark: the knob slides to the other end and glows */
-:root[data-theme="dark"] .theme-toggle { background: #141A2C; box-shadow: inset 0 2px 6px rgba(0,0,0,.6), 0 0 18px rgba(64,224,208,.32); }
+:root[data-theme="dark"] .theme-toggle { background: #0B1830; box-shadow: inset 0 2px 6px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08), 0 0 18px rgba(58,178,184,.32); }
 :root[data-theme="dark"] .theme-toggle svg { transform: translateX(calc(var(--tw) - var(--k) - 2 * var(--kpad))); }
 [dir="rtl"]:root[data-theme="dark"] .theme-toggle svg, :root[data-theme="dark"] [dir="rtl"] .theme-toggle svg { transform: translateX(calc(-1 * (var(--tw) - var(--k) - 2 * var(--kpad)))); }
 :root[data-theme="dark"] .theme-toggle .i-sun { opacity: 0; }
-:root[data-theme="dark"] .theme-toggle .i-moon { opacity: 1; background: linear-gradient(145deg, #B5ECFF, #6FB6F0); box-shadow: 0 0 10px rgba(94,234,212,.85), 0 0 22px rgba(94,234,212,.45); }
+:root[data-theme="dark"] .theme-toggle .i-moon { opacity: 1; color: #173059; background: linear-gradient(145deg, #FBF7EC, #DCD3BE); box-shadow: 0 0 10px rgba(58,178,184,.85), 0 0 22px rgba(58,178,184,.45); }
 .theme-row { display: none; }
 @media (max-width: 919px) {
   .header-inner > .theme-toggle { display: none; }
@@ -411,9 +411,9 @@ a { color: var(--color-primary); }
   [dir="rtl"] .theme-row .theme-toggle { padding: 0 14px 0 calc(var(--tw) + 28px); }
   .theme-row .theme-toggle::after {
     content: ""; position: absolute; top: 50%; inset-inline-end: 14px; width: var(--tw); height: var(--th); margin-top: calc(var(--th) / -2);
-    border-radius: 999px; background: #363C5A; box-shadow: inset 0 2px 5px rgba(0,0,0,.35); transition: background-color .4s, box-shadow .4s;
+    border-radius: 999px; background: #173059; box-shadow: inset 0 2px 5px rgba(0,0,0,.35); transition: background-color .4s, box-shadow .4s;
   }
-  :root[data-theme="dark"] .theme-row .theme-toggle::after { background: #141A2C; box-shadow: inset 0 2px 6px rgba(0,0,0,.6), 0 0 18px rgba(64,224,208,.32); }
+  :root[data-theme="dark"] .theme-row .theme-toggle::after { background: #0B1830; box-shadow: inset 0 2px 6px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08), 0 0 18px rgba(58,178,184,.32); }
   .theme-row .theme-toggle svg { z-index: 1; top: 50%; margin-top: calc(var(--k) / -2); inset-inline-start: auto; inset-inline-end: calc(14px + var(--tw) - var(--k) - var(--kpad)); }
 }
 
