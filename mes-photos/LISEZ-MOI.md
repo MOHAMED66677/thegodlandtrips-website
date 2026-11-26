@@ -32,6 +32,11 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `essaouira` | Essaouira day trip |
 | `ourika` | Ourika valley |
 | `agafay` | Agafay desert |
+| `bahia` | Bahia Palace |
+| `majorelle` | Majorelle Garden |
+| `saadian` | Saadian Tombs |
+| `benyoussef` | Ben Youssef Madrasa |
+| `badi` | El Badi Palace |
 | `quad` | Quad |
 | `buggy` | Buggy |
 | `motocross` | Motocross |
