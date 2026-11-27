@@ -32,6 +32,7 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `essaouira` | Essaouira day trip |
 | `ourika` | Ourika valley |
 | `agafay` | Agafay desert |
+| `zagora` | Zagora desert, 3 days |
 | `bahia` | Bahia Palace |
 | `majorelle` | Majorelle Garden |
 | `saadian` | Saadian Tombs |
@@ -42,6 +43,7 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `darbacha` | Dar el Bacha – Museum of Confluences |
 | `photomuseum` | Maison de la Photographie |
 | `darsisaid` | Dar Si Said – Carpet Museum |
+| `cooking` | Moroccan cooking class |
 | `quad` | Quad |
 | `buggy` | Buggy |
 | `motocross` | Motocross |
