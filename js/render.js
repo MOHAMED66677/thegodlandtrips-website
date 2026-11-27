@@ -420,11 +420,15 @@
     return '<section class="section section-band" id="activities" aria-labelledby="acts-title"><div class="container">' +
       '<div class="acts-head">' +
         sectionHead(lang, "acts-title", "acts.title", "acts.lead", "nav.activities") +
-        '<div class="filters reveal" role="group" aria-label="' + e(lang, "acts.filterLabel") + '">' + filters.map(function (f) {
+        '<div class="filters-wrap reveal">' +
+        '<button type="button" class="fil-btn fil-prev" data-fdir="-1" tabindex="-1" aria-label="' + e(lang, "acts.filtersPrev") + '">' + icon("arrow") + "</button>" +
+        '<div class="filters" role="group" aria-label="' + e(lang, "acts.filterLabel") + '">' + filters.map(function (f) {
           var n = f === "all" ? ACTIVITIES.length : ACTIVITIES.filter(function (a) { return a.category === f; }).length;
           return '<button type="button" data-filter="' + f + '" aria-pressed="' + (f === "all") + '">' +
             (f === "all" ? "" : icon(CAT_ICON[f])) + "<span>" + e(lang, f === "all" ? "acts.all" : "cat." + f) + '</span><span class="count">' + n + "</span></button>";
         }).join("") + "</div>" +
+        '<button type="button" class="fil-btn fil-next" data-fdir="1" tabindex="-1" aria-label="' + e(lang, "acts.filtersNext") + '">' + icon("arrow") + "</button>" +
+        "</div>" +
       "</div>" +
       '<div class="acts-tools reveal">' +
         '<button type="button" class="search-bar" data-search-open>' + SEARCH_SVG + '<span>' + e(lang, "search.placeholder") + "</span></button>" +

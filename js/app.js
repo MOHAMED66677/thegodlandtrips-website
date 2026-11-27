@@ -157,6 +157,7 @@
     writeForm(state);
     afterRender();
     applyFilter(currentFilter, false);
+    updateFilterArrows();
     updateCarousel();
     setupReveal(!opts.initial);
     onScroll();
@@ -465,6 +466,38 @@
     }
   }
 
+  /* ---------- category chips: arrows, faded edges and mouse-wheel scrolling when they don't fit ---------- */
+  function updateFilterArrows() {
+    var wrap = app.querySelector(".filters-wrap"), row = wrap && wrap.querySelector(".filters");
+    if (!row) return;
+    var max = row.scrollWidth - row.clientWidth;
+    var x = Math.abs(row.scrollLeft);                 // negative in Arabic (right-to-left)
+    wrap.classList.toggle("can-prev", max > 4 && x > 24);
+    wrap.classList.toggle("can-next", max > 4 && x < max - 24);
+  }
+  function scrollFilters(dir) {
+    var row = app.querySelector(".filters");
+    if (!row) return;
+    var rtl = document.documentElement.dir === "rtl";
+    row.scrollBy({ left: dir * Math.max(row.clientWidth * 0.7, 200) * (rtl ? -1 : 1), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  document.addEventListener("scroll", function (ev) { if (ev.target && ev.target.classList && ev.target.classList.contains("filters")) updateFilterArrows(); }, true);
+  // a vertical mouse wheel over the chips scrolls them sideways, until their end (then the page scrolls as usual)
+  document.addEventListener("wheel", function (ev) {
+    var row = ev.target.closest && ev.target.closest(".filters");
+    if (!row || Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) return;
+    var max = row.scrollWidth - row.clientWidth;
+    if (max <= 4) return;
+    var rtl = document.documentElement.dir === "rtl";
+    var x = Math.abs(row.scrollLeft), d = ev.deltaY;
+    if ((d > 0 && x >= max - 2) || (d < 0 && x <= 2)) return;
+    ev.preventDefault();
+    row.scrollLeft += rtl ? -d : d;
+  }, { passive: false });
+  window.addEventListener("resize", updateFilterArrows);
+  window.addEventListener("load", updateFilterArrows);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateFilterArrows);
+
   /* ---------- activities row: arrows + their on/off state ---------- */
   function updateCarousel() {
     var row = $("#acts-grid");
@@ -737,6 +770,7 @@
       if (l !== currentLang) setLang(l, { from: el.closest(".lang-switch-footer") ? "footer" : "header" });
       return;
     }
+    if (el.matches(".fil-btn")) { scrollFilters(Number(el.getAttribute("data-fdir"))); return; }
     if (el.matches(".filters button")) { applyFilter(el.getAttribute("data-filter"), true); return; }
     if (el.matches(".dur-tabs button")) {
       currentDur = el.getAttribute("data-dur");

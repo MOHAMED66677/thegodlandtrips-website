@@ -1356,3 +1356,25 @@ html.srch-lock, html.srch-lock body { overflow: hidden; }
 .filters button.is-empty { opacity: .45; cursor: default; box-shadow: none; }
 .dur-tabs button { white-space: nowrap; }
 @media (max-width: 430px) { .dur-tabs .count { display: none; } }
+
+/* Category chips: arrows + faded edge when there are more chips to see */
+.filters-wrap { position: relative; min-width: 0; }
+.filters-wrap .filters { --fade-s: 0px; --fade-e: 0px;
+  -webkit-mask: linear-gradient(to right, transparent, #000 var(--fade-s), #000 calc(100% - var(--fade-e)), transparent);
+          mask: linear-gradient(to right, transparent, #000 var(--fade-s), #000 calc(100% - var(--fade-e)), transparent); }
+.filters-wrap.can-prev .filters { --fade-s: 56px; }
+.filters-wrap.can-next .filters { --fade-e: 56px; }
+[dir="rtl"] .filters-wrap .filters { -webkit-mask: linear-gradient(to left, transparent, #000 var(--fade-s), #000 calc(100% - var(--fade-e)), transparent);
+          mask: linear-gradient(to left, transparent, #000 var(--fade-s), #000 calc(100% - var(--fade-e)), transparent); }
+.fil-btn { position: absolute; top: 50%; z-index: 2; display: none; place-items: center; width: 40px; height: 40px; margin-top: -20px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--color-surface); color: var(--color-primary); box-shadow: 0 4px 14px rgba(23,48,89,.18), inset 0 0 0 1px var(--color-border); transition: transform .2s; }
+.fil-btn:hover { transform: scale(1.08); }
+.fil-btn svg { width: 18px; height: 18px; }
+.fil-prev { inset-inline-start: 0; }
+.fil-next { inset-inline-end: 0; }
+.fil-prev svg { transform: scaleX(-1); }
+[dir="rtl"] .fil-prev svg { transform: none; }
+[dir="rtl"] .fil-next svg { transform: scaleX(-1); }
+.filters-wrap.can-prev .fil-prev, .filters-wrap.can-next .fil-next { display: grid; }
+/* phones: swipe; the faded edge is enough of a hint */
+@media (max-width: 640px) { .filters-wrap.can-prev .fil-prev, .filters-wrap.can-next .fil-next { display: none; } }
