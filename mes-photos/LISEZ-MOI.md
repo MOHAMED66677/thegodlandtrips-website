@@ -34,6 +34,10 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `agafay` | Agafay desert |
 | `zagora` | Zagora desert, 3 days |
 | `aitbenhaddou` | Ait Ben Haddou and Ouarzazate |
+| `merzouga` | Merzouga desert, 3 days |
+| `fesdesert` | Marrakech to Fes via the desert |
+| `chegaga` | Erg Chegaga, 3 days |
+| `atlas` | High Atlas and Imlil valley |
 | `bahia` | Bahia Palace |
 | `majorelle` | Majorelle Garden |
 | `saadian` | Saadian Tombs |
@@ -47,8 +51,12 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `cooking` | Moroccan cooking class |
 | `chezali` | Chez Ali dinner show |
 | `hammam` | Hammam & spa |
+| `agafaydinner` | Dinner and show in Agafay |
 | `quad` | Quad |
 | `buggy` | Buggy |
+| `agafay4x4` | Agafay by 4x4 |
+| `camel` | Camel ride in the Palmeraie |
+| `quadcamel` | Quad and camel in the Palmeraie |
 | `motocross` | Motocross |
 | `paintball` | Paintball |
 | `balloon` | Hot-air balloon |
