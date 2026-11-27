@@ -136,12 +136,14 @@
       (withLabel ? "<span>" + e(lang, "theme.dark") + "</span>" : "") + "</button>";
   }
 
+  var SEARCH_SVG = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg>';
   function header(lang) {
     return '<a class="skip-link" href="#main">' + e(lang, "skip") + "</a>" +
       '<header class="site-header is-top"><div class="container header-inner">' +
         '<a class="brand" href="#top">' + brandInner() + "</a>" +
         '<nav class="main-nav" id="main-nav" aria-label="' + e(lang, "nav.label") + '"><ul>' + navLinks(lang) +
           '<li class="theme-row">' + themeToggle(lang, true) + "</li></ul></nav>" +
+        '<button type="button" class="search-btn" aria-label="' + e(lang, "search.open") + '">' + SEARCH_SVG + "</button>" +
         langMenu(lang) +
         '<a class="btn btn-action btn-sm header-cta" href="#quote" data-quote="transfer">' + e(lang, "hero.ctaQuote") + "</a>" +
         themeToggle(lang) +
@@ -421,6 +423,7 @@
             (f === "all" ? "" : icon(CAT_ICON[f])) + "<span>" + e(lang, f === "all" ? "acts.all" : "cat." + f) + '</span><span class="count">' + n + "</span></button>";
         }).join("") + "</div>" +
       "</div>" +
+      '<button type="button" class="search-bar reveal" data-search-open>' + SEARCH_SVG + '<span>' + e(lang, "search.placeholder") + "</span></button>" +
       '<p class="visually-hidden" aria-live="polite" id="acts-count"></p>' +
       // one horizontal row you can scroll (arrows on wide screens, swipe on phones)
       '<div class="acts-carousel reveal">' +

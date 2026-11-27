@@ -259,6 +259,7 @@ for (const lang of LANGS) {
   <a class="skip-link" href="#legal-main">${R.esc(R.t(lang, "skip"))}</a>
   <header class="legal-header"><div class="container legal-header-inner">
     <a class="brand" href="./"><img class="brand-logo" src="${prefix}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${prefix}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${prefix}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <button type="button" class="search-btn" aria-label="${R.esc(R.t(lang, "search.open"))}"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg></button>
     <nav class="lang-menu" aria-label="${R.esc(R.t(lang, "lang.label"))}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list"><svg aria-hidden="true" width="20" height="20"><use href="#i-globe"/></svg><span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${R.esc(R.t(lang, "lang.label"))} (${R.esc(LANG_NAMES[lang])})</span><svg class="lang-chevron" aria-hidden="true" width="16" height="16"><use href="#i-chevron"/></svg></button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${R.esc(R.t(lang, "theme.dark"))}"><svg class="i-moon" aria-hidden="true" width="22" height="22"><use href="#i-moon"/></svg><svg class="i-sun" aria-hidden="true" width="22" height="22"><use href="#i-sun"/></svg></button>
   </div></header>
@@ -296,6 +297,7 @@ for (const lang of LANGS) {
     })();
   </script>
   <script src="${prefix}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
+  <script src="${prefix}js/search.js?v=${version("js/search.js")}" defer></script>
 </body>
 </html>
 `;
@@ -405,6 +407,7 @@ for (const lang of LANGS) {
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
     <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <button type="button" class="search-btn" aria-label="${e("search.open")}"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg></button>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${langLinks}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
@@ -460,6 +463,7 @@ for (const lang of LANGS) {
   </div></footer>
   <script>${PAGE_SCRIPT}</script>
   <script src="${up}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
+  <script src="${up}js/search.js?v=${version("js/search.js")}" defer></script>
 </body>
 </html>
 `;
@@ -514,6 +518,7 @@ for (const lang of LANGS) {
   <a class="skip-link" href="#main">${e("skip")}</a>
   <header class="legal-header"><div class="container legal-header-inner">
     <a class="brand" href="${home}"><img class="brand-logo" src="${up}images/logo-emblem.png" alt="" width="60" height="78"><span class="brand-word"><img class="bw bw-navy" src="${up}images/wordmark.png" alt="" width="155" height="64" loading="lazy"><img class="bw bw-white" src="${up}images/wordmark-white.png" alt="" width="155" height="64" loading="lazy"></span><span class="visually-hidden">${R.esc(SITE.agencyName)}</span></a>
+    <button type="button" class="search-btn" aria-label="${e("search.open")}"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg></button>
     <nav class="lang-menu" aria-label="${e("lang.label")}"><button type="button" class="lang-menu-btn" aria-expanded="false" aria-controls="lang-list">${ic("globe")}<span class="lang-current" aria-hidden="true">${R.esc(LANG_SHORT[lang])}</span><span class="visually-hidden">${e("lang.label")} (${R.esc(LANG_NAMES[lang])})</span>${ic("chevron", "lang-chevron", 16)}</button><ul class="lang-list" id="lang-list" hidden>${LANGS.map((l) => `<li><a href="${alt(l)}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}><span class="lang-code" aria-hidden="true">${R.esc(LANG_SHORT[l])}</span>${R.esc(LANG_NAMES[l])}</a></li>`).join("")}</ul></nav>
     <button type="button" class="theme-toggle" aria-pressed="false" aria-label="${e("theme.dark")}">${ic("moon", "i-moon", 22)}${ic("sun", "i-sun", 22)}</button>
   </div></header>
@@ -526,6 +531,7 @@ ${body}
   </div></footer>
   <script>${PAGE_SCRIPT}</script>
   <script src="${up}js/assistant.js?v=${version("js/assistant.js")}" defer></script>
+  <script src="${up}js/search.js?v=${version("js/search.js")}" defer></script>
 </body>
 </html>
 `;
@@ -713,6 +719,32 @@ writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
     writeFileSync(`${OUT}/assistant/${lang}.json`, JSON.stringify({ ui, labels, nodes, wa: SITE.whatsapp, waMsg: T.waMsg, waTopics: T.waTopics }));
   }
   console.log(`✓ ${OUT}/assistant/*.json`);
+}
+
+// ---------------- Site search: one small file per language, loaded when the search opens ----------------
+{
+  const { ASSISTANT_TEXT } = require("./content/assistant.js");
+  mkdirSync(`${OUT}/search`, { recursive: true });
+  const img = (id) => (/^photo-/.test(id || "") ? `/images/photos/${id}-480.webp` : null);
+  for (const lang of LANGS) {
+    const t = (k) => R.t(lang, k);
+    const root = `/${pathFor(lang)}`;
+    const allNames = (key) => LANGS.map((l) => R.t(l, key)).join(" ");
+    const items = [
+      { g: "service", t: t("services.transfer.title"), d: t("services.transfer.desc"), c: t("search.services"), u: `${root}#quote`, i: img(IMAGES.transfer),
+        k: allNames("services.transfer.title") + " taxi aeroport airport aeropuerto flughafen luchthaven aeroporto RAK" },
+      { g: "service", t: t("services.disposal.title"), d: t("services.disposal.desc"), c: t("search.services"), u: `${root}#quote`, i: img(IMAGES.disposal),
+        k: allNames("services.disposal.title") + " chauffeur driver" },
+      ...ACTIVITIES.map((a) => ({ g: "act", t: t(`act.${a.id}.name`), d: t(`act.${a.id}.desc`), c: t(`cat.${a.category}`),
+        u: `${root}activity/${a.slug}.html`, i: img(a.image), k: allNames(`act.${a.id}.name`) + " " + allNames(`act.${a.id}.desc`) + " " + allNames(`cat.${a.category}`) + " " + t(`dur.${a.duration}`) })),
+      ...GUIDES.map((g) => { const G = g[lang] || g.fr; return { g: "guide", t: G.t, d: G.d, c: (GUIDE_UI[lang] || GUIDE_UI.fr).title,
+        u: `${root}guides/${g.slug}.html`, i: img(g.image), k: LANGS.map((l) => (g[l] || g.fr).t).join(" ") }; }),
+    ];
+    const popular = [t("cat.heritage"), t("cat.museums"), "Agafay", "Merzouga", t("act.quad.name"), "Essaouira", t("act.hammam.name"), t("act.balloon.name")];
+    const ui = Object.fromEntries(["placeholder", "label", "popular", "acts", "services", "guides", "none", "ask", "close", "count"].map((k) => [k, t(`search.${k}`)]));
+    writeFileSync(`${OUT}/search/${lang}.json`, JSON.stringify({ ui, items, popular, wa: SITE.whatsapp, waMsg: (ASSISTANT_TEXT[lang] || ASSISTANT_TEXT.fr).waMsg }));
+  }
+  console.log(`✓ ${OUT}/search/*.json`);
 }
 
 writeFileSync(`${OUT}/robots.txt`, SITE.demoMode || SITE.hideFromSearch

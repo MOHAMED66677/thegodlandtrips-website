@@ -356,3 +356,7 @@ Le bouton « Une question ? » (en bas à droite de toutes les pages) ouvre un p
 - Les textes propres à l'assistant (bonjour, boutons, journée historique, musées) sont dans `content/assistant.js`, dans les sept langues.
 - À la fin, le bouton « Écrire sur WhatsApp » ouvre WhatsApp avec un message déjà écrit qui reprend les sujets consultés.
 - `node build.mjs` crée un petit fichier par langue (`dist/assistant/fr.json`…), téléchargé seulement quand le visiteur ouvre l'assistant.
+
+## Recherche
+
+La loupe en haut de chaque page, et la barre « Rechercher une activité, un lieu… » au-dessus des activités, ouvrent la recherche. Elle trouve les activités, les services (transfert, chauffeur) et les guides de voyage, sans tenir compte des accents ni des majuscules, et comprend aussi les mots des autres langues (« waterfall » trouve Ouzoud sur la page française). `node build.mjs` crée un petit fichier par langue (`dist/search/fr.json`…), téléchargé seulement à l'ouverture de la recherche. Les textes de la recherche sont dans `content/translations.js` (`search.*`). Raccourci clavier : « / ».
