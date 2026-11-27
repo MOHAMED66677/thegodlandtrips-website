@@ -696,7 +696,7 @@ writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
       heritage: { say: [T.heritageA], list: acts(["bahia", "saadian", "badi", "benyoussef", "koubba", "photomuseum", "cooking"]), links: [quote], chips: ["museums", "daytrips"] },
       museums: { say: [T.museumsA], list: acts(ACTIVITIES.filter((a) => a.category === "museums").map((a) => a.id).concat("majorelle")), links: [quote], chips: ["heritage", "planner"] },
       desert: { say: guide("desert").facts, list: acts(["agafay", "zagora", "quad", "buggy"]), links: [guide("desert").link], chips: ["wear", "daytrips"] },
-      daytrips: { say: guide("daytrips").facts, list: acts(["ouzoud", "ourika", "essaouira"]), links: [guide("daytrips").link], chips: ["desert", "faq2"] },
+      daytrips: { say: guide("daytrips").facts, list: acts(["ouzoud", "ourika", "essaouira", "aitbenhaddou"]), links: [guide("daytrips").link], chips: ["desert", "faq2"] },
       wear: { say: guide("wear").facts, list: acts(["quad", "buggy", "agafay"]), links: [guide("wear").link], chips: ["desert", "faq8"] },
       planner: { say: [T.plannerQ], chips: cats.map((c) => `cat_${c}`) },
       practical: { say: [T.practicalQ], chips: faqs.map((i) => `faq${i}`) },

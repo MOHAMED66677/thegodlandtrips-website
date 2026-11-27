@@ -33,6 +33,7 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `ourika` | Ourika valley |
 | `agafay` | Agafay desert |
 | `zagora` | Zagora desert, 3 days |
+| `aitbenhaddou` | Ait Ben Haddou and Ouarzazate |
 | `bahia` | Bahia Palace |
 | `majorelle` | Majorelle Garden |
 | `saadian` | Saadian Tombs |
@@ -44,6 +45,8 @@ To go back to the stock photo, delete your file and put the old id back in `cont
 | `photomuseum` | Maison de la Photographie |
 | `darsisaid` | Dar Si Said – Carpet Museum |
 | `cooking` | Moroccan cooking class |
+| `chezali` | Chez Ali dinner show |
+| `hammam` | Hammam & spa |
 | `quad` | Quad |
 | `buggy` | Buggy |
 | `motocross` | Motocross |
