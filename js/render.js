@@ -390,12 +390,15 @@
       }).join("") + "</div></div>";
   }
 
+  // "multi" = trips of several days (duration days2, days3...), "day" = everything done within a day
+  function spanOf(a) { return /^days\d/.test(a.duration) ? "multi" : "day"; }
+
   function activityCard(lang, a, i) {
     var name = t(lang, "act." + a.id + ".name");
     var price = SITE.showPrices && a.price
       ? '<span class="price">' + e(lang, "acts.from") + " <strong>" + esc(a.price) + " " + esc(SITE.currency) + "</strong></span>"
       : "";
-    return '<article class="activity-card" data-cat="' + a.category + '">' +
+    return '<article class="activity-card" data-cat="' + a.category + '" data-span="' + spanOf(a) + '">' +
       '<div class="activity-media">' + img(a.image) +
         '<span class="chip chip-cat">' + icon(CAT_ICON[a.category]) + e(lang, "cat." + a.category) + "</span>" +
         '<span class="chip chip-dur"><span class="visually-hidden">' + e(lang, "acts.duration") + (lang === "fr" ? " : " : ": ") + "</span>" + icon("clock") + e(lang, "dur." + a.duration) + "</span>" +
@@ -423,7 +426,14 @@
             (f === "all" ? "" : icon(CAT_ICON[f])) + "<span>" + e(lang, f === "all" ? "acts.all" : "cat." + f) + '</span><span class="count">' + n + "</span></button>";
         }).join("") + "</div>" +
       "</div>" +
-      '<button type="button" class="search-bar reveal" data-search-open>' + SEARCH_SVG + '<span>' + e(lang, "search.placeholder") + "</span></button>" +
+      '<div class="acts-tools reveal">' +
+        '<button type="button" class="search-bar" data-search-open>' + SEARCH_SVG + '<span>' + e(lang, "search.placeholder") + "</span></button>" +
+        '<div class="dur-tabs" role="group" aria-label="' + e(lang, "acts.durLabel") + '">' + [["all", "durAll", null], ["day", "durDay", "clock"], ["multi", "durMulti", "calendar"]].map(function (d) {
+          var n = d[0] === "all" ? ACTIVITIES.length : ACTIVITIES.filter(function (a) { return spanOf(a) === d[0]; }).length;
+          return '<button type="button" data-dur="' + d[0] + '" aria-pressed="' + (d[0] === "all") + '">' + (d[2] ? icon(d[2]) : "") +
+            "<span>" + e(lang, "acts." + d[1]) + '</span><span class="count">' + n + "</span></button>";
+        }).join("") + "</div>" +
+      "</div>" +
       '<p class="visually-hidden" aria-live="polite" id="acts-count"></p>' +
       // one horizontal row you can scroll (arrows on wide screens, swipe on phones)
       '<div class="acts-carousel reveal">' +

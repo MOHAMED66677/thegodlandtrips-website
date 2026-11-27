@@ -10,6 +10,7 @@
   var html = document.documentElement;
   var currentLang = DEFAULT_LANG;
   var currentFilter = "all";
+  var currentDur = "all";   // duration tab: all | day | multi
   var lastSubmitter = null;
 
   // Absolute base URL of the site (folder containing css/), used for local images
@@ -437,8 +438,20 @@
     app.querySelectorAll(".filters button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-filter") === f));
     });
-    app.querySelectorAll("#acts-grid .activity-card").forEach(function (c) {
-      var show = f === "all" || c.getAttribute("data-cat") === f;
+    app.querySelectorAll(".dur-tabs button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-dur") === currentDur));
+    });
+    // category counts follow the duration tab; a category with nothing in it is dimmed
+    var cards = app.querySelectorAll("#acts-grid .activity-card");
+    app.querySelectorAll(".filters button").forEach(function (b) {
+      var cat = b.getAttribute("data-filter"), n = 0;
+      cards.forEach(function (c) { if ((cat === "all" || c.getAttribute("data-cat") === cat) && (currentDur === "all" || c.getAttribute("data-span") === currentDur)) n++; });
+      var cnt = b.querySelector(".count"); if (cnt) cnt.textContent = n;
+      b.classList.toggle("is-empty", n === 0);
+      b.disabled = n === 0 && cat !== "all";
+    });
+    cards.forEach(function (c) {
+      var show = (f === "all" || c.getAttribute("data-cat") === f) && (currentDur === "all" || c.getAttribute("data-span") === currentDur);
       c.hidden = !show;
       if (show && announce) c.classList.add("is-in");
       if (show) shown++;
@@ -725,6 +738,13 @@
       return;
     }
     if (el.matches(".filters button")) { applyFilter(el.getAttribute("data-filter"), true); return; }
+    if (el.matches(".dur-tabs button")) {
+      currentDur = el.getAttribute("data-dur");
+      // if the chosen category has nothing of that length, show all categories
+      var keep = currentFilter === "all" || [].some.call(app.querySelectorAll('#acts-grid .activity-card[data-cat="' + currentFilter + '"]'), function (c) { return currentDur === "all" || c.getAttribute("data-span") === currentDur; });
+      applyFilter(keep ? currentFilter : "all", true);
+      return;
+    }
     if (el.matches(".car-btn")) { scrollCarousel(Number(el.getAttribute("data-dir"))); return; }
     if (el.matches(".menu-toggle")) {
       var nav = $("#main-nav");
