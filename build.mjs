@@ -132,7 +132,7 @@ for (const lang of LANGS) {
             offer("Service", tt("services.disposal.title"), tt("services.disposal.desc")),
             ...ACTIVITIES.map((a) => {
               const o = offer("TouristTrip", tt(`act.${a.id}.name`), tt(`act.${a.id}.desc`));
-              if (SITE.showPrices && a.price) Object.assign(o, { price: a.price, priceCurrency: SITE.currency });
+              if (SITE.showPrices && a.price) Object.assign(o, { price: a.price, priceCurrency: SITE.currencyCode || SITE.currency });
               return o;
             }),
           ],
@@ -353,7 +353,7 @@ for (const lang of LANGS) {
       ["clock", "info.duration", t(`dur.${a.duration}`)],
       ["pin", "info.departure", t("info.departureValue")],
       ...(dest && dest.km ? [["car", "info.distance", R.formatTrip(lang, dest.km, dest.minutes)]] : []),
-      ["check", "info.price", SITE.showPrices && a.price ? `${t("acts.from")} ${a.price} ${SITE.currency}` : t("info.priceQuote")],
+      ["check", "info.price", SITE.showPrices && a.price ? `${t("acts.from")} ${a.price} ${SITE.currency}${SITE.pricesPerPerson ? " " + t("acts.perPerson") : ""}` : t("info.priceQuote")],
       ...(P.freeCancellationHours ? [["calendar", "info.cancel", t("info.cancelValue")]] : []),
     ];
     const others = ACTIVITIES.filter((o) => o.id !== a.id && o.slug && o.category === a.category)
@@ -369,7 +369,7 @@ for (const lang of LANGS) {
         { "@type": "TouristTrip", name, description: t(`act.${a.id}.long`), image: isPhoto ? photo(`${SITE.siteUrl}/`, a.image, 1200, "jpg") : undefined,
           url: actUrl(lang, a), inLanguage: lang, touristType: t(`cat.${a.category}`),
           provider: { "@type": "TravelAgency", name: SITE.agencyName, url: urlFor(lang) },
-          ...(SITE.showPrices && a.price ? { offers: { "@type": "Offer", price: a.price, priceCurrency: SITE.currency } } : {}) },
+          ...(SITE.showPrices && a.price ? { offers: { "@type": "Offer", price: a.price, priceCurrency: SITE.currencyCode || SITE.currency } } : {}) },
         { "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: t("page.home"), item: urlFor(lang) },
           { "@type": "ListItem", position: 2, name: t("nav.activities"), item: `${urlFor(lang)}#activities` },

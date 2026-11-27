@@ -396,7 +396,7 @@
   function activityCard(lang, a, i) {
     var name = t(lang, "act." + a.id + ".name");
     var price = SITE.showPrices && a.price
-      ? '<span class="price">' + e(lang, "acts.from") + " <strong>" + esc(a.price) + " " + esc(SITE.currency) + "</strong></span>"
+      ? '<span class="price">' + e(lang, "acts.from") + " <strong>" + esc(a.price) + " " + esc(SITE.currency) + "</strong>" + (SITE.pricesPerPerson ? ' <small>' + e(lang, "acts.perPerson") + "</small>" : "") + "</span>"
       : "";
     return '<article class="activity-card" data-cat="' + a.category + '" data-span="' + spanOf(a) + '">' +
       '<div class="activity-media">' + img(a.image) +
